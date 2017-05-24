@@ -30,6 +30,7 @@ class MainController extends Controller {
 	{
 		$fake_permissions = ['5144', '1'];
 		//$fake_permissions = null;
+		$vectorArreglaso="a%3A12%3A%7Bi%3A0%3Bs%3A4%3A%221046%22%3Bi%3A1%3Bs%3A1%3A%221%22%3Bi%3A2%3Bs%3A1%3A%221%22%3Bi%3A3%3Bs%3A1%3A%221%22%3Bi%3A4%3Bs%3A1%3A%221%22%3Bi%3A5%3Bs%3A1%3A%221%22%3Bi%3A6%3Bs%3A1%3A%221%22%3Bi%3A7%3Bs%3A1%3A%221%22%3Bi%3A8%3Bs%3A1%3A%221%22%3Bi%3A9%3Bs%3A1%3A%221%22%3Bi%3A10%3Bs%3A1%3A%221%22%3Bi%3A11%3Bs%3A1%3A%221%22%3B%7D";
 
 		if ($request->has('vector_modulo') || $fake_permissions)
 		{	
@@ -48,6 +49,7 @@ class MainController extends Controller {
 			$_SESSION['Usuario']['Roles'] = [];
 			$_SESSION['Usuario']['Persona'] = $persona;
 			$_SESSION['Usuario']['Permisos'] = $permisos;
+			$_SESSION['Nombre']=$persona["Primer_Apellido"]." ".$persona["Segundo_Apellido"]." ".$persona["Primer_Nombre"]." ".$persona["Segundo_Nombre"];
 			$this->Usuario = $_SESSION['Usuario'];
 		} else {
 			if (!isset($_SESSION['Usuario']))

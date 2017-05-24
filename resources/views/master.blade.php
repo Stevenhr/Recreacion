@@ -22,6 +22,7 @@
           <link rel="stylesheet" href="{{ asset('public/components/highcharts/css/highcharts.css') }}" media="screen">
           <link rel="stylesheet" href="{{ asset('public/components/loaders.css/loaders.min.css') }}" media="screen">
           <link rel="stylesheet" href="{{ asset('public/Css/main.css') }}" media="screen">    
+          <link rel="shortcut icon" href="{{ asset('public/Img/Institucionales/iconoModulo.png') }}">  
       @show
 
       @section('script')
@@ -37,7 +38,7 @@
           <script src="{{ asset('public/Js/main.js') }}"></script>
       @show
 
-      <title>Nombre Módulo</title>
+      <title>Módulo Recreación</title>
   </head>
 
   <body>
@@ -82,13 +83,6 @@
               </li>
             </ul>
 
-            <form class="navbar-form navbar-left" role="search">
-                <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Buscar">
-                </div>                
-                <button type="submit" class="btn btn-default">Ir</button>
-            </form>
-
             <ul class="nav navbar-nav navbar-right">
               <li><a href="http://www.idrd.gov.co/sitio/idrd/" target="_blank">I.D.R.D</a></li>
               <li><a href="#" target="_blank">Cerrar Sesión</a></li>
@@ -105,8 +99,8 @@
           <div class="page-header" id="banner">
             <div class="row">
               <div class="col-lg-8 col-md-7 col-sm-6">
-                <h1>MÓDULO</h1>
-                <p class="lead"><h1>##### ### ### ####</h1></p>
+                <h1>MÓDULO RECREACIÓN</h1>
+                <p class="lead"><h1>Subdirección Técnica de Recreación y Deportes</h1></p>
               </div>
               <div class="col-lg-4 col-md-5 col-sm-6">
                  <div align="right"> 
@@ -115,7 +109,23 @@
               </div>
             </div>
           </div>        
-      </div>
+          <div class="row">
+            <div class="col-xs-6 col-md-6 ">
+              <div class="alert" role="alert">
+                <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+                <span >PERFIL:</span>
+                <b></b>
+              </div>
+            </div>
+            <div class="col-xs-6 col-md-6 " align="right">
+              <div class="alert" role="alert">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                <span >USUARIO:</span>
+                <b>{{$_SESSION['Nombre']}}</b>
+              </div>
+            </div>
+          </div>
+       </div>
       <!-- FIN Contenedor información módulo -->
 
       <!-- Contenedor panel principal -->
