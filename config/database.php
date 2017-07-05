@@ -61,11 +61,11 @@ return [
 
         'db_principal' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST'),
+            'host' => env('DB_HOST2'),
             'port' => env('DB_PORT'),
             'database' => env('DB_PRINCIPAL'),
-            'username' => env('DB_USERNAME'),
-            'password' => env('DB_PASSWORD'),
+            'username' => env('DB_PRINCIPAL_USERNAME'),
+            'password' => env('DB_PRINCIPAL_PASSWORD'),
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix' => '',

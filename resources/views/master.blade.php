@@ -56,17 +56,24 @@
           </div>
           <div class="navbar-collapse collapse" id="navbar-main">
             <ul class="nav navbar-nav">
+              
               <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Opción 1 <span class="caret"></span></a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes">Configuración<span class="caret"></span></a>
                 <ul class="dropdown-menu" aria-labelledby="themes">
-                  <li><a href="#">Default</a></li>
+                  <li><a href="#">Configuración</a></li>
                   <li class="divider"></li>
                   <li><a href="#">Sub-Item 1</a></li>
                   <li><a href="#">Sub-Item 2</a></li>
                   <li><a href="#">Sub-Item 3</a></li>
                   <li><a href="#">Sub-Item 4</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Gestión Usuarios</a></li>
+                  <li class="divider"></li>
+                  <li class=”{{ Request::is( 'personas') ? 'active' : '' }}”><a href="{{ URL::to( 'personas') }}">Usuarios</a></li>
+                  <li class=”{{ Request::is( 'asignarActividad') ? 'active' : '' }}”><a href="{{ URL::to( 'asignarActividad') }}">Agregar Permisos</a></li>
                 </ul>
               </li>
+
               <li>
                 <a href="#">Opción 2</a>
               </li>
