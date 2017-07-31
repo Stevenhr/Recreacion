@@ -2,13 +2,9 @@
 session_start();
 /*
 |--------------------------------------------------------------------------
-| Routes File
+| Routes Usuarios
 |--------------------------------------------------------------------------
-|
-| Here is where you will register all of the routes in an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
+|Rutas para la gestion de los usuarios.
 */
 Route::get('/personas', '\Idrd\Usuarios\Controllers\PersonaController@index');
 Route::get('/personas/service/obtener/{id}', '\Idrd\Usuarios\Controllers\PersonaController@obtener');
@@ -37,3 +33,25 @@ Route::any('/logout', 'MainController@logout');
 Route::group(['middleware' => ['web']], function () {
 	Route::get('/welcome', 'MainController@welcome');
 });
+
+
+/*
+|--------------------------------------------------------------------------
+| Routes Actividad
+|--------------------------------------------------------------------------
+|Rutas para la gestion de los usuarios.
+*/
+
+Route::group(['prefix' => 'actividad', 'middleware' => 'auth'], function()
+{
+    $controller = "\\App\\Modulos\\Actividad\\Controllers\\";
+
+    Route::any('/registroActividad', [
+        'uses' => $controller.'ActividadController@inicio',
+        'as' => 'proceso_actividad'
+    ]);
+
+});
+
+
+

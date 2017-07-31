@@ -69,20 +69,18 @@
                   <li class="divider"></li>
                   <li><a href="#">Gestión Usuarios</a></li>
                   <li class="divider"></li>
-                  <li class=”{{ Request::is( 'personas') ? 'active' : '' }}”><a href="{{ URL::to( 'personas') }}">Usuarios</a></li>
-                  <li class=”{{ Request::is( 'asignarActividad') ? 'active' : '' }}”><a href="{{ URL::to( 'asignarActividad') }}">Agregar Permisos</a></li>
+                  <li class="{{ Request::is( 'personas') ? 'active' : '' }}"><a href="{{ URL::to( 'personas') }}">Usuarios</a></li>
+                  <li class="{{ Request::is( 'asignarActividad') ? 'active' : '' }}"><a href="{{ URL::to( 'asignarActividad') }}">Agregar Permisos</a></li>
                 </ul>
               </li>
 
-              <li>
-                <a href="#">Opción 2</a>
-              </li>
+
               <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download">Opción 3 <span class="caret"></span></a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download">Gestor<span class="caret"></span></a>
                 <ul class="dropdown-menu" aria-labelledby="download">
-                  <li><a href="#">Default</a></li>
+                  <li><a href="#">Actividad</a></li>
                   <li class="divider"></li>
-                  <li><a href="#">Sub-Item 1</a></li>
+                  <li class="{{ Request::is( 'proceso_actividad') ? 'active' : '' }}"><a href="{{ route('proceso_actividad') }}">Crear actividad</a></li>
                   <li><a href="#">Sub-Item 2</a></li>
                   <li><a href="#">Sub-Item 3</a></li>
                   <li><a href="#">Sub-Item 4</a></li>
