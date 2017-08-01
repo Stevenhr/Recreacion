@@ -1,74 +1,273 @@
 @extends('master')                              
 
 @section('content') 
-       
+
 <div class="container">
- 
-<div class="stepwizard col-md-offset-3">
-    <div class="stepwizard-row setup-panel">
-      <div class="stepwizard-step">
-        <a href="#step-1" type="button" class="btn btn-primary btn-circle">1</a>
-        <p>Step 1</p>
-      </div>
-      <div class="stepwizard-step">
-        <a href="#step-2" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
-        <p>Step 2</p>
-      </div>
-      <div class="stepwizard-step">
-        <a href="#step-3" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
-        <p>Step 3</p>
-      </div>
-    </div>
-  </div>
-  
-  <form role="form" action="" method="post">
-    <div class="row setup-content" id="step-1">
-      <div class="col-xs-6 col-md-offset-3">
-        <div class="col-md-12">
-          <h3> Step 1</h3>
-          <div class="form-group">
-            <label class="control-label">First Name</label>
-            <input  maxlength="100" type="text" required="required" class="form-control" placeholder="Enter First Name"  />
-          </div>
-          <div class="form-group">
-            <label class="control-label">Last Name</label>
-            <input maxlength="100" type="text" required="required" class="form-control" placeholder="Enter Last Name" />
-          </div>
-          <div class="form-group">
-            <label class="control-label">Address</label>
-            <textarea required="required" class="form-control" placeholder="Enter your address" ></textarea>
-          </div>
-          <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Next</button>
-        </div>
-      </div>
-    </div>
-    <div class="row setup-content" id="step-2">
-      <div class="col-xs-6 col-md-offset-3">
-        <div class="col-md-12">
-          <h3> Step 2</h3>
-          <div class="form-group">
-            <label class="control-label">Company Name</label>
-            <input maxlength="200" type="text" required="required" class="form-control" placeholder="Enter Company Name" />
-          </div>
-          <div class="form-group">
-            <label class="control-label">Company Address</label>
-            <input maxlength="200" type="text" required="required" class="form-control" placeholder="Enter Company Address"  />
-          </div>
-          <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Next</button>
-        </div>
-      </div>
-    </div>
-    <div class="row setup-content" id="step-3">
-      <div class="col-xs-6 col-md-offset-3">
-        <div class="col-md-12">
-          <h3> Step 3</h3>
-          <button class="btn btn-success btn-lg pull-right" type="submit">Submit</button>
-        </div>
-      </div>
-    </div>
-  </form>
-  
+
+		<div class="row">
+			<div class="board">
+				<!-- <h2>Welcome to IGHALO!<sup>™</sup></h2>-->
+				<div class="board-inner">
+					<ul class="nav nav-tabs" id="myTab">
+						<div class="liner"></div>
+						
+						<li class="active">
+							<a href="#home" data-toggle="tab" title="welcome">
+								<span class="round-tabs one">
+									<i class="glyphicon glyphicon-th"></i>
+								</span> 
+							</a>
+						</li>
+
+						<li>
+							<a href="#profile" data-toggle="tab" title="profile">
+								<span class="round-tabs two">
+									<i class="glyphicon glyphicon-calendar"></i>
+								</span> 
+							</a>
+						</li>
+
+						<li>
+							<a href="#messages" data-toggle="tab" title="bootsnipp goodies">
+								<span class="round-tabs three">
+									<i class="glyphicon glyphicon-user"></i>
+								</span>
+							</a>
+						</li>
+
+						<li>
+							<a href="#settings" data-toggle="tab" title="blah blah">
+								<span class="round-tabs four">
+									<i class="glyphicon glyphicon-globe"></i>
+								</span> 
+							</a>
+						</li>
+
+
+						<li>
+							<a href="#doner" data-toggle="tab" title="completed">
+								<span class="round-tabs five">
+									<i class="glyphicon glyphicon-ok"></i>
+								</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="tab-content">
+					
+					<div class="tab-pane fade in active" id="home">
+						<div class="row">
+							<div class="col-xs-12 col-sm-12">
+								<h3 class="head text-center">Datos basicos de la actividad</h3>
+								<p class="narrow text-center">
+									Espacio para registrar las actividades basicas de la actvidad.
+								</p>
+								<br><br>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-xs-6 col-sm-6">
+								<div class="form-group">
+									<label> 1. Programa </label>
+									<select class="form-control" name="unidad_tiempo">
+										<option value="">Seleccionar</option>
+										<option value="0">Dias</option>
+										<option value="1">Meses</option>
+										<option value="2">Años</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-xs-6 col-sm-6">
+								<div class="form-group">
+									<label> 2. Actividad </label>
+									<select class="form-control" name="unidad_tiempo">
+										<option value="">Seleccionar</option>
+									</select>
+								</div>
+							</div>
+						</div>
+
+			            <div class="row">
+							<div class="col-xs-6 col-sm-6">
+								<div class="form-group">
+									<label> 3. Temática</label>
+									<select class="form-control" name="unidad_tiempo">
+										<option value="">Seleccionar</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-xs-6 col-sm-6">
+								<div class="form-group">
+									<label> 4. Componente </label>
+									<select class="form-control" name="unidad_tiempo">
+										<option value="">Seleccionar</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12">
+								<p class="text-center">
+									<a href="" class="btn btn-success btn-outline-rounded green"> Agregar datos<span style="margin-left:10px;" class="glyphicon glyphicon-plus"></span></a>
+								</p>
+							</div>
+						</div>
+					</div>
+
+
+
+					<div class="tab-pane fade" id="profile">
+						
+						<div class="row">
+							<div class="col-xs-12 col-sm-12">
+								<h3 class="head text-center">Programación y asignación de la actividad</h3>
+								<p class="narrow text-center">
+									Espacio para registrar la programación y asignación de la activadad, se puede agregar varias actividades que coincidan con los mismos datos en los diferentes ítem
+								</p>
+								<br><br>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-xs-6 col-sm-6">
+								<div class="form-group">
+									<label> 1. Fecha de ejecución</label>
+									<input type="date" class="form-control" name="fecha_inicio"  data-role1="datepicker" placeholder="aa/mm/dd" autocomplete="off" >
+								</div>
+							</div>
+							<div class="col-xs-6 col-sm-6">
+								<div class="form-group">
+									<label> 2. Responsable </label>
+									<select class="form-control" name="unidad_tiempo">
+										<option value="">Seleccionar</option>
+										<option value="0">Dias</option>
+										<option value="1">Meses</option>
+										<option value="2">Años</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-6 col-sm-6">
+								<div class="form-group">
+									<label> 3. Horario inicio</label>
+									<input type="time" class="form-control" name="fecha_suscripcion"  data-role1="datepicker" autocomplete="off">
+								</div>
+							</div>
+							<div class="col-xs-6 col-sm-6">
+								<div class="form-group">
+									<label> 4. Horario fin</label>
+									<input type="time" class="form-control" name="fecha_suscripcion" autocomplete="off">
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-xs-12 col-sm-12">
+								<div class="form-group">
+									<label> 5. Registro de acompañantes</label>
+									<div class="bs-example" data-example-id="bordered-table"> 
+										<table class="table display no-wrap table-condensed table-bordered table-min"> 
+											<thead> 
+												<tr> 
+													<th>#</th> 
+													<th>Nombres</th> 
+													<th>Apellidos</th> 
+													<th>Validar</th> 
+												</tr> 
+												</thead> 
+													<tbody> 
+														<tr> 
+															<th scope="row">1</th> 
+															<td>Mark</td> 
+															<td>Otto</td> 
+															<td>
+																<div class="checkbox">
+															      <label>
+															        <input type="checkbox"> Agregar
+															      </label>
+															    </div>
+															</td> 
+														</tr> 
+														<tr> 
+															<th scope="row">2</th> 
+															<td>Jacob</td> 
+															<td>Thornton</td> 
+															<td>
+																<div class="checkbox">
+															      <label>
+															        <input type="checkbox"> Agregar
+															      </label>
+															    </div>
+															</td> 
+														</tr> 
+														<tr> 
+															<th scope="row">3</th> 
+															<td>Larry</td> 
+															<td>the Bird</td> 
+															<td>
+																<div class="checkbox">
+															      <label>
+															        <input type="checkbox"> Agregar
+															      </label>
+															    </div>
+															</td> 
+														</tr> </tbody> </table> </div>
+								</div>
+							</div>
+						</div>
+
+						<p class="text-center">
+							<a href="" class="btn btn-success btn-outline-rounded green"> Agregar programación <span style="margin-left:10px;" class="glyphicon glyphicon-plus"></span></a>
+						</p>
+
+					</div>
+
+
+
+					<div class="tab-pane fade" id="messages">
+						<h3 class="head text-center">Bootsnipp goodies</h3>
+						<p class="narrow text-center">
+							Lorem ipsum dolor sit amet, his ea mollis fabellas principes. Quo mazim facilis tincidunt ut, utinam saperet facilisi an vim.
+						</p>
+
+						<p class="text-center">
+							<a href="" class="btn btn-success btn-outline-rounded green"> start using bootsnipp <span style="margin-left:10px;" class="glyphicon glyphicon-send"></span></a>
+						</p>
+					</div>
+
+
+
+					<div class="tab-pane fade" id="settings">
+						<h3 class="head text-center">Drop comments!</h3>
+						<p class="narrow text-center">
+							Lorem ipsum dolor sit amet, his ea mollis fabellas principes. Quo mazim facilis tincidunt ut, utinam saperet facilisi an vim.
+						</p>
+
+						<p class="text-center">
+							<a href="" class="btn btn-success btn-outline-rounded green"> start using bootsnipp <span style="margin-left:10px;" class="glyphicon glyphicon-send"></span></a>
+						</p>
+					</div>
+
+					<div class="tab-pane fade" id="doner">
+						<div class="text-center">
+							<i class="img-intro icon-checkmark-circle"></i>
+						</div>
+						<h3 class="head text-center">thanks for staying tuned! <span style="color:#f48260;">♥</span> Bootstrap</h3>
+						<p class="narrow text-center">
+							Lorem ipsum dolor sit amet, his ea mollis fabellas principes. Quo mazim facilis tincidunt ut, utinam saperet facilisi an vim.
+						</p>
+					</div>
+
+					<div class="clearfix"></div>
+				</div>
+
+			</div>
+		</div>
+
 </div>
-       
+
 @stop
 
