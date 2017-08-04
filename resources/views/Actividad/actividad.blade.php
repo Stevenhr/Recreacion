@@ -28,14 +28,6 @@
 						</li>
 
 						<li>
-							<a href="#messages" data-toggle="tab" title="bootsnipp goodies">
-								<span class="round-tabs three">
-									<i class="glyphicon glyphicon-user"></i>
-								</span>
-							</a>
-						</li>
-
-						<li>
 							<a href="#settings" data-toggle="tab" title="blah blah">
 								<span class="round-tabs four">
 									<i class="glyphicon glyphicon-globe"></i>
@@ -43,6 +35,13 @@
 							</a>
 						</li>
 
+						<li>
+							<a href="#messages" data-toggle="tab" title="bootsnipp goodies">
+								<span class="round-tabs three">
+									<i class="glyphicon glyphicon-user"></i>
+								</span>
+							</a>
+						</li>
 
 						<li>
 							<a href="#doner" data-toggle="tab" title="completed">
@@ -107,13 +106,57 @@
 								</div>
 							</div>
 						</div>
+
 						<div class="row">
 							<div class="col-xs-12 col-sm-12">
 								<p class="text-center">
-									<a href="" class="btn btn-success btn-outline-rounded green"> Agregar datos<span style="margin-left:10px;" class="glyphicon glyphicon-plus"></span></a>
+									<a href="" class="btn btn-success"> Agregar datos<span style="margin-left:10px;" class="glyphicon glyphicon-plus"></span></a>
 								</p>
 							</div>
 						</div>
+
+						<div class="row">
+							<div class="col-xs-12 col-sm-12">
+								<div class="form-group">
+									<label> Registro de datos de la actividad</label>
+									<div class="bs-example" data-example-id="bordered-table"> 
+										<table class="table display no-wrap table-condensed table-bordered table-min"> 
+											<thead> 
+												<tr class="active"> 
+													<th>#</th> 
+													<th>Programa</th> 
+													<th>Actividad</th> 
+													<th>Tematica</th> 
+													<th>Componente</th> 
+													<th>Eliminar</th> 
+												</tr> 
+												</thead> 
+													<tbody> 
+														<tr> 
+															<th scope="row">1</th> 
+															<td>Mark</td> 
+															<td>Mark</td> 
+															<td>Mark</td> 
+															<td>Otto</td> 
+															<td>
+																<button type="button" class="btn btn-danger btn-xs">eliminar</button>
+															</td> 
+														</tr> 
+														<tr> 
+															<th scope="row">2</th> 
+															<td>Jacob</td> 
+															<td>Jacob</td> 
+															<td>Jacob</td> 
+															<td>Thornton</td> 
+															<td>
+																<button type="button" class="btn btn-danger btn-xs">eliminar</button>
+															</td> 
+														</tr> 
+														</tbody> </table> </div>
+								</div>
+							</div>
+						</div>
+
 					</div>
 
 
@@ -164,6 +207,8 @@
 							</div>
 						</div>
 
+						
+
 						<div class="row">
 							<div class="col-xs-12 col-sm-12">
 								<div class="form-group">
@@ -171,7 +216,7 @@
 									<div class="bs-example" data-example-id="bordered-table"> 
 										<table class="table display no-wrap table-condensed table-bordered table-min"> 
 											<thead> 
-												<tr> 
+												<tr class="active"> 
 													<th>#</th> 
 													<th>Nombres</th> 
 													<th>Apellidos</th> 
@@ -219,18 +264,20 @@
 							</div>
 						</div>
 
-						<p class="text-center">
-							<a href="" class="btn btn-success btn-outline-rounded green"> Agregar programación <span style="margin-left:10px;" class="glyphicon glyphicon-plus"></span></a>
-						</p>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12">
+								<p class="text-center">
+									<a href="" class="btn btn-warning"> Agregar programación <span style="margin-left:10px;" class="glyphicon glyphicon-plus"></span></a>
+								</p>
+							</div>
+						</div>
 
 					</div>
 
-
-
-					<div class="tab-pane fade" id="messages">
-						<h3 class="head text-center">Bootsnipp goodies</h3>
+					<div class="tab-pane fade" id="settings">
+						<h3 class="head text-center">DATOS DEL ESCENARIO</h3>
 						<p class="narrow text-center">
-							Lorem ipsum dolor sit amet, his ea mollis fabellas principes. Quo mazim facilis tincidunt ut, utinam saperet facilisi an vim.
+							Datos del escenario donde se va a realizar la actividad.
 						</p>
 
 						<p class="text-center">
@@ -238,12 +285,10 @@
 						</p>
 					</div>
 
-
-
-					<div class="tab-pane fade" id="settings">
-						<h3 class="head text-center">Drop comments!</h3>
+					<div class="tab-pane fade" id="messages">
+						<h3 class="head text-center">DATOS DE LA COMUNIDAD</h3>
 						<p class="narrow text-center">
-							Lorem ipsum dolor sit amet, his ea mollis fabellas principes. Quo mazim facilis tincidunt ut, utinam saperet facilisi an vim.
+							Registro del tipo de comunidad que va asistir a la actividad.
 						</p>
 
 						<p class="text-center">
@@ -255,7 +300,7 @@
 						<div class="text-center">
 							<i class="img-intro icon-checkmark-circle"></i>
 						</div>
-						<h3 class="head text-center">thanks for staying tuned! <span style="color:#f48260;">♥</span> Bootstrap</h3>
+						<h3 class="head text-center">ASPECTOS A TENER EN CUENTA</h3>
 						<p class="narrow text-center">
 							Lorem ipsum dolor sit amet, his ea mollis fabellas principes. Quo mazim facilis tincidunt ut, utinam saperet facilisi an vim.
 						</p>
