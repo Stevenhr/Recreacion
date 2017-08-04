@@ -72,9 +72,9 @@
 									<label> 1. Programa </label>
 									<select class="form-control" name="unidad_tiempo">
 										<option value="">Seleccionar</option>
-										<option value="0">Dias</option>
-										<option value="1">Meses</option>
-										<option value="2">Años</option>
+										@foreach($programas as $programa)
+											<option value="{{$programa['IdPrograma']}}">{{$programa['Programa']}}</option>	
+										@endforeach
 									</select>
 								</div>
 							</div>
@@ -279,32 +279,148 @@
 						<p class="narrow text-center">
 							Datos del escenario donde se va a realizar la actividad.
 						</p>
-
-						<p class="text-center">
-							<a href="" class="btn btn-success btn-outline-rounded green"> start using bootsnipp <span style="margin-left:10px;" class="glyphicon glyphicon-send"></span></a>
-						</p>
 					</div>
+
 
 					<div class="tab-pane fade" id="messages">
-						<h3 class="head text-center">DATOS DE LA COMUNIDAD</h3>
-						<p class="narrow text-center">
-							Registro del tipo de comunidad que va asistir a la actividad.
-						</p>
+						
+						<div class="row">
+							<div class="col-xs-12 col-sm-12">
+								<h3 class="head text-center">DATOS DE LA COMUNIDAD</h3>
+								<p class="narrow text-center">
+									Registro del tipo de comunidad que va asistir a la actividad.
+								</p>
+							</div>
+						</div>
 
-						<p class="text-center">
-							<a href="" class="btn btn-success btn-outline-rounded green"> start using bootsnipp <span style="margin-left:10px;" class="glyphicon glyphicon-send"></span></a>
-						</p>
+						<div class="row">
+							<div class="col-xs-4 col-sm-4">
+								<div class="form-group">
+									<label> 1. Localidad </label>
+									<select class="form-control" name="unidad_tiempo">
+										<option value="">Seleccionar</option>
+										@foreach($localidades as $localidad)
+											<option value="{{$localidad['Id_Localidad']}}">{{$localidad['Nombre_Localidad']}}</option>	
+										@endforeach
+									</select>
+								</div>
+							</div>
+							<div class="col-xs-4 col-sm-4">
+								<div class="form-group">
+									<label> 2. Upz </label>
+									<select class="form-control" name="unidad_tiempo">
+										<option value="">Seleccionar</option>
+										<option value="0">Dias</option>
+										<option value="1">Meses</option>
+										<option value="2">Años</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-xs-4 col-sm-4">
+								<div class="form-group">
+									<label> 3. Barrio </label>
+									<select class="form-control" name="unidad_tiempo">
+										<option value="">Seleccionar</option>
+										<option value="0">Dias</option>
+										<option value="1">Meses</option>
+										<option value="2">Años</option>
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-xs-4 col-sm-4">
+								<div class="form-group">
+									<label> 4. Institución, Grupo, Comunidad:	</label>
+									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
+								</div>
+							</div>
+
+							<div class="col-xs-4 col-sm-4">
+								<div class="form-group">
+									<label> 5. Características de la Poblacion a beneficiar:	</label>
+									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
+								</div>
+							</div>
+
+							<div class="col-xs-4 col-sm-4">
+								<div class="form-group">
+									<label> 6. Número de Asistentes a Beneficiar:</label>
+									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
+								</div>
+							</div>
+						</div>
+
 					</div>
+
 
 					<div class="tab-pane fade" id="doner">
-						<div class="text-center">
-							<i class="img-intro icon-checkmark-circle"></i>
+						
+						<div class="row">
+							<div class="col-xs-12 col-sm-12">
+								<div class="text-center">
+									<i class="img-intro icon-checkmark-circle"></i>
+								</div>
+								<h3 class="head text-center">ASPECTOS A TENER EN CUENTA</h3>
+							</div>
 						</div>
-						<h3 class="head text-center">ASPECTOS A TENER EN CUENTA</h3>
-						<p class="narrow text-center">
-							Lorem ipsum dolor sit amet, his ea mollis fabellas principes. Quo mazim facilis tincidunt ut, utinam saperet facilisi an vim.
-						</p>
+
+						<div class="row">
+							<div class="col-xs-4 col-sm-4">
+								<div class="form-group">
+									<label> 1. Hora de implementación:	</label>
+									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
+								</div>
+							</div>
+
+							<div class="col-xs-4 col-sm-4">
+								<div class="form-group">
+									<label> 2. Punto de encuentro:	</label>
+									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
+								</div>
+							</div>
+
+							<div class="col-xs-4 col-sm-4">
+								<div class="form-group">
+									<label> 3. Nombre de la persona de contacto:</label>
+									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-xs-4 col-sm-4">
+								<div class="form-group">
+									<label> 4. Rol en la comunidad:	</label>
+									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
+								</div>
+							</div>
+
+							<div class="col-xs-4 col-sm-4">
+								<div class="form-group">
+									<label> 5. Telefono:	</label>
+									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
+								</div>
+							</div>
+
+							<div class="col-xs-4 col-sm-4">
+								<div class="form-group">
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-xs-12 col-sm-12">
+								<p class="text-center">
+									<a href="" class="btn btn-success btn-outline-rounded green"> Registrar actividad <span style="margin-left:10px;" class="glyphicon glyphicon-ok"></span></a>
+								</p>
+							</div>
+						</div>
+
+
 					</div>
+
 
 					<div class="clearfix"></div>
 				</div>
