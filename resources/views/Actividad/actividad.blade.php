@@ -1,9 +1,14 @@
 @extends('master')                              
 
+	@section('script')
+		@parent
+	    <script src="{{ asset('public/Js/Actividad/actividad.js') }}"></script>	
+	@stop
+
 @section('content') 
 
 <div class="container">
-
+		<div class="content" id="main_actividad" class="row" data-url="actividad" ></div>
 		<div class="row">
 			<div class="board">
 				<!-- <h2>Welcome to IGHALO!<sup>™</sup></h2>-->
@@ -70,7 +75,7 @@
 							<div class="col-xs-6 col-sm-6">
 								<div class="form-group">
 									<label> 1. Programa </label>
-									<select class="form-control" name="unidad_tiempo">
+									<select class="form-control" name="programa">
 										<option value="">Seleccionar</option>
 										@foreach($programas as $programa)
 											<option value="{{$programa['IdPrograma']}}">{{$programa['Programa']}}</option>	
@@ -81,7 +86,7 @@
 							<div class="col-xs-6 col-sm-6">
 								<div class="form-group">
 									<label> 2. Actividad </label>
-									<select class="form-control" name="unidad_tiempo">
+									<select class="form-control" name="actividad">
 										<option value="">Seleccionar</option>
 									</select>
 								</div>
@@ -92,7 +97,7 @@
 							<div class="col-xs-6 col-sm-6">
 								<div class="form-group">
 									<label> 3. Temática</label>
-									<select class="form-control" name="unidad_tiempo">
+									<select class="form-control" name="tematica">
 										<option value="">Seleccionar</option>
 									</select>
 								</div>
@@ -100,7 +105,7 @@
 							<div class="col-xs-6 col-sm-6">
 								<div class="form-group">
 									<label> 4. Componente </label>
-									<select class="form-control" name="unidad_tiempo">
+									<select class="form-control" name="componente">
 										<option value="">Seleccionar</option>
 									</select>
 								</div>
@@ -154,6 +159,12 @@
 														</tr> 
 														</tbody> </table> </div>
 								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-xs-12 col-sm-12">
+								<br><br>
 							</div>
 						</div>
 
