@@ -93,7 +93,30 @@ $(function()
         });
     };
 
-    
+    // Agregar datos de la actividad
+    $('#btn_agregar_datos_actividad').on('click', function(e)
+    {
+
+        var programa = $('select[name="programa"]').val();
+        var actividad = $('select[name="actividad"]').val();
+        var mnsj="";
+        if(programa=="" || actividad==""){
+            mnsj="<div class='alert alert-info'>"
+                        +"<strong>Datos Vacios!</strong> El programa o la actividad están vacios."
+                     +"</div>";
+        }else{
+            mnsj="<div class='alert alert-success'>"
+                +"<strong>Datos Agregados!</strong> Se agregaron los datos exitosamente."
+                +"</div>";
+        }
+
+        $('#alerta_datos').html(mnsj);
+        setTimeout(function(){
+            $('#alerta_datos').html("");
+        }, 3000)
+
+        return false;
+    });
     
 
 });

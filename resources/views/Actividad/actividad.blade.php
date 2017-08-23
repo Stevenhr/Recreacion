@@ -115,9 +115,12 @@
 						<div class="row">
 							<div class="col-xs-12 col-sm-12">
 								<p class="text-center">
-									<a href="" class="btn btn-success"> Agregar datos<span style="margin-left:10px;" class="glyphicon glyphicon-plus"></span></a>
+									<a href="" class="btn btn-success" id="btn_agregar_datos_actividad"> Agregar datos<span style="margin-left:10px;" class="glyphicon glyphicon-plus"></span></a>
 								</p>
 							</div>
+						</div>
+
+						<div id="alerta_datos">
 						</div>
 
 						<div class="row">
