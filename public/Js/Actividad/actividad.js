@@ -94,26 +94,69 @@ $(function()
     };
 
     // Agregar datos de la actividad
+    var datos_actividad = [];
     $('#btn_agregar_datos_actividad').on('click', function(e)
     {
 
-        var programa = $('select[name="programa"]').val();
-        var actividad = $('select[name="actividad"]').val();
+
+        var id_programa = $('select[name="programa"]').val();
+        var programa = $('select[name="programa"]').find(':selected').text();
+        var id_actividad = $('select[name="actividad"]').val();
+        var actividad = $('select[name="actividad"]').find(':selected').text();
+        var id_tematica = $('select[name="tematica"]').val();
+        var tematica = $('select[name="tematica"]').find(':selected').text();
+        var id_componente = $('select[name="componente"]').val();
+        var componente = $('select[name="componente"]').find(':selected').text();
         var mnsj="";
-        if(programa=="" || actividad==""){
+
+        if(id_programa=="" || id_actividad=="")
+        {
             mnsj="<div class='alert alert-info'>"
-                        +"<strong>Datos Vacios!</strong> El programa o la actividad están vacios."
-                     +"</div>";
-        }else{
-            mnsj="<div class='alert alert-success'>"
-                +"<strong>Datos Agregados!</strong> Se agregaron los datos exitosamente."
-                +"</div>";
+                  +"<strong>Datos Vacios!</strong> El programa o la actividad están vacios."
+                  +"</div>";
+        }
+        else
+        {
+            var paso=0;
+            if(datos_actividad.length!=0){
+                $.each(datos_actividad, function(i, e) {
+                    if(e['id_programa']==id_programa && e['id_actividad']==id_actividad){
+                        paso=1;
+                    }else{
+                        paso=0;
+
+                        return false;
+                    }
+                });
+            }else{
+                paso=1;
+            }
+
+            if(paso==1) {
+                datos_actividad.push({
+                    "id_programa": id_programa,
+                    "programa": programa,
+                    "id_actividad": id_actividad,
+                    "actividad": actividad,
+                    "id_tematica": id_tematica,
+                    "tematica": tematica,
+                    "id_componente": id_componente,
+                    "componente": componente
+                });
+                mnsj="<div class='alert alert-success'>"
+                    +"<strong>Datos Agregados!</strong> Se agregaron los datos exitosamente."
+                    +"</div>";
+            }else{
+                mnsj="<div class='alert alert-info'>"
+                    +"<strong>Programa o Actividad!</strong> El programa o la actividad son diferentes a los registrados, solo se puede registrar un programa y actividad."
+                    +"</div>";
+            }
         }
 
         $('#alerta_datos').html(mnsj);
         setTimeout(function(){
             $('#alerta_datos').html("");
-        }, 3000)
+        }, 4000)
 
         return false;
     });
