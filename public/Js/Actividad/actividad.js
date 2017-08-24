@@ -24,7 +24,7 @@ $(function()
 
                   var html = '<option value="">Seleccionar actividad</option>';
                   $.each(data, function(i, eee){
-                        html += '<option value="'+eee['IdActividad']+'">'+eee['Actividad'].toLowerCase()+'</option>';
+                        html += '<option value="'+eee['IdActividad']+'">'+eee['Actividad'].toUpperCase()+'</option>';
                   });   
                   $('select[name="actividad"]').html(html).val($('select[name="actividad"]').data('value'));
             }
@@ -56,7 +56,7 @@ $(function()
                   {
                   		if(eee['estado']==1)
                   		{
-	                        html += '<option value="'+eee['IdTematica']+'">'+eee['Tematica'].toLowerCase()+'</option>';
+	                        html += '<option value="'+eee['IdTematica']+'">'+eee['Tematica'].toUpperCase()+'</option>';
 	                    }
                   });   
                   $('select[name="tematica"]').html(html).val($('select[name="tematica"]').data('value'));
@@ -85,7 +85,7 @@ $(function()
                   {
                   		/*if(eee['estado']==1)
                   		{*/
-	                        html += '<option value="'+eee['IdComponente']+'">'+eee['Component'].toLowerCase()+'</option>';
+	                        html += '<option value="'+eee['IdComponente']+'">'+eee['Component'].toUpperCase()+'</option>';
 	                    //}
                   });   
                   $('select[name="componente"]').html(html).val($('select[name="componente"]').data('value'));
@@ -146,6 +146,23 @@ $(function()
                 mnsj="<div class='alert alert-success'>"
                     +"<strong>Datos Agregados!</strong> Se agregaron los datos exitosamente."
                     +"</div>";
+
+                if(datos_actividad.length > 0)
+                {
+                    var num=1;
+                    var html="";
+                    $.each(datos_actividad, function(i, e){
+                        html += '<tr class="warning"><th scope="row" class="text-center">'+num+'</th>'+
+                            '<td>'+e['programa']+'</td>'+
+                            '<td>'+e['actividad']+'</td>'+
+                            '<td>'+e['tematica']+'</td>'+
+                            '<td>'+e['componente']+'</td>'+
+                            '<td class="text-center"><button type="button" data-rel="'+i+'" data-funcion="eliminar" class="eliminar_dato_actividad"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td></tr>';
+                        num++;
+                    });
+                }
+                $('#registros_datos').html(html);
+
             }else{
                 mnsj="<div class='alert alert-info'>"
                     +"<strong>Programa o Actividad!</strong> El programa o la actividad son diferentes a los registrados, solo se puede registrar un programa y actividad."
@@ -156,9 +173,37 @@ $(function()
         $('#alerta_datos').html(mnsj);
         setTimeout(function(){
             $('#alerta_datos').html("");
-        }, 4000)
+        }, 4000);
 
         return false;
+    });
+
+
+    $('#datos_actividad').delegate('button[data-funcion="eliminar"]','click',function (e) {
+        var id = $(this).data('rel');
+        datos_actividad.splice(id, 1);
+
+        $('#alerta_datos').html('<div class="alert alert-dismissible alert-success" ><strong>Exito!</strong> Dato eliminado de la actividad con exito. </div>');
+        setTimeout(function(){
+            $('#alerta_datos').html("");
+        }, 4000);
+
+        if(datos_actividad.length > 0)
+        {
+            var num=1;
+            var html="";
+            $.each(datos_actividad, function(i, e){
+                html += '<tr class="warning"><th scope="row" class="text-center">'+num+'</th>'+
+                    '<td>'+e['programa']+'</td>'+
+                    '<td>'+e['actividad']+'</td>'+
+                    '<td>'+e['tematica']+'</td>'+
+                    '<td>'+e['componente']+'</td>'+
+                    '<td class="text-center"><button type="button" data-rel="'+i+'" data-funcion="eliminar" class="eliminar_dato_actividad"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td></tr>';
+                num++;
+            });
+        }
+        $('#registros_datos').html(html);
+
     });
     
 

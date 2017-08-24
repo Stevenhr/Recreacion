@@ -128,7 +128,7 @@
 								<div class="form-group">
 									<label> Registro de datos de la actividad</label>
 									<div class="bs-example" data-example-id="bordered-table"> 
-										<table class="table display no-wrap table-condensed table-bordered table-min"> 
+										<table class="table display no-wrap table-condensed table-bordered table-min" id="datos_actividad">
 											<thead> 
 												<tr class="active"> 
 													<th>#</th> 
@@ -138,35 +138,20 @@
 													<th>Componente</th> 
 													<th>Eliminar</th> 
 												</tr> 
-												</thead> 
-													<tbody> 
-														<tr> 
-															<th scope="row">1</th> 
-															<td>Mark</td> 
-															<td>Mark</td> 
-															<td>Mark</td> 
-															<td>Otto</td> 
-															<td>
-																<button type="button" class="btn btn-danger btn-xs">eliminar</button>
-															</td> 
-														</tr> 
-														<tr> 
-															<th scope="row">2</th> 
-															<td>Jacob</td> 
-															<td>Jacob</td> 
-															<td>Jacob</td> 
-															<td>Thornton</td> 
-															<td>
-																<button type="button" class="btn btn-danger btn-xs">eliminar</button>
-															</td> 
-														</tr> 
-														</tbody> </table> </div>
+											</thead>
+												<tbody id="registros_datos">
+
+												</tbody>
+										</table>
+									</div>
 								</div>
 							</div>
 						</div>
 
 						<div class="row">
 							<div class="col-xs-12 col-sm-12">
+								<br><br>
+								<center>Registro de datos de la actividad</center>
 								<br><br>
 							</div>
 						</div>
