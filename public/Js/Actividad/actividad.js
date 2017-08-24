@@ -205,6 +205,44 @@ $(function()
         $('#registros_datos').html(html);
 
     });
+
+
+    var latitud = $('input[name="Latitud"]').val() ? parseFloat($('input[name="Latitud"]').val()) : 4.666575;
+    var longitud = $('input[name="Longitud"]').val() ? parseFloat($('input[name="Longitud"]').val()) : -74.125786;
+    var zoom = $('input[name="Id_Punto"]').val() == '0' ? 11 : 13;
+
+
+    function toggleBounce()
+    {
+        if (marker.getAnimation() !== null)
+        {
+            marker.setAnimation(null);
+        } else {
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+        }
+    }
+
+    function actualizarPosicion(e)
+    {
+        $('input[name="Latitud"]').val(e.latLng.lat());
+        $('input[name="Longitud"]').val(e.latLng.lng());
+    }
+
+    var map = new google.maps.Map($("#map").get(0), {
+        center: {lat: latitud, lng: longitud},
+        zoom: zoom
+    });
+
+    var marker = new google.maps.Marker({
+        map: map,
+        draggable: true,
+        animation: google.maps.Animation.DROP,
+        position: {lat: latitud, lng: longitud}
+    });
+
+    marker.addListener('click', toggleBounce);
+
+    marker.addListener('dragend', actualizarPosicion);
     
 
 });

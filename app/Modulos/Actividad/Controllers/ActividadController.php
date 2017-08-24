@@ -18,8 +18,9 @@ class ActividadController extends Controller {
 		$Localidad=Localidad::all();
 		
 		$datos=[
-		"localidades"=>$Localidad,
-		"programas"=>$Programa
+            "localidades"=>$Localidad,
+            "programas"=>$Programa,
+            'punto' => null,
 		];
 		
 		return view('Actividad.actividad',$datos);

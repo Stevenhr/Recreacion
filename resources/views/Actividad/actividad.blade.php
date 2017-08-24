@@ -2,8 +2,12 @@
 
 	@section('script')
 		@parent
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmhb8BVo311Mnvr35sv8VngIvXiiTnKQ4" defer></script>
 	    <script src="{{ asset('public/Js/Actividad/actividad.js') }}"></script>	
 	@stop
+
+
+
 
 @section('content') 
 
@@ -62,7 +66,7 @@
 					
 					<div class="tab-pane fade in active" id="home">
 						<div class="row">
-							<div class="col-xs-12 col-sm-12">
+							<div class="col-md-6 col-xs-12">
 								<h3 class="head text-center">Datos basicos de la actividad</h3>
 								<p class="narrow text-center">
 									Espacio para registrar las actividades basicas de la actvidad.
@@ -72,7 +76,7 @@
 						</div>
 
 						<div class="row">
-							<div class="col-xs-6 col-sm-6">
+							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
 									<label> 1. Programa </label>
 									<select class="form-control" name="programa">
@@ -83,7 +87,7 @@
 									</select>
 								</div>
 							</div>
-							<div class="col-xs-6 col-sm-6">
+							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
 									<label> 2. Actividad </label>
 									<select class="form-control" name="actividad">
@@ -94,7 +98,7 @@
 						</div>
 
 			            <div class="row">
-							<div class="col-xs-6 col-sm-6">
+							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
 									<label> 3. Temática</label>
 									<select class="form-control" name="tematica">
@@ -102,7 +106,7 @@
 									</select>
 								</div>
 							</div>
-							<div class="col-xs-6 col-sm-6">
+							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
 									<label> 4. Componente </label>
 									<select class="form-control" name="componente">
@@ -113,7 +117,7 @@
 						</div>
 
 						<div class="row">
-							<div class="col-xs-12 col-sm-12">
+							<div class="col-xs-12 col-sm-12 col-xs-12">
 								<p class="text-center">
 									<a href="" class="btn btn-success" id="btn_agregar_datos_actividad"> Agregar datos<span style="margin-left:10px;" class="glyphicon glyphicon-plus"></span></a>
 								</p>
@@ -124,7 +128,7 @@
 						</div>
 
 						<div class="row">
-							<div class="col-xs-12 col-sm-12">
+							<div class="col-xs-12 col-sm-12 col-xs-12">
 								<div class="form-group">
 									<label> Registro de datos de la actividad</label>
 									<div class="bs-example" data-example-id="bordered-table"> 
@@ -149,7 +153,7 @@
 						</div>
 
 						<div class="row">
-							<div class="col-xs-12 col-sm-12">
+							<div class="col-xs-12 col-sm-12 col-xs-12">
 								<br><br>
 								<center>Registro de datos de la actividad</center>
 								<br><br>
@@ -163,7 +167,7 @@
 					<div class="tab-pane fade" id="profile">
 						
 						<div class="row">
-							<div class="col-xs-12 col-sm-12">
+							<div class="col-xs-12 col-sm-12 col-xs-12">
 								<h3 class="head text-center">Programación y asignación de la actividad</h3>
 								<p class="narrow text-center">
 									Espacio para registrar la programación y asignación de la activadad, se puede agregar varias actividades que coincidan con los mismos datos en los diferentes ítem
@@ -173,13 +177,13 @@
 						</div>
 
 						<div class="row">
-							<div class="col-xs-6 col-sm-6">
+							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
 									<label> 1. Fecha de ejecución</label>
 									<input type="date" class="form-control" name="fecha_inicio"  data-role1="datepicker" placeholder="aa/mm/dd" autocomplete="off" >
 								</div>
 							</div>
-							<div class="col-xs-6 col-sm-6">
+							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
 									<label> 2. Responsable </label>
 									<select class="form-control" name="unidad_tiempo">
@@ -192,13 +196,13 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-xs-6 col-sm-6">
+							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
 									<label> 3. Horario inicio</label>
 									<input type="time" class="form-control" name="fecha_suscripcion"  data-role1="datepicker" autocomplete="off">
 								</div>
 							</div>
-							<div class="col-xs-6 col-sm-6">
+							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
 									<label> 4. Horario fin</label>
 									<input type="time" class="form-control" name="fecha_suscripcion" autocomplete="off">
@@ -274,7 +278,71 @@
 					</div>
 
 					<div class="tab-pane fade" id="settings">
-						<h3 class="head text-center">DATOS DEL ESCENARIO</h3>
+
+						<div class="col-xs-12 col-md-12">
+							<h3 class="head text-center">DATOS DEL ESCENARIO</h3>
+						</div>
+
+						<div class="col-xs-12 col-md-6">
+							<div class="row">
+								<fieldset>
+									<div class="col-xs-12">
+										<input type="hidden" name="Latitud" value="{{ $punto ? $punto['Latitud'] : 4.666575 }}">
+										<input type="hidden" name="Longitud" value="{{ $punto ? $punto['Longitud'] : -74.125786 }}">
+										<input type="hidden" name="Id_Punto" value="{{ $punto ? $punto['Id_Punto'] : 0 }}">
+										<div class="form-group">
+											<label class="control-label" for="Direccion">Dirección</label>
+											<input type="text" name="Direccion" class="form-control" value="">
+										</div>
+									</div>
+									<div class="col-xs-12">
+										<div class="form-group">
+											<label class="control-label" for="Escenario">Escenario</label>
+											<input type="text" name="Escenario" class="form-control" value="">
+										</div>
+									</div>
+									<div class="col-md-6 col-xs-12">
+										<div class="form-group">
+											<label class="control-label" for="Cod_IDRD">Cod. IDRD</label>
+											<input type="text" name="Cod_IDRD" class="form-control" value="">
+										</div>
+									</div>
+									<div class="col-md-6 col-xs-12">
+										<div class="form-group">
+										</div>
+									</div>
+									<div class="col-xs-12"><hr></div>
+									<div class="col-xs-12 col-md-4">
+										<div class="form-group">
+											<label class="control-label" for="Id_Localidad">Localidad </label>
+											<select name="Id_Localidad" id="" class="form-control" data-value="" title="Seleccionar">
+
+											</select>
+										</div>
+									</div>
+									<div class="col-xs-12 col-md-4">
+										<div class="form-group">
+											<label class="control-label" for="Id_Upz">Upz</label>
+											<select name="Id_Upz" id="" class="form-control" data-json="" data-value="" title="Seleccionar">
+											</select>
+										</div>
+									</div>
+									<div class="col-xs-12 col-md-4">
+										<div class="form-group">
+											<label class="control-label" for="Id_Upz">Barrio</label>
+											<select name="Id_Upz" id="" class="form-control" data-json="" data-value="" title="Seleccionar">
+											</select>
+										</div>
+									</div>
+								</fieldset>
+							</div>
+						</div>
+						<div class="col-xs-12 col-md-6">
+							<div class="form-group ">
+								<label class="control-label" for="">Ubicación</label>
+								<div id="map"></div>
+							</div>
+						</div>
 						<p class="narrow text-center">
 							Datos del escenario donde se va a realizar la actividad.
 						</p>
@@ -293,7 +361,7 @@
 						</div>
 
 						<div class="row">
-							<div class="col-xs-4 col-sm-4">
+							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
 									<label> 1. Localidad </label>
 									<select class="form-control" name="unidad_tiempo">
@@ -304,7 +372,7 @@
 									</select>
 								</div>
 							</div>
-							<div class="col-xs-4 col-sm-4">
+							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
 									<label> 2. Upz </label>
 									<select class="form-control" name="unidad_tiempo">
@@ -315,7 +383,7 @@
 									</select>
 								</div>
 							</div>
-							<div class="col-xs-4 col-sm-4">
+							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
 									<label> 3. Barrio </label>
 									<select class="form-control" name="unidad_tiempo">
@@ -329,21 +397,21 @@
 						</div>
 
 						<div class="row">
-							<div class="col-xs-4 col-sm-4">
+							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
 									<label> 4. Institución, Grupo, Comunidad:	</label>
 									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
 								</div>
 							</div>
 
-							<div class="col-xs-4 col-sm-4">
+							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
 									<label> 5. Características de la Poblacion a beneficiar:	</label>
 									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
 								</div>
 							</div>
 
-							<div class="col-xs-4 col-sm-4">
+							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
 									<label> 6. Número de Asistentes a Beneficiar:</label>
 									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
@@ -366,21 +434,21 @@
 						</div>
 
 						<div class="row">
-							<div class="col-xs-4 col-sm-4">
+							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
 									<label> 1. Hora de implementación:	</label>
 									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
 								</div>
 							</div>
 
-							<div class="col-xs-4 col-sm-4">
+							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
 									<label> 2. Punto de encuentro:	</label>
 									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
 								</div>
 							</div>
 
-							<div class="col-xs-4 col-sm-4">
+							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
 									<label> 3. Nombre de la persona de contacto:</label>
 									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
@@ -389,21 +457,21 @@
 						</div>
 
 						<div class="row">
-							<div class="col-xs-4 col-sm-4">
+							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
 									<label> 4. Rol en la comunidad:	</label>
 									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
 								</div>
 							</div>
 
-							<div class="col-xs-4 col-sm-4">
+							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
 									<label> 5. Telefono:	</label>
 									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
 								</div>
 							</div>
 
-							<div class="col-xs-4 col-sm-4">
+							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
 								</div>
 							</div>
