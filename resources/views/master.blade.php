@@ -107,7 +107,7 @@
               </div>
               <div class="col-lg-4 col-md-5 col-sm-6">
                  <div align="right"> 
-                    <img src="public/Img/IDRD.JPG" width="50%" heigth="40%"/>
+                    <img src="" width="50%" heigth="40%"/>
                  </div>                    
               </div>
             </div>

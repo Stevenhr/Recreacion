@@ -156,7 +156,8 @@
 							<div class="col-xs-12 col-sm-12 col-xs-12">
 								<br><br>
 								<center>Registro de datos de la actividad</center>
-								<br><br>
+								<br>
+								<hr><br><br>
 							</div>
 						</div>
 
@@ -275,6 +276,15 @@
 							</div>
 						</div>
 
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-xs-12">
+								<br><br>
+								<center>Programación y asignación de la actividad.</center>
+								<br>
+								<hr><br><br>
+							</div>
+						</div>
+
 					</div>
 
 					<div class="tab-pane fade" id="settings">
@@ -287,9 +297,7 @@
 							<div class="row">
 								<fieldset>
 									<div class="col-xs-12">
-										<input type="hidden" name="Latitud" value="{{ $punto ? $punto['Latitud'] : 4.666575 }}">
-										<input type="hidden" name="Longitud" value="{{ $punto ? $punto['Longitud'] : -74.125786 }}">
-										<input type="hidden" name="Id_Punto" value="{{ $punto ? $punto['Id_Punto'] : 0 }}">
+
 										<div class="form-group">
 											<label class="control-label" for="Direccion">Dirección</label>
 											<input type="text" name="Direccion" class="form-control" value="">
@@ -343,9 +351,18 @@
 								<div id="map"></div>
 							</div>
 						</div>
-						<p class="narrow text-center">
-							Datos del escenario donde se va a realizar la actividad.
-						</p>
+
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-xs-12">
+								<br><br>
+								<center>Datos del escenario donde se va a realizar la actividad.</center>
+								<br>
+								<hr><br><br>
+								<input type="hidden" name="Latitud" value="{{ $punto ? $punto['Latitud'] :  59.327 }}">
+								<input type="hidden" name="Longitud" value="{{ $punto ? $punto['Longitud'] : 18.067  }}">
+								<input type="hidden" name="Id_Punto" value="{{ $punto ? $punto['Id_Punto'] : 0 }}">
+							</div>
+						</div>
 					</div>
 
 
@@ -419,6 +436,16 @@
 							</div>
 						</div>
 
+
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-xs-12">
+								<br><br>
+								<center>Registro del tipo de comunidad que va asistir a la actividad.</center>
+								<br>
+								<hr><br><br>
+							</div>
+						</div>
+
 					</div>
 
 
@@ -485,6 +512,14 @@
 							</div>
 						</div>
 
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-xs-12">
+								<br><br>
+								<center>Aspectos a tener en cuenta.</center>
+								<br>
+								<hr><br><br>
+							</div>
+						</div>
 
 					</div>
 

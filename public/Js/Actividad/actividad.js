@@ -207,8 +207,8 @@ $(function()
     });
 
 
-    var latitud = $('input[name="Latitud"]').val() ? parseFloat($('input[name="Latitud"]').val()) : 4.666575;
-    var longitud = $('input[name="Longitud"]').val() ? parseFloat($('input[name="Longitud"]').val()) : -74.125786;
+    var latitud = $('input[name="Latitud"]').val() ? parseFloat($('input[name="Latitud"]').val()) : 59.327;
+    var longitud = $('input[name="Longitud"]').val() ? parseFloat($('input[name="Longitud"]').val()) : 18.067;
     var zoom = $('input[name="Id_Punto"]').val() == '0' ? 11 : 13;
 
 
@@ -227,10 +227,11 @@ $(function()
         $('input[name="Latitud"]').val(e.latLng.lat());
         $('input[name="Longitud"]').val(e.latLng.lng());
     }
+    
 
     var map = new google.maps.Map($("#map").get(0), {
         center: {lat: latitud, lng: longitud},
-        zoom: zoom
+        zoom: 13
     });
 
     var marker = new google.maps.Marker({
@@ -241,8 +242,5 @@ $(function()
     });
 
     marker.addListener('click', toggleBounce);
-
-    marker.addListener('dragend', actualizarPosicion);
-    
 
 });
