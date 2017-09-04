@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class ActividadRecreativa extends Model
 {
     //
-    protected $table = 'Actividad';
-	protected $primaryKey = 'IdActividad';
-	protected $fillable = ['IdPrograma','Actividad'];
+    protected $table = 'actividades';
+	protected $primaryKey = 'idActividad';
+	protected $fillable = ['idPrograma','actividad','estado'];
 	protected $connection = ''; 
 	public $timestamps = false;
 

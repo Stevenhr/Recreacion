@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Programa extends Model
 {
     //
-    protected $table = 'Programa';
-	protected $primaryKey = 'IdPrograma';
-	protected $fillable = ['Programa','Descripcion'];
+    protected $table = 'programas';
+	protected $primaryKey = 'idPrograma';
+	protected $fillable = ['programa','descripcion'];
 	protected $connection = ''; 
 	public $timestamps = true;
 

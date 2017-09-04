@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Componente extends Model
 {
     //
-    protected $table = 'Componenete';
-	protected $primaryKey = 'IdComponente';
-	protected $fillable = ['IdTematica','Component'];
+    protected $table = 'componentes';
+	protected $primaryKey = 'idComponente';
+	protected $fillable = ['idTematica','componente','estado'];
 	protected $connection = ''; 
 	public $timestamps = true;
 
