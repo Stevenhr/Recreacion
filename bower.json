@@ -1,9 +1,9 @@
 {
-  "name": "ModuloRecreovia",
+  "name": "recreacion",
   "description": "",
   "main": "",
   "license": "MIT",
-  "homepage": "https://github.com/hjonac/ModuloRecreovia",
+  "homepage": "https://github.com/hjonac/recreacion",
   "ignore": [
     "**/.*",
     "node_modules",
