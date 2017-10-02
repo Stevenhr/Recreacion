@@ -4,6 +4,7 @@ namespace App\Modulos\Actividad\Controllers;
 
 use Illuminate\Http\Request;
 use App\Localidad;
+use App\Modulos\Parques\Upz;
 use App\Modulos\ActividadRecreativa\ActividadRecreativa;
 use App\Modulos\Programa\Programa;
 use App\Modulos\Componente\Componente;
@@ -42,6 +43,12 @@ class ActividadController extends Controller {
 	{
 		$componente = Componente::where('IdTematica',$id)->get();
 		return response()->json($componente);
+	}
+
+	public function select_upz(Request $request, $id)
+	{
+		$upzs = Upz::where('IdLocalidad',$id)->get();
+		return response()->json($upzs);
 	}
 
 }

@@ -93,6 +93,94 @@ $(function()
         });
     };
 
+
+    //Carga de las Upzs
+    $('select[name="Id_Localidad"]').on('change', function(e)
+    {
+        selecionar_upz($(this).val());
+    });
+
+    var selecionar_upz = function(id)
+    { 
+        $('select[name="Id_Upz"]').html('<option value="">Cargando...</option>');
+        $.ajax({
+            url: URL+'/select_upz/'+id,
+            data: {},
+            dataType: 'json',
+            success: function(data)
+            {
+                var html = '<option value="">Seleccionar</option>'; 
+                $('select[name="Id_Barrio"]').html(html).val($('select[name="Id_Barrio"]').data('value'));
+
+                  var html = '<option value="">Seleccionar tematica</option>';
+                  $.each(data, function(i, eee)
+                  {
+                        if(eee['estado']==1)
+                        {
+                            html += '<option value="'+eee['cod_upz']+'">'+eee['Upz'].toUpperCase()+'</option>';
+                        }
+                  });   
+                  $('select[name="Id_Upz"]').html(html).val($('select[name="Id_Upz"]').data('value'));
+            }
+        });
+    };
+
+
+    //Carga de las Upzs comunidad
+    $('select[name="localidad_comunidad"]').on('change', function(e)
+    {
+        selecionar_upz_comunidad($(this).val());
+    });
+
+    var selecionar_upz_comunidad = function(id)
+    { 
+        $('select[name="Id_Upz_Comunidad"]').html('<option value="">Cargando...</option>');
+        $.ajax({
+            url: URL+'/select_upz/'+id,
+            data: {},
+            dataType: 'json',
+            success: function(data)
+            {
+                var html = '<option value="">Seleccionar</option>'; 
+                $('select[name="Id_Barrio_Comunidad"]').html(html).val($('select[name="Id_Barrio_Comunidad"]').data('value'));
+
+                  var html = '<option value="">Seleccionar</option>';
+                  $.each(data, function(i, eee)
+                  {
+                            html += '<option value="'+eee['Id_Upz']+'">'+eee['Upz'].toUpperCase()+'</option>';
+                  });   
+                  $('select[name="Id_Upz_Comunidad"]').html(html).val($('select[name="Id_Upz_Comunidad"]').data('value'));
+            }
+        });
+    };
+
+    $('select[name="Id_Upz_Comunidad"]').on('change', function(e)
+    {
+        selecionar_upz_comunidad($(this).val());
+    });
+
+    var selecionar_upz_comunidad = function(id)
+    { 
+        $('select[name="Id_Upz_Comunidad"]').html('<option value="">Cargando...</option>');
+        $.ajax({
+            url: URL+'/select_upz/'+id,
+            data: {},
+            dataType: 'json',
+            success: function(data)
+            {
+                var html = '<option value="">Seleccionar</option>'; 
+                $('select[name="Id_Barrio_Comunidad"]').html(html).val($('select[name="Id_Barrio_Comunidad"]').data('value'));
+
+                  var html = '<option value="">Seleccionar</option>';
+                  $.each(data, function(i, eee)
+                  {
+                            html += '<option value="'+eee['Id_Upz']+'">'+eee['Upz'].toUpperCase()+'</option>';
+                  });   
+                  $('select[name="Id_Upz_Comunidad"]').html(html).val($('select[name="Id_Upz_Comunidad"]').data('value'));
+            }
+        });
+    };
+
     // Agregar datos de la actividad
     var datos_actividad = [];
     $('#btn_agregar_datos_actividad').on('click', function(e)

@@ -66,6 +66,11 @@ Route::group(['prefix' => 'actividad', 'middleware' => 'auth'], function()
         'as' => 'selecionar_componente'
     ]);
 
+    Route::get('actividad/select_upz/{id}',[
+        'uses' => $controller.'ActividadController@select_upz',
+        'as' => 'selecionar_upz'
+    ]);
+
 });
 
 
