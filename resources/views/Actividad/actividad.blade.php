@@ -12,7 +12,7 @@
 @section('content') 
 
 <div class="container">
-		<div class="content" id="main_actividad" class="row" data-url="actividad" ></div>
+		<div class="content" id="main_actividad" class="row" data-url="{{ url('actividad') }}" ></div>
 		<div class="row">
 			<div class="board">
 				<!-- <h2>Welcome to IGHALO!<sup>™</sup></h2>-->
@@ -25,6 +25,15 @@
 								<span class="round-tabs one">
 									<i class="glyphicon glyphicon-th"></i>
 								</span> 
+							</a>
+						</li>
+
+
+						<li>
+							<a href="#datos_comunidad" data-toggle="tab" title="bootsnipp goodies">
+								<span class="round-tabs three">
+									<i class="glyphicon glyphicon-user"></i>
+								</span>
 							</a>
 						</li>
 
@@ -44,13 +53,6 @@
 							</a>
 						</li>
 
-						<li>
-							<a href="#messages" data-toggle="tab" title="bootsnipp goodies">
-								<span class="round-tabs three">
-									<i class="glyphicon glyphicon-user"></i>
-								</span>
-							</a>
-						</li>
 
 						<li>
 							<a href="#doner" data-toggle="tab" title="completed">
@@ -66,7 +68,7 @@
 					
 					<div class="tab-pane fade in active" id="home">
 						<div class="row">
-							<div class="col-md-6 col-xs-12">
+							<div class="col-md-12 col-xs-12">
 								<h3 class="head text-center">Datos basicos de la actividad</h3>
 								<p class="narrow text-center">
 									Espacio para registrar las actividades basicas de la actvidad.
@@ -82,7 +84,7 @@
 									<select class="form-control" name="programa">
 										<option value="">Seleccionar</option>
 										@foreach($programas as $programa)
-											<option value="{{$programa['IdPrograma']}}">{{$programa['Programa']}}</option>	
+											<option value="{{$programa['idPrograma']}}">{{strtoupper($programa['programa'])}}</option>	
 										@endforeach
 									</select>
 								</div>
@@ -162,6 +164,85 @@
 						</div>
 
 					</div>
+
+
+
+					<div class="tab-pane fade" id="datos_comunidad">
+						
+						<div class="row">
+							<div class="col-xs-12 col-sm-12">
+								<h3 class="head text-center">DATOS DE LA COMUNIDAD</h3>
+								<p class="narrow text-center">
+									Registro del tipo de comunidad que va asistir a la actividad.
+								</p>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6 col-xs-12">
+								<div class="form-group">
+									<label> 1. Localidad </label>
+									<select class="form-control" name="localidad_comunidad" id="localidad_comunidad">
+										<option value="">Seleccionar</option>
+										@foreach($localidades as $localidad)
+											<option value="{{$localidad['Id_Localidad']}}">{{$localidad['Nombre_Localidad']}}</option>	
+										@endforeach
+									</select>
+								</div>
+							</div>
+							<div class="col-md-6 col-xs-12">
+								<div class="form-group">
+									<label> 2. Upz </label>
+									<select class="form-control" name="Id_Upz_Comunidad" id="Id_Upz_Comunidad">
+										<option value="">Seleccionar</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-6 col-xs-12">
+								<div class="form-group">
+									<label> 3. Barrio </label>
+									<select class="form-control" name="Id_Barrio_Comunidad" id="Id_Barrio_Comunidad">
+										<option value="">Seleccionar</option>
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6 col-xs-12">
+								<div class="form-group">
+									<label> 4. Institución, Grupo, Comunidad:	</label>
+									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
+								</div>
+							</div>
+
+							<div class="col-md-6 col-xs-12">
+								<div class="form-group">
+									<label> 5. Características de la Poblacion a beneficiar:	</label>
+									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
+								</div>
+							</div>
+
+							<div class="col-md-6 col-xs-12">
+								<div class="form-group">
+									<label> 6. Número de Asistentes a Beneficiar:</label>
+									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
+								</div>
+							</div>
+						</div>
+
+
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-xs-12">
+								<br><br>
+								<center>Registro del tipo de comunidad que va asistir a la actividad.</center>
+								<br>
+								<hr><br><br>
+							</div>
+						</div>
+
+					</div>
+
 
 
 
@@ -366,82 +447,7 @@
 					</div>
 
 
-					<div class="tab-pane fade" id="messages">
-						
-						<div class="row">
-							<div class="col-xs-12 col-sm-12">
-								<h3 class="head text-center">DATOS DE LA COMUNIDAD</h3>
-								<p class="narrow text-center">
-									Registro del tipo de comunidad que va asistir a la actividad.
-								</p>
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="col-md-6 col-xs-12">
-								<div class="form-group">
-									<label> 1. Localidad </label>
-									<select class="form-control" name="localidad_comunidad" id="localidad_comunidad">
-										<option value="">Seleccionar</option>
-										@foreach($localidades as $localidad)
-											<option value="{{$localidad['Id_Localidad']}}">{{$localidad['Nombre_Localidad']}}</option>	
-										@endforeach
-									</select>
-								</div>
-							</div>
-							<div class="col-md-6 col-xs-12">
-								<div class="form-group">
-									<label> 2. Upz </label>
-									<select class="form-control" name="Id_Upz_Comunidad" id="Id_Upz_Comunidad">
-										<option value="">Seleccionar</option>
-									</select>
-								</div>
-							</div>
-							<div class="col-md-6 col-xs-12">
-								<div class="form-group">
-									<label> 3. Barrio </label>
-									<select class="form-control" name="Id_Barrio_Comunidad" id="Id_Barrio_Comunidad">
-										<option value="">Seleccionar</option>
-									</select>
-								</div>
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="col-md-6 col-xs-12">
-								<div class="form-group">
-									<label> 4. Institución, Grupo, Comunidad:	</label>
-									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
-								</div>
-							</div>
-
-							<div class="col-md-6 col-xs-12">
-								<div class="form-group">
-									<label> 5. Características de la Poblacion a beneficiar:	</label>
-									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
-								</div>
-							</div>
-
-							<div class="col-md-6 col-xs-12">
-								<div class="form-group">
-									<label> 6. Número de Asistentes a Beneficiar:</label>
-									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
-								</div>
-							</div>
-						</div>
-
-
-						<div class="row">
-							<div class="col-xs-12 col-sm-12 col-xs-12">
-								<br><br>
-								<center>Registro del tipo de comunidad que va asistir a la actividad.</center>
-								<br>
-								<hr><br><br>
-							</div>
-						</div>
-
-					</div>
-
+					
 
 					<div class="tab-pane fade" id="doner">
 						

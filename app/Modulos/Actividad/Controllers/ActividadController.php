@@ -5,6 +5,7 @@ namespace App\Modulos\Actividad\Controllers;
 use Illuminate\Http\Request;
 use App\Localidad;
 use App\Modulos\Parques\Upz;
+use App\Modulos\Parques\Barrio;
 use App\Modulos\ActividadRecreativa\ActividadRecreativa;
 use App\Modulos\Programa\Programa;
 use App\Modulos\Componente\Componente;
@@ -48,6 +49,12 @@ class ActividadController extends Controller {
 	public function select_upz(Request $request, $id)
 	{
 		$upzs = Upz::where('IdLocalidad',$id)->get();
+		return response()->json($upzs);
+	}
+
+	public function select_barrio(Request $request, $id)
+	{
+		$upzs = Barrio::where('CodUpz',$id)->get();
 		return response()->json($upzs);
 	}
 

@@ -51,24 +51,29 @@ Route::group(['prefix' => 'actividad', 'middleware' => 'auth'], function()
         'as' => 'proceso_actividad'
     ]);
 
-    Route::get('actividad/select_actividad/{id}',[
+    Route::get('select_actividad/{id}',[
         'uses' => $controller.'ActividadController@select_actividad',
         'as' => 'selecionar_actividad'
     ]);
 
-    Route::get('actividad/select_tematica/{id}',[
+    Route::get('select_tematica/{id}',[
         'uses' => $controller.'ActividadController@select_tematica',
         'as' => 'selecionar_tematica'
     ]);
 
-    Route::get('actividad/select_componente/{id}',[
+    Route::get('select_componente/{id}',[
         'uses' => $controller.'ActividadController@select_componente',
         'as' => 'selecionar_componente'
     ]);
 
-    Route::get('actividad/select_upz/{id}',[
+    Route::get('select_upz/{id}',[
         'uses' => $controller.'ActividadController@select_upz',
         'as' => 'selecionar_upz'
+    ]);
+
+    Route::get('select_barrio/{id}',[
+        'uses' => $controller.'ActividadController@select_barrio',
+        'as' => 'selecionar_barrio'
     ]);
 
 });

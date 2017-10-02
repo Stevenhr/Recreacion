@@ -11,20 +11,24 @@ $(function()
     var selecionar_actividad = function(id)
     { 
     	$('select[name="actividad"]').html('<option value="">Cargando...</option>');
+
+        var html = '<option value="">Seleccionar</option>'; 
+        $('select[name="tematica"]').html(html);
+        $('select[name="componente"]').html(html);
         $.ajax({
             url: URL+'/select_actividad/'+id,
             data: {},
             dataType: 'json',
             success: function(data)
             {
-                
+            
                 var html = '<option value="">Seleccionar</option>'; 
                 $('select[name="tematica"]').html(html).val($('select[name="tematica"]').data('value'));
                 $('select[name="componente"]').html(html).val($('select[name="componente"]').data('value'));
 
                   var html = '<option value="">Seleccionar actividad</option>';
                   $.each(data, function(i, eee){
-                        html += '<option value="'+eee['IdActividad']+'">'+eee['Actividad'].toUpperCase()+'</option>';
+                        html += '<option value="'+eee['idActividad']+'">'+eee['actividad'].toUpperCase()+'</option>';
                   });   
                   $('select[name="actividad"]').html(html).val($('select[name="actividad"]').data('value'));
             }
@@ -42,6 +46,8 @@ $(function()
     var selecionar_tematica = function(id)
     { 
     	$('select[name="tematica"]').html('<option value="">Cargando...</option>');
+        var html = '<option value="">Seleccionar</option>'; 
+        $('select[name="componente"]').html(html);
         $.ajax({
             url: URL+'/select_tematica/'+id,
             data: {},
@@ -56,7 +62,7 @@ $(function()
                   {
                   		if(eee['estado']==1)
                   		{
-	                        html += '<option value="'+eee['IdTematica']+'">'+eee['Tematica'].toUpperCase()+'</option>';
+	                        html += '<option value="'+eee['idTematica']+'">'+eee['tematica'].toUpperCase()+'</option>';
 	                    }
                   });   
                   $('select[name="tematica"]').html(html).val($('select[name="tematica"]').data('value'));
@@ -85,7 +91,7 @@ $(function()
                   {
                   		/*if(eee['estado']==1)
                   		{*/
-	                        html += '<option value="'+eee['IdComponente']+'">'+eee['Component'].toUpperCase()+'</option>';
+	                        html += '<option value="'+eee['idComponente']+'">'+eee['componente'].toUpperCase()+'</option>';
 	                    //}
                   });   
                   $('select[name="componente"]').html(html).val($('select[name="componente"]').data('value'));
@@ -156,10 +162,10 @@ $(function()
 
     $('select[name="Id_Upz_Comunidad"]').on('change', function(e)
     {
-        selecionar_upz_comunidad($(this).val());
+        selecionar_barrios_comunidad($(this).val());
     });
 
-    var selecionar_upz_comunidad = function(id)
+    var selecionar_barrios_comunidad = function(id)
     { 
         $('select[name="Id_Upz_Comunidad"]').html('<option value="">Cargando...</option>');
         $.ajax({
@@ -197,10 +203,10 @@ $(function()
         var componente = $('select[name="componente"]').find(':selected').text();
         var mnsj="";
 
-        if(id_programa=="" || id_actividad=="")
+        if(id_programa=="" || id_actividad=="" || id_tematica=="" || id_componente=="")
         {
             mnsj="<div class='alert alert-info'>"
-                  +"<strong>Datos Vacios!</strong> El programa o la actividad están vacios."
+                  +"<strong>Datos Vacios!</strong> Algunos datos están vacios."
                   +"</div>";
         }
         else
@@ -208,11 +214,13 @@ $(function()
             var paso=0;
             if(datos_actividad.length!=0){
                 $.each(datos_actividad, function(i, e) {
-                    if(e['id_programa']==id_programa && e['id_actividad']==id_actividad){
+                    if(e['id_programa']==id_programa && e['id_actividad']==id_actividad && e['id_tematica']==id_tematica && e['id_componente']==id_componente){
+                        paso=2;
+                        return false;
+                    }else if(e['id_programa']==id_programa && e['id_actividad']==id_actividad ){
                         paso=1;
                     }else{
                         paso=0;
-
                         return false;
                     }
                 });
@@ -251,6 +259,10 @@ $(function()
                 }
                 $('#registros_datos').html(html);
 
+            }else if(paso==2){
+                mnsj="<div class='alert alert-info'>"
+                    +"<strong>Registro Repetidos!</strong>Los datos ya fueron registrados."
+                    +"</div>";
             }else{
                 mnsj="<div class='alert alert-info'>"
                     +"<strong>Programa o Actividad!</strong> El programa o la actividad son diferentes a los registrados, solo se puede registrar un programa y actividad."
