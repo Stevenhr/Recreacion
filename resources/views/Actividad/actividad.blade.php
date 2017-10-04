@@ -212,21 +212,21 @@
 							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
 									<label> 4. Institución, Grupo, Comunidad:	</label>
-									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
+									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
 								</div>
 							</div>
 
 							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
 									<label> 5. Características de la Poblacion a beneficiar:	</label>
-									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
+									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
 								</div>
 							</div>
 
 							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
 									<label> 6. Número de Asistentes a Beneficiar:</label>
-									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
+									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off" onKeyPress="return soloNumeros( event )">
 								</div>
 							</div>
 						</div>
@@ -262,13 +262,13 @@
 							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
 									<label> 1. Fecha de ejecución</label>
-									<input type="date" class="form-control" name="fecha_inicio"  data-role1="datepicker" placeholder="aa/mm/dd" autocomplete="off" >
+									<input type="date" class="form-control" name="fecha_ejecucion" id="fecha_ejecucion"  data-role1="datepicker" placeholder="aa/mm/dd" autocomplete="off" >
 								</div>
 							</div>
 							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
 									<label> 2. Responsable </label>
-									<select class="form-control" name="unidad_tiempo">
+									<select class="form-control" name="responsable">
 										<option value="">Seleccionar</option>
 										<option value="0">Dias</option>
 										<option value="1">Meses</option>
@@ -280,15 +280,28 @@
 						<div class="row">
 							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
-									<label> 3. Horario inicio</label>
-									<input type="time" class="form-control" name="fecha_suscripcion"  data-role1="datepicker" autocomplete="off">
+									<label> 3. Hora inicio</label>
+									<input type="time" class="form-control" name="hora_inicio"  data-role1="datepicker" autocomplete="off">
 								</div>
 							</div>
 							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
-									<label> 4. Horario fin</label>
-									<input type="time" class="form-control" name="fecha_suscripcion" autocomplete="off">
+									<label> 4. Hora fin</label>
+									<input type="time" class="form-control" name="hora_fin" autocomplete="off">
 								</div>
+							</div>
+						</div>
+
+
+
+						<div class="row">
+							<div class="col-md-12 col-xs-12">
+								<div class="form-group">
+									<p class="text-center">
+										<a href="" class="btn btn-warning" id="btn_agregar_validar_disponiblidad"> Buscar Acompañantes disponibles <span style="margin-left:10px;" class="glyphicon glyphicon-plus"></span></a>
+									</p>
+								</div>
+								<div id="alerta_datos_acompanantes"></div>
 							</div>
 						</div>
 

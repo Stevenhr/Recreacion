@@ -1,6 +1,13 @@
 $(function()
 {
 	var URL = $('#main_actividad').data('url');
+
+    $("#fecha_ejecucion").datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: 'yy-mm-dd',
+      yearRange: '-100:+0'
+    });
     
 	//Carga de las actividades 
     $('select[name="programa"]').on('change', function(e)
@@ -153,7 +160,7 @@ $(function()
                   var html = '<option value="">Seleccionar</option>';
                   $.each(data, function(i, eee)
                   {
-                            html += '<option value="'+eee['Id_Upz']+'">'+eee['Upz'].toUpperCase()+'</option>';
+                            html += '<option value="'+eee['Id_Upz']+'" data-othervalue="'+eee['cod_upz']+'">'+eee['Upz'].toUpperCase()+'</option>';
                   });   
                   $('select[name="Id_Upz_Comunidad"]').html(html).val($('select[name="Id_Upz_Comunidad"]').data('value'));
             }
@@ -162,14 +169,16 @@ $(function()
 
     $('select[name="Id_Upz_Comunidad"]').on('change', function(e)
     {
-        selecionar_barrios_comunidad($(this).val());
+        var otherValue=$(this).find('option:selected').attr('data-othervalue');
+        console.log(otherValue);
+        selecionar_barrios_comunidad(otherValue);
     });
 
     var selecionar_barrios_comunidad = function(id)
     { 
-        $('select[name="Id_Upz_Comunidad"]').html('<option value="">Cargando...</option>');
+       $('select[name="Id_Barrio_Comunidad"]').html('<option value="">Cargando...</option>');
         $.ajax({
-            url: URL+'/select_upz/'+id,
+            url: URL+'/select_barrio/'+id,
             data: {},
             dataType: 'json',
             success: function(data)
@@ -180,9 +189,9 @@ $(function()
                   var html = '<option value="">Seleccionar</option>';
                   $.each(data, function(i, eee)
                   {
-                            html += '<option value="'+eee['Id_Upz']+'">'+eee['Upz'].toUpperCase()+'</option>';
+                            html += '<option value="'+eee['IdBarrio']+'"  >'+eee['Barrio'].toUpperCase()+'</option>';
                   });   
-                  $('select[name="Id_Upz_Comunidad"]').html(html).val($('select[name="Id_Upz_Comunidad"]').data('value'));
+                  $('select[name="Id_Barrio_Comunidad"]').html(html).val($('select[name="Id_Barrio_Comunidad"]').data('value'));
             }
         });
     };
@@ -261,7 +270,7 @@ $(function()
 
             }else if(paso==2){
                 mnsj="<div class='alert alert-info'>"
-                    +"<strong>Registro Repetidos!</strong>Los datos ya fueron registrados."
+                    +"<strong>Registro Repetido! </strong>Los datos ya fueron registrados."
                     +"</div>";
             }else{
                 mnsj="<div class='alert alert-info'>"
@@ -278,6 +287,27 @@ $(function()
         return false;
     });
 
+
+    $('#btn_agregar_validar_disponiblidad').on('click', function(e)
+    {
+
+        var fecha_ejecucion = $('input[name="fecha_ejecucion"]').val();
+        var responsable = $('input[name="responsable"]').val();
+        var hora_inicio = $('input[name="hora_inicio"]').val();
+        var hora_fin = $('input[name="hora_fin"]').val();
+       
+        if(fecha_ejecucion!="" ||  hora_inicio!=""  ||  hora_fin!="")
+        {
+            alert("Datos incompletos");
+        }else{
+            $('#alerta_datos_acompanantes').html('<div class="alert alert-dismissible alert-success" ><strong>Exito!</strong> Datos incompletos para la consulta. </div>');
+        setTimeout(function(){
+            $('#alerta_datos_acompanantes').html("");
+        }, 4000);
+        }
+
+        return false;
+    });
 
     $('#datos_actividad').delegate('button[data-funcion="eliminar"]','click',function (e) {
         var id = $(this).data('rel');
@@ -344,3 +374,17 @@ $(function()
     marker.addListener('click', toggleBounce);
 
 });
+
+function soloNumeros(evt) 
+    {
+        if ( window.event ) { // IE
+            keyNum = evt.keyCode;
+        } else {
+            keyNum = evt.which;
+        }
+        if ( keyNum >= 48 && keyNum <= 57 ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
