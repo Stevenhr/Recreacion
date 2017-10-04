@@ -212,10 +212,10 @@ $(function()
         var componente = $('select[name="componente"]').find(':selected').text();
         var mnsj="";
 
-        if(id_programa=="" || id_actividad=="" || id_tematica=="" || id_componente=="")
+        if(id_programa=="" || id_actividad=="" )
         {
             mnsj="<div class='alert alert-info'>"
-                  +"<strong>Datos Vacios!</strong> Algunos datos están vacios."
+                  +"<strong>Datos Vacios!</strong> Algunos campos del formulario están vacios."
                   +"</div>";
         }
         else
@@ -236,8 +236,12 @@ $(function()
             }else{
                 paso=1;
             }
-
+            console.log(paso);
             if(paso==1) {
+
+                if(id_tematica==""){tematica="";}
+                if(id_componente==""){componente="";}
+
                 datos_actividad.push({
                     "id_programa": id_programa,
                     "programa": programa,
@@ -298,12 +302,36 @@ $(function()
        
         if(fecha_ejecucion!="" ||  hora_inicio!=""  ||  hora_fin!="")
         {
-            alert("Datos incompletos");
+           
+
+            $.post(
+            
+            URL+'/disponibilidad_acopanante',
+            {
+                fecha_ejecucion: fecha_ejecucion,
+                responsable: responsable
+            },
+            'json'
+            ).done(function(data)
+            {
+              
+                if(data)
+                {
+                    console.log(data);
+
+                }
+            }).fail(function(xhr, status, error)
+            {
+                alert(error);
+            });
+
+            e.preventDefault();
+
         }else{
-            $('#alerta_datos_acompanantes').html('<div class="alert alert-dismissible alert-success" ><strong>Exito!</strong> Datos incompletos para la consulta. </div>');
-        setTimeout(function(){
-            $('#alerta_datos_acompanantes').html("");
-        }, 4000);
+            $('#alerta_datos_acompanantes').html('<div class="alert alert-dismissible alert-info" ><strong>Error!</strong> Datos incompletos para la consulta. </div>');
+            setTimeout(function(){
+                $('#alerta_datos_acompanantes').html("");
+            }, 4000);
         }
 
         return false;

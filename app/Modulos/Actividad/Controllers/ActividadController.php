@@ -58,4 +58,11 @@ class ActividadController extends Controller {
 		return response()->json($upzs);
 	}
 
+	public function disponibilidad_acopanante(Request $request)
+	{
+		//dd($request['responsable']);
+		//$upzs = Barrio::where('CodUpz',$id)->get();
+		return response()->json($request['fecha_ejecucion']);
+	}
+
 }

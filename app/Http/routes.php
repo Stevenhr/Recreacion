@@ -76,6 +76,11 @@ Route::group(['prefix' => 'actividad', 'middleware' => 'auth'], function()
         'as' => 'selecionar_barrio'
     ]);
 
+
+    Route::post('disponibilidad_acopanante',[
+        'uses' => $controller.'ActividadController@disponibilidad_acopanante',
+        'as' => 'selecionar_barrio'
+    ]);
 });
 
 
