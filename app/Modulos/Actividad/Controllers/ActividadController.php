@@ -10,9 +10,11 @@ use App\Modulos\ActividadRecreativa\ActividadRecreativa;
 use App\Modulos\Programa\Programa;
 use App\Modulos\Componente\Componente;
 use App\Modulos\Tematica\Tematica;
+use App\Modulos\Usuario\ConfiguracionPersona;
 use App\Http\Controllers\Controller;
 
-class ActividadController extends Controller {
+class ActividadController extends Controller 
+{
 
 	public function inicio()
 	{
@@ -60,9 +62,35 @@ class ActividadController extends Controller {
 
 	public function disponibilidad_acopanante(Request $request)
 	{
-		//dd($request['responsable']);
-		//$upzs = Barrio::where('CodUpz',$id)->get();
-		return response()->json($request['fecha_ejecucion']);
+		$hora_inicio = $request['hora_inicio'];
+		$hora_fin = $request['hora_fin'];
+
+		$actividades = ActividadRecreativa::where('d_fechaEjecucion',$request['fecha_ejecucion'])->where('i_fk_localidadComunidad',$request['localidad_comunidad'])->get();
+		
+
+			foreach ($actividades as $dia) {
+				
+
+				if(strtotime($hora_inicio) >= strtotime($dia['t_horaInicio']) 
+				&& 
+				   strtotime($hora_inicio) <= strtotime($dia['t_horaFin'])){echo 'Verfique hay un cruze de horarios';exit();}
+						
+								
+				if(strtotime($hora_fin) >=  strtotime($dia['t_horaInicio'])
+					&& 
+				   strtotime($hora_fin) <= strtotime($dia['t_horaFin'])){echo 'Verfique hay un cruze de horarios';exit();}
+
+
+				if(strtotime($hora_fin) >  strtotime($dia['t_horaFin'])
+					&& 
+				   strtotime($hora_inicio) < strtotime($dia['t_horaInicio'])){echo 'Verfique hay un cruze de horarios';exit();}
+
+			}
+
+		echo "pasa";
+		exit();
+		$confgu_persona = ConfiguracionPersona::with('persona')->where('i_id_localidad',strval($request['localidad_comunidad']))->where('i_id_tipo_persona',2)->get();
+		return response()->json($confgu_persona);
 	}
 
 }

@@ -17,6 +17,7 @@
 			<div class="board">
 				<!-- <h2>Welcome to IGHALO!<sup>™</sup></h2>-->
 				<div class="board-inner">
+
 					<ul class="nav nav-tabs" id="myTab">
 						<div class="liner"></div>
 						
@@ -53,7 +54,6 @@
 							</a>
 						</li>
 
-
 						<li>
 							<a href="#doner" data-toggle="tab" title="completed">
 								<span class="round-tabs five">
@@ -61,6 +61,7 @@
 								</span>
 							</a>
 						</li>
+
 					</ul>
 				</div>
 
@@ -312,7 +313,7 @@
 								<div class="form-group">
 									<label> 5. Registro de acompañantes</label>
 									<div class="bs-example" data-example-id="bordered-table"> 
-										<table class="table display no-wrap table-condensed table-bordered table-min"> 
+										<table id="tabla_responsable" class="table display no-wrap table-condensed table-bordered table-min"> 
 											<thead> 
 												<tr class="active"> 
 													<th>#</th> 
@@ -320,44 +321,12 @@
 													<th>Apellidos</th> 
 													<th>Validar</th> 
 												</tr> 
-												</thead> 
-													<tbody> 
-														<tr> 
-															<th scope="row">1</th> 
-															<td>Mark</td> 
-															<td>Otto</td> 
-															<td>
-																<div class="checkbox">
-															      <label>
-															        <input type="checkbox"> Agregar
-															      </label>
-															    </div>
-															</td> 
-														</tr> 
-														<tr> 
-															<th scope="row">2</th> 
-															<td>Jacob</td> 
-															<td>Thornton</td> 
-															<td>
-																<div class="checkbox">
-															      <label>
-															        <input type="checkbox"> Agregar
-															      </label>
-															    </div>
-															</td> 
-														</tr> 
-														<tr> 
-															<th scope="row">3</th> 
-															<td>Larry</td> 
-															<td>the Bird</td> 
-															<td>
-																<div class="checkbox">
-															      <label>
-															        <input type="checkbox"> Agregar
-															      </label>
-															    </div>
-															</td> 
-														</tr> </tbody> </table> </div>
+											</thead> 
+											<tbody id="registros_datos_acompanante"> 
+											
+											</tbody> 
+										</table> 
+									</div>
 								</div>
 							</div>
 						</div>
