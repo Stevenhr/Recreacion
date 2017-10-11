@@ -2,7 +2,7 @@ $(function()
 {
 	var URL = $('#main_actividad').data('url');
 
-    $("#fecha_ejecucion").datepicker({
+    $("#fecha_ejecucdion").datepicker({
       changeMonth: true,
       changeYear: true,
       dateFormat: 'yy-mm-dd',
@@ -236,7 +236,7 @@ $(function()
             }else{
                 paso=1;
             }
-            console.log(paso);
+     
             if(paso==1) {
 
                 if(id_tematica==""){tematica="";}
@@ -299,27 +299,48 @@ $(function()
         var responsable = $('input[name="responsable"]').val();
         var hora_inicio = $('input[name="hora_inicio"]').val();
         var hora_fin = $('input[name="hora_fin"]').val();
-       
+        var localidad_comunidad = $('select[name="localidad_comunidad"]').find('option:selected').val();
+        
         if(fecha_ejecucion!="" ||  hora_inicio!=""  ||  hora_fin!="")
         {
            
+            if(localidad_comunidad==""){
+                $('#alerta_datos_acompanantes').html('<div class="alert alert-dismissible alert-info" ><strong>Error!</strong> Localidad de la comunidad no ha sido seleccionada. <strong>Ir a paso dos</strong> </div>');
+                setTimeout(function(){
+                    $('#alerta_datos_acompanantes').html("");
+                }, 4000);
+            }
 
             $.post(
             
             URL+'/disponibilidad_acopanante',
             {
                 fecha_ejecucion: fecha_ejecucion,
-                responsable: responsable
+                responsable: responsable,
+                localidad_comunidad:localidad_comunidad,
+                hora_inicio:hora_inicio,
+                hora_fin:hora_fin
             },
             'json'
             ).done(function(data)
             {
-              
+                console.log(data);
                 if(data)
                 {
-                    console.log(data);
-
+                    var num=1;
+                    var html="";
+                    $.each(data, function(i, e){
+                        html += '<tr class="warning"><th scope="row" class="text-center">'+num+'</th>'+
+                            '<td>'+e.persona['Primer_Apellido']+' '+e.persona['Segundo_Apellido']+' '+e.persona['Primer_Nombre']+' '+e.persona['Segundo_Nombre']+'</td>'+
+                            '<td>'+e['i_id_ambito']+'</td>'+
+                            '<td>'+e['i_id_localidad']+'</td>'+
+                            '<td>'+e['i_id_tipo_persona']+'</td>'+
+                            '<td class="text-center"><button type="button" data-rel="'+i+'" data-funcion="eliminar" class="eliminar_dato_actividad"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td></tr>';
+                        num++;
+                    });
+                    $('#registros_datos_acompanante').html(html);
                 }
+
             }).fail(function(xhr, status, error)
             {
                 alert(error);
