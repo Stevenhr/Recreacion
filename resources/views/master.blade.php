@@ -60,7 +60,7 @@
                 <ul class="dropdown-menu" aria-labelledby="themes">
                   <li><a href="#">Configuración</a></li>
                   <li class="divider"></li>
-                  <li><a href="#">Sub-Item 1</a></li>
+                  <li><a href="{{ url('usuarios/distribuir') }}">Distribuir usuarios</a></li>
                   <li><a href="#">Sub-Item 2</a></li>
                   <li><a href="#">Sub-Item 3</a></li>
                   <li><a href="#">Sub-Item 4</a></li>

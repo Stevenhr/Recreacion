@@ -32,6 +32,7 @@ Route::any('/logout', 'MainController@logout');
 //rutas con filtro de autenticación
 Route::group(['middleware' => ['web']], function () {
 	Route::get('/welcome', 'MainController@welcome');
+	Route::get('/usuarios/distribuir', '\App\Modulos\Usuarios\Controllers\DistribucionController@index');
 });
 
 
