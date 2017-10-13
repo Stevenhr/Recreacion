@@ -158,7 +158,7 @@ $(function()
                 $('select[name="Id_Barrio_Comunidad"]').html(html).val($('select[name="Id_Barrio_Comunidad"]').data('value'));
 
                   var html = '<option value="">Seleccionar</option>';
-                  $.each(data, function(i, eee)
+                  $.each(data.upzs, function(i, eee)
                   {
                             html += '<option value="'+eee['Id_Upz']+'" data-othervalue="'+eee['cod_upz']+'">'+eee['Upz'].toUpperCase()+'</option>';
                   });   
@@ -331,7 +331,8 @@ $(function()
                         $('#alerta_datos_acompanantes').html("");
                     }, 4000);
                 }
-              /*if(data)
+               
+               /*if(data)
                 {
                     var num=1;
                     var html="";

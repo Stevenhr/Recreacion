@@ -11,12 +11,11 @@ class Configuracion
     const CANCELADO = 3; // No se permite modificar nada cuando este cancelado. 
 
 	const RESPOSANBLE_ACTIVIDAD = 1; // Solo una localidad, Recreador encargado de ejecutar la actividad
-    const GESTOR = 2; // Varias localidades, persona encargada de crear la actividad y asignarcela a un RESPOSANBLE_ACTIVIDAD
-    const RESPOSANBLE_PROGRAMA = 2; // Persona encargada de aprobar la actividad creada por el GESTOR
-    const OBSERVADOR = 2; // Da observaciones a todas las actividades.
-    const ADMINISTRADOR = 2; // Administrador de sistema
+    const  GESTOR = 2; // Varias localidades, persona encargada de crear la actividad y asignarcela a un RESPOSANBLE_ACTIVIDAD
+    const RESPOSANBLE_PROGRAMA = 3; // Persona encargada de aprobar la actividad creada por el GESTOR
+    const OBSERVADOR = 4; // Da observaciones a todas las actividades.
+    const ADMINISTRADOR = 5; // Administrador de sistema
     
-    const DEVUELTO = 2;
 
     public static function getArrayForSelect()
     {
