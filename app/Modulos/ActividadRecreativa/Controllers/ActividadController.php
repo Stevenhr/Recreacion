@@ -21,8 +21,18 @@ class ActividadController extends Controller
 	public function inicio()
 	{
 		$Programa=Programa::where('IdPrograma','<>',7)->get();
-		$Localidad=Localidad::all();
-		$Programa=ConfiguracionPersona::where('i_fk_id_persona','<>',$_SESSION['Usuario'])->where('i_fk_id_persona','<>',$_SESSION['Usuario'])->get();
+
+
+		$Locali_gestor=ConfiguracionPersona::where('i_fk_id_persona',$_SESSION['Usuario'][0])->where('i_id_tipo_persona',Configuracion::GESTOR)->get();
+		
+		$locali[]="";
+		$i=0;
+		foreach ($Locali_gestor as $key) {
+			$locali[$i]=$key['i_id_localidad'];
+			$i++;
+		}
+
+		$Localidad = Localidad::whereIn('Id_Localidad',$locali)->get();
 
 		$datos=[
             "localidades"=>$Localidad,
@@ -53,8 +63,16 @@ class ActividadController extends Controller
 
 	public function select_upz(Request $request, $id)
 	{
+		
+		$Locali_recreador=ConfiguracionPersona::where('i_id_localidad',$id)->where('i_id_tipo_persona',Configuracion::RESPOSANBLE_ACTIVIDAD)->get();
+
 		$upzs = Upz::where('IdLocalidad',$id)->get();
-		return response()->json($upzs);
+
+		$datos=[
+		'upzs'=>$upzs,
+		'responsables'=>$Locali_recreador
+		];
+		return response()->json($datos);
 	}
 
 	public function select_barrio(Request $request, $id)
