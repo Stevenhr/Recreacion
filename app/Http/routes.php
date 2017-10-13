@@ -45,7 +45,7 @@ Route::group(['middleware' => ['web']], function () {
 
 Route::group(['prefix' => 'actividad', 'middleware' => 'auth'], function()
 {
-    $controller = "\\App\\Modulos\\Actividad\\Controllers\\";
+    $controller = "\\App\\Modulos\\ActividadRecreativa\\Controllers\\";
 
     Route::any('/registroActividad', [
         'uses' => $controller.'ActividadController@inicio',
@@ -77,11 +77,11 @@ Route::group(['prefix' => 'actividad', 'middleware' => 'auth'], function()
         'as' => 'selecionar_barrio'
     ]);
 
-
     Route::post('disponibilidad_acopanante',[
         'uses' => $controller.'ActividadController@disponibilidad_acopanante',
         'as' => 'selecionar_barrio'
     ]);
+
 });
 
 

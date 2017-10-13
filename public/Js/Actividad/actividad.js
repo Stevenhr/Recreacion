@@ -324,8 +324,14 @@ $(function()
             'json'
             ).done(function(data)
             {
-                console.log(data);
-                if(data)
+              
+                if(data.opcion=="Verfique hay un cruze de horarios"){
+                    $('#alerta_datos_acompanantes').html('<div class="alert alert-dismissible alert-info" ><strong>Error!</strong> '+data.opcion+' <strong>ID de actividades con conflicto: '+data.id_actividades+'</strong> </div>');
+                    setTimeout(function(){
+                        $('#alerta_datos_acompanantes').html("");
+                    }, 4000);
+                }
+              /*if(data)
                 {
                     var num=1;
                     var html="";
@@ -340,6 +346,7 @@ $(function()
                     });
                     $('#registros_datos_acompanante').html(html);
                 }
+                */
 
             }).fail(function(xhr, status, error)
             {
@@ -360,6 +367,7 @@ $(function()
 
     $('#datos_actividad').delegate('button[data-funcion="eliminar"]','click',function (e) {
         var id = $(this).data('rel');
+        console.log(id);
         datos_actividad.splice(id, 1);
 
         $('#alerta_datos').html('<div class="alert alert-dismissible alert-success" ><strong>Exito!</strong> Dato eliminado de la actividad con exito. </div>');
@@ -367,7 +375,7 @@ $(function()
             $('#alerta_datos').html("");
         }, 4000);
 
-        if(datos_actividad.length > 0)
+        if(datos_actividad.length >= 0)
         {
             var num=1;
             var html="";
