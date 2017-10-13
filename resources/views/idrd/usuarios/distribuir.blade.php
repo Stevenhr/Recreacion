@@ -6,14 +6,15 @@
     <script>
         $(function()
         {
-            $('#panel-usuarios').usuarios({
+            var usuarios = $('#panel-usuarios').usuarios({
                 titulo: 'Busque y seleccione un usuario',
                 url: $('#main').data('url')+'/service/buscar',
                 onEdit: function(persona, item, event){
-                    alert('onEdit');
+                    var container = usuarios.getContainer();
+                    container.find('li[data-id != "'+persona.Id_Persona+'"]').remove();
                 },
                 template: function (usuario) {
-                    return '<li class="list-group-item">' +
+                    return '<li data-id="'+usuario.Id_Persona+'" class="list-group-item">' +
                         '<h5 class="list-group-item-heading">' +
                             usuario.Primer_Apellido+' '+usuario.Primer_Nombre+'' +
                             '<a data-event="onEdit" class="pull-right btn btn-primary btn-xs">' +

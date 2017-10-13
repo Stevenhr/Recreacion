@@ -9,9 +9,16 @@
                 tipo: '',
                 callback: function(usuario, item, evento) {}
             }],
-            template: function(usuario) {
+            template_container: function() {
+                return '<div class="col-md-12">' +
+                    '<ul data-role="resultados" class="list-group">' +
+                    '</ul>' +
+                '</div>';
+            },
+            template_item: function(usuario) {
                 return '<li>'+usuario.Primer_Nombre+' '+usuario.Primer_Apellido+'</li>';
             },
+            onResult: function(){},
             onEdit: function(usuario, element, event){},
             onSelect: function (usuario, element, event){}
         }, options );
@@ -34,10 +41,7 @@
                     '<label for=""><br></label>' +
                     '<p class="form-control-static" data-role="estado"></p>' +
                 '</div>' +
-                '<div class="col-md-12">' +
-                    '<ul data-role="resultados" class="list-group">' +
-                    '</ul>' +
-                '</div>' +
+                +settings.template_container()+
             '</div>';
 
             this.html(plantilla);
@@ -52,13 +56,14 @@
 
             boton_buscar.on('click', function(e)
             {
-                input_key.closest('.form-grouo').removeClass('has-error');
+                input_key.closest('.form-group').removeClass('has-error');
                 var key = input_key.val();
 
                 if(key.length > 0)
                 {
                     var service = $.get(settings.url+'/'+key, {}, 'json');
                     estado.html('Buscando...');
+                    resultados.html('');
 
                     service.done(function(data)
                     {
@@ -92,6 +97,9 @@
 
         agregar_plantilla.call(this);
         asignar_eventos.call(this);
+        this.getContainer = function () {
+            return this.find('*[data-role="resultados"]');
+        };
 
         return this;
     };

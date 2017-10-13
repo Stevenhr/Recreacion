@@ -15,8 +15,6 @@ class Configuracion
     const RESPOSANBLE_PROGRAMA = 2; // Persona encargada de aprobar la actividad creada por el GESTOR
     const OBSERVADOR = 2; // Da observaciones a todas las actividades.
     const ADMINISTRADOR = 2; // Administrador de sistema
-    
-    const DEVUELTO = 2;
 
     public static function getArrayForSelect()
     {
