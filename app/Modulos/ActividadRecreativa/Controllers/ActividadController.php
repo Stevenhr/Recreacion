@@ -11,6 +11,7 @@ use App\Modulos\Programa\Programa;
 use App\Modulos\Actividad\Actividad;
 use App\Modulos\Componente\Componente;
 use App\Modulos\Tematica\Tematica;
+use App\Modulos\Configuracion\Configuracion;
 use App\Modulos\Usuario\ConfiguracionPersona;
 use App\Http\Controllers\Controller;
 
@@ -21,7 +22,8 @@ class ActividadController extends Controller
 	{
 		$Programa=Programa::where('IdPrograma','<>',7)->get();
 		$Localidad=Localidad::all();
-		//echo $_SESSION['Usuario'];
+		$Programa=ConfiguracionPersona::where('i_fk_id_persona','<>',$_SESSION['Usuario'])->where('i_fk_id_persona','<>',$_SESSION['Usuario'])->get();
+
 		$datos=[
             "localidades"=>$Localidad,
             "programas"=>$Programa,
