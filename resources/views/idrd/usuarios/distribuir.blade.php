@@ -22,7 +22,7 @@
                 </div>
                 <div class="col-md-4 form-group">
                     <label for="">Perfil</label>
-                    <select class="form-control" name="perfil" id="perfil" title="Seleccionar" data-size="10" data-live-search="true">
+                    <select class="form-control" name="perfil" id="perfil" title="Seleccionar" data-size="10" data-live-search="true    " >
                         @foreach($perfiles as $key => $perfil)
                             <option value="{{ $key }}">{{ $perfil }}</option>
                         @endforeach
@@ -30,7 +30,7 @@
                 </div>
                 <div class="col-md-4 form-group">
                     <label for="">Localidad</label>
-                    <select class="form-control" name="localidad" id="localidad" title="Seleccionar" data-size="10" data-live-search="true" multiple>
+                    <select class="form-control" name="localidad" id="localidad" title="Seleccionar" data-size="10"  data-live-search="true " multiple>
                         @foreach($localidades as $localidad)
                             <option value="{{ $localidad['Id_Localidad'] }}">{{ $localidad['Nombre_Localidad'] }}</option>
                         @endforeach
@@ -51,6 +51,8 @@
         $(function()
         {
             var URL = $('#main').data('url-area');
+            var json_localidades = JSON.parse('{!! $localidades !!}');
+            var select_localidades = $('select[name="localidad"]');
             var persona_seleccionada = null;
 
             var usuarios = $('#panel-usuarios').usuarios({
@@ -89,6 +91,15 @@
 
             $('select[name="perfil"]').on('change', function()
             {
+                select_localidades.html('');
+                select_localidades.prop('multiple', $(this).val() !== '1');
+                $.each(json_localidades, function(i, localidad)
+                {
+                   select_localidades.append('<option value="'+localidad.Id_Localidad+'">'+localidad.Nombre_Localidad+'</option>');
+                });
+                select_localidades.selectpicker('destroy');
+                select_localidades.selectpicker();
+
                 if (persona_seleccionada)
                 {
                     var validacion = $.post(
