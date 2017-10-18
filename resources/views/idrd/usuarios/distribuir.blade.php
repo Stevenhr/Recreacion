@@ -30,14 +30,14 @@
                 </div>
                 <div class="col-md-4 form-group">
                     <label for="">Localidad</label>
-                    <select class="form-control" name="localidad" id="localidad" title="Seleccionar" data-size="5" data-live-search="true" multiple>
+                    <select class="form-control" name="localidad" id="localidad" title="Seleccionar" data-size="10" data-live-search="true" multiple>
                         @foreach($localidades as $localidad)
                             <option value="{{ $localidad['Id_Localidad'] }}">{{ $localidad['Nombre_Localidad'] }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="col-md-12">
-                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="button" id="btn-guardar" class="btn btn-primary">Guardar</button>
                 </div>
             </div>
         </div>
@@ -92,15 +92,50 @@
                 if (persona_seleccionada)
                 {
                     var validacion = $.post(
-                        URL+'cargarRol',
+                        URL+'/cargarRol',
                         {
-                            persona: persona_seleccionada.Id_Persona,
-                            rol: $('select[name="perfil"]').val()
+                            id_persona: persona_seleccionada.Id_Persona,
+                            id_perfil: $('select[name="perfil"]').val()
                         },
                         'json'
                     );
+
+                    validacion.done(function(data)
+                    {
+                        var localidades = [];
+
+                        $.each(data, function(i, configuracion)
+                        {
+                            localidades.push(configuracion.i_id_localidad);
+                        });
+
+                        $('select[name="localidad"]').selectpicker('val', localidades);
+                    });
                 }
             });
+
+            $('#btn-guardar').on('click', function(e)
+            {
+                if (persona_seleccionada)
+                {
+                    var guardar = $.post(
+                        URL+'/asignarRol',
+                        {
+                            id_persona: persona_seleccionada.Id_Persona,
+                            id_perfil: $('select[name="perfil"]').val(),
+                            localidades: $('select[name="localidad"]').val()
+                        },
+                        'json'
+                    );
+
+                    guardar.done(function(data)
+                    {
+                        swal("Bien!", "Los datos se registraron satisfactoriamente!", "success");
+                        $('select[name="perfil"]').val('').trigger('change');
+                        $('select[name="localidad"]').val('').trigger('change');
+                    });
+                }
+            })
         });
     </script>
 @stop

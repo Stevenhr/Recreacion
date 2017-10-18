@@ -35,11 +35,30 @@ class DistribucionController extends Controller {
 
     public function asignarRol(Request $request)
     {
+        $configuraciones = ConfiguracionPersona::where('i_fk_id_persona', $request->input('id_persona'))
+                                        ->where('i_id_tipo_persona', $request->input('id_perfil'));
 
+        $configuraciones->delete();
+
+        foreach ($request->input('localidades') as $localidad)
+        {
+            $configuracion = new ConfiguracionPersona;
+            $configuracion->i_fk_id_persona = $request->input('id_persona');
+            $configuracion->i_id_tipo_persona = $request->input('id_perfil');
+            $configuracion->i_id_localidad = $localidad;
+            $configuracion->save();
+        }
+
+        return response()->json(['status' => 'success']);
     }
 
     public function cargarRol(Request $request)
     {
-        ConfiguracionPersona::where('id_persona', $request->input('id_persona'));
+        $configuraciones = ConfiguracionPersona::with('localidad')
+                                ->where('i_fk_id_persona', $request->input('id_persona'))
+                                ->where('i_id_tipo_persona', $request->input('id_perfil'))
+                                ->get();
+
+        return response()->json($configuraciones);
     }
 }
