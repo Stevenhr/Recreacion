@@ -32,7 +32,6 @@ Route::any('/logout', 'MainController@logout');
 //rutas con filtro de autenticación
 Route::group(['middleware' => ['web']], function () {
 	Route::get('/welcome', 'MainController@welcome');
-	Route::get('/usuarios/distribuir', '\App\Modulos\Usuarios\Controllers\DistribucionController@index');
 });
 
 
@@ -81,7 +80,13 @@ Route::group(['prefix' => 'actividad', 'middleware' => 'auth'], function()
         'uses' => $controller.'ActividadController@disponibilidad_acopanante',
         'as' => 'selecionar_barrio'
     ]);
+});
 
+Route::group(['prefix' => 'usuarios', 'middleware' => 'auth'], function()
+{
+    Route::get('distribuir', '\App\Modulos\Usuario\Controllers\DistribucionController@index');
+    Route::post('asignarRol', '\App\Modulos\Usuario\Controllers\DistribucionController@asignarRol');
+    Route::post('cargarRol', '\App\Modulos\Usuario\Controllers\DistribucionController@cargarRol');
 });
 
 

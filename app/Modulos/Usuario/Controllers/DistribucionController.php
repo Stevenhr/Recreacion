@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Modulos\Usuarios\Controllers;
+namespace App\Modulos\Usuario\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Localidad;
 use App\Modulos\Configuracion\Configuracion;
+use App\Modulos\Usuario\ConfiguracionPersona;
+use App\Persona;
 use Idrd\Usuarios\Repo\PersonaInterface;
 use Illuminate\Http\Request;
 
@@ -22,7 +25,21 @@ class DistribucionController extends Controller {
 
     public function index()
     {
+        $data = [
+            'perfiles' => Configuracion::getPerfilesForSelect(),
+            'localidades' => Localidad::all()
+        ];
 
-        return view('idrd.usuarios.distribuir');
+        return view('idrd.usuarios.distribuir', $data);
+    }
+
+    public function asignarRol(Request $request)
+    {
+
+    }
+
+    public function cargarRol(Request $request)
+    {
+        ConfiguracionPersona::where('id_persona', $request->input('id_persona'));
     }
 }

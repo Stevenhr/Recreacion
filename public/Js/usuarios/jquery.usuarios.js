@@ -4,16 +4,18 @@
         var settings = $.extend({
             titulo: 'Buscar un usuario',
             url: '/usuarios',
+            /*
             eventos_personalizados: [{
                 nombre: '',
                 tipo: '',
                 callback: function(usuario, item, evento) {}
             }],
+            */
             template_container: function() {
                 return '<div class="col-md-12">' +
-                    '<ul data-role="resultados" class="list-group">' +
-                    '</ul>' +
-                '</div>';
+                        '<ul data-role="resultados" class="list-group">' +
+                        '</ul>' +
+                    '</div>';
             },
             template_item: function(usuario) {
                 return '<li>'+usuario.Primer_Nombre+' '+usuario.Primer_Apellido+'</li>';
@@ -26,7 +28,7 @@
         var agregar_plantilla = function()
         {
             var plantilla = '<div class="row">' +
-                '<div class="col-md-6 col-xs-12">' +
+                '<div class="col-md-4 col-xs-12">' +
                     '<div class="form-group">' +
                         '<label for="">'+settings.titulo+'</label>' +
                         '<div class="input-group">' +
@@ -37,11 +39,11 @@
                         '</div>' +
                     '</div>' +
                 '</div>' +
-                '<div class="col-md-6 form-group">' +
+                '<div class="col-md-8 form-group">' +
                     '<label for=""><br></label>' +
                     '<p class="form-control-static" data-role="estado"></p>' +
                 '</div>' +
-                +settings.template_container()+
+                ''+settings.template_container()+
             '</div>';
 
             this.html(plantilla);
@@ -71,27 +73,37 @@
                         $.each(data, function(i, persona)
                         {
                             var item = $(settings.template(persona));
-                            item.find('*[data-event="onEdit"]').on('click', function (e) {
-                                settings.onEdit(persona, item, e);
+
+                            var eventos = ['onEdit', 'onSelect'];
+
+                            $.each(eventos, function(i, evento){
+                               if(typeof item.data('event') !== 'undefined')
+                               {
+                                   item.on('click', function(e) {
+                                       settings[evento](persona, item, e);
+                                   });
+                               } else {
+                                   item.find('*[data-event="'+evento+'"]').on('click', function (e) {
+                                       settings[evento](persona, item, e);
+                                   });
+                               }
                             });
 
-                            item.find('*[data-event="onSelect"]').on('click', function (e) {
-                                settings.onSelect(persona, item, e);
-                            });
-
-                            $.each(settings.eventos_personalizados, function (i, evento) {
+                            /*$.each(settings.eventos_personalizados, function (i, evento) {
                                 item.find('*[data-event="'+evento.nombre+'"]').on(evento.tipo, function(e)
                                 {
                                     evento.callback(persona, item, e);
                                 })
-                            });
+                            });*/
 
                             resultados.append(item);
                         });
                     });
                 } else {
-                    input_key.closest('.form-grouo').addClass('has-error');
+                    input_key.closest('.form-group').addClass('has-error');
                 }
+
+                settings.onResult();
             })
         };
 

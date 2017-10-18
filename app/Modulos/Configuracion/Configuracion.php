@@ -11,18 +11,10 @@ class Configuracion
     const CANCELADO = 3; // No se permite modificar nada cuando este cancelado. 
 
 	const RESPOSANBLE_ACTIVIDAD = 1; // Solo una localidad, Recreador encargado de ejecutar la actividad
-<<<<<<< HEAD
     const GESTOR = 2; // Varias localidades, persona encargada de crear la actividad y asignarcela a un RESPOSANBLE_ACTIVIDAD
-    const RESPOSANBLE_PROGRAMA = 2; // Persona encargada de aprobar la actividad creada por el GESTOR
-    const OBSERVADOR = 2; // Da observaciones a todas las actividades.
-    const ADMINISTRADOR = 2; // Administrador de sistema
-=======
-    const  GESTOR = 2; // Varias localidades, persona encargada de crear la actividad y asignarcela a un RESPOSANBLE_ACTIVIDAD
     const RESPOSANBLE_PROGRAMA = 3; // Persona encargada de aprobar la actividad creada por el GESTOR
     const OBSERVADOR = 4; // Da observaciones a todas las actividades.
     const ADMINISTRADOR = 5; // Administrador de sistema
-    
->>>>>>> 312ba6532bee9b6d3dd2e3f2dd3029944ff81077
 
     public static function getArrayForSelect()
     {
@@ -31,6 +23,17 @@ class Configuracion
           self::APROBADO    =>  self::toString(self::APROBADO),
           self::DEVUELTO    =>  self::toString(self::DEVUELTO),
           self::CANCELADO   =>  self::toString(self::CANCELADO),
+        ];
+    }
+
+    public static function getPerfilesForSelect()
+    {
+        return [
+            self::RESPOSANBLE_ACTIVIDAD => 'RESPOSANBLE ACTIVIDAD',
+            self::GESTOR => 'GESTOR',
+            self::RESPOSANBLE_PROGRAMA => 'RESPOSANBLE PROGRAMA',
+            self::OBSERVADOR => 'OBSERVADOR',
+            self::ADMINISTRADOR => 'ADMINISTRADOR'
         ];
     }
 
