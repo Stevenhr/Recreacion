@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Modulos\Usuario\ConfiguracionPersona;
 use Idrd\Usuarios\Repo\PersonaInterface;
 use Illuminate\Http\Request;
 
@@ -44,11 +45,12 @@ class MainController extends Controller {
 
 			$_SESSION['Usuario'] = $user_array;
             $persona = $this->repositorio_personas->obtener($_SESSION['Usuario'][0]);
+            $configuraciones = ConfiguracionPersona::where('i_fk_id_persona', $_SESSION['Usuario'][0]);
 
 			$_SESSION['Usuario']['Recreopersona'] = [];
-			$_SESSION['Usuario']['Roles'] = [];
 			$_SESSION['Usuario']['Persona'] = $persona;
 			$_SESSION['Usuario']['Permisos'] = $permisos;
+			$_SESSION['Usuario']['Roles'] = $configuraciones;
 			$_SESSION['Nombre']=$persona["Primer_Apellido"]." ".$persona["Segundo_Apellido"]." ".$persona["Primer_Nombre"]." ".$persona["Segundo_Nombre"];
 			$this->Usuario = $_SESSION['Usuario'];
 		} else {
