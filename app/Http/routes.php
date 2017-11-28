@@ -76,6 +76,11 @@ Route::group(['prefix' => 'actividad', 'middleware' => 'auth'], function()
         'as' => 'selecionar_barrio'
     ]);
 
+    Route::get('select_caracteristicas_especificas_poblacion/{id}',[
+        'uses' => $controller.'ActividadController@select_caracteristicas_especificas_poblacion',
+        'as' => 'seleccionar_caracteristicas_especificas_poblacion'
+    ]);
+
     Route::post('disponibilidad_acopanante',[
         'uses' => $controller.'ActividadController@disponibilidad_acopanante',
         'as' => 'selecionar_barrio'

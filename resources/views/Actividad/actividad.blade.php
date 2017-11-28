@@ -15,7 +15,10 @@
 		<div class="content" id="main_actividad" class="row" data-url="{{ url('actividad') }}" ></div>
 		<div class="row">
 			<div class="board">
-				<!-- <h2>Welcome to IGHALO!<sup>™</sup></h2>-->
+				
+
+
+				<!-- MENU DE CREACIÓN DE LA ACTIVIDAD-->
 				<div class="board-inner">
 
 					<ul class="nav nav-tabs" id="myTab">
@@ -28,7 +31,6 @@
 								</span> 
 							</a>
 						</li>
-
 
 						<li>
 							<a href="#datos_comunidad" data-toggle="tab" title="bootsnipp goodies">
@@ -64,7 +66,11 @@
 
 					</ul>
 				</div>
+				<!--FIN:: MENU DE CREACIÓN DE LA ACTIVIDAD-->
 
+
+
+				<!-- DATOS BASICOS DE LA ACTIVIDAD  -->
 				<div class="tab-content">
 					
 					<div class="tab-pane fade in active" id="home">
@@ -79,10 +85,10 @@
 						</div>
 
 						<div class="row">
-							<div class="col-md-6 col-xs-12">
+							<div class="col-md-3 col-xs-12">
 								<div class="form-group">
 									<label> 1. Programa </label>
-									<select class="form-control" name="programa">
+									<select class="form-control" data-live-search="true" name="programa">
 										<option value="">Seleccionar</option>
 										@foreach($programas as $programa)
 											<option value="{{$programa['idPrograma']}}">{{strtoupper($programa['programa'])}}</option>	
@@ -90,29 +96,26 @@
 									</select>
 								</div>
 							</div>
-							<div class="col-md-6 col-xs-12">
+							<div class="col-md-3 col-xs-12">
 								<div class="form-group">
 									<label> 2. Actividad </label>
-									<select class="form-control" name="actividad">
+									<select class="form-control" data-live-search="true" name="actividad">
 										<option value="">Seleccionar</option>
 									</select>
 								</div>
 							</div>
-						</div>
-
-			            <div class="row">
-							<div class="col-md-6 col-xs-12">
+							<div class="col-md-3 col-xs-12">
 								<div class="form-group">
 									<label> 3. Temática</label>
-									<select class="form-control" name="tematica">
+									<select class="form-control" data-live-search="true" name="tematica">
 										<option value="">Seleccionar</option>
 									</select>
 								</div>
 							</div>
-							<div class="col-md-6 col-xs-12">
+							<div class="col-md-3 col-xs-12">
 								<div class="form-group">
 									<label> 4. Componente </label>
-									<select class="form-control" name="componente">
+									<select class="form-control" data-live-search="true" name="componente">
 										<option value="">Seleccionar</option>
 									</select>
 								</div>
@@ -121,8 +124,8 @@
 
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-xs-12">
-								<p class="text-center">
-									<a href="" class="btn btn-success" id="btn_agregar_datos_actividad"> Agregar datos<span style="margin-left:10px;" class="glyphicon glyphicon-plus"></span></a>
+								<p>
+									<a href="" class="btn btn-success btn-xs" id="btn_agregar_datos_actividad"> Agregar datos de la actividad <span style="margin-left:10px;" class="glyphicon glyphicon-plus"></span></a><br>
 								</p>
 							</div>
 						</div>
@@ -165,6 +168,8 @@
 						</div>
 
 					</div>
+					<!-- FIN:: DATOS BASICOS DE LA ACTIVIDAD  -->
+
 
 
 
@@ -180,29 +185,29 @@
 						</div>
 
 						<div class="row">
-							<div class="col-md-6 col-xs-12">
+							<div class="col-md-4 col-xs-12">
 								<div class="form-group">
 									<label> 1. Localidad </label>
-									<select class="form-control" name="localidad_comunidad" id="localidad_comunidad">
+									<select class="form-control" data-live-search="true" name="localidad_comunidad" id="localidad_comunidad">
 										<option value="">Seleccionar</option>
 										@foreach($localidades as $localidad)
-											<option value="{{$localidad['Id_Localidad']}}">{{$localidad['Nombre_Localidad']}}</option>	
+											<option value="{{$localidad['Id_Localidad']}}">{{strtoupper($localidad['Nombre_Localidad'])}}</option>	
 										@endforeach
 									</select>
 								</div>
 							</div>
-							<div class="col-md-6 col-xs-12">
+							<div class="col-md-4 col-xs-12">
 								<div class="form-group">
 									<label> 2. Upz </label>
-									<select class="form-control" name="Id_Upz_Comunidad" id="Id_Upz_Comunidad">
+									<select class="form-control" data-live-search="true" name="Id_Upz_Comunidad" id="Id_Upz_Comunidad">
 										<option value="">Seleccionar</option>
 									</select>
 								</div>
 							</div>
-							<div class="col-md-6 col-xs-12">
+							<div class="col-md-4 col-xs-12">
 								<div class="form-group">
 									<label> 3. Barrio </label>
-									<select class="form-control" name="Id_Barrio_Comunidad" id="Id_Barrio_Comunidad">
+									<select class="form-control" data-live-search="true" name="Id_Barrio_Comunidad" id="Id_Barrio_Comunidad">
 										<option value="">Seleccionar</option>
 									</select>
 								</div>
@@ -210,26 +215,41 @@
 						</div>
 
 						<div class="row">
-							<div class="col-md-6 col-xs-12">
+							<div class="col-md-4 col-xs-12">
 								<div class="form-group">
 									<label> 4. Institución, Grupo, Comunidad:	</label>
 									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
 								</div>
 							</div>
 
-							<div class="col-md-6 col-xs-12">
+							<div class="col-md-4 col-xs-12">
 								<div class="form-group">
 									<label> 5. Características de la Poblacion a beneficiar:	</label>
-									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
+									<select class="form-control"  name="caracteristicaPoblacion" >
+										<option value="">Seleccionar</option>
+										@foreach($caracteristicasPoblacion as $caracteristicaPoblacion)
+											<option value="{{$caracteristicaPoblacion['i_pk_id']}}">{{strtoupper($caracteristicaPoblacion['tx_caracteristicas'])}}</option>	
+										@endforeach
+									</select>
 								</div>
 							</div>
 
-							<div class="col-md-6 col-xs-12">
+							<div class="col-md-4 col-xs-12">
 								<div class="form-group">
-									<label> 6. Número de Asistentes a Beneficiar:</label>
-									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off" onKeyPress="return soloNumeros( event )">
+									<label> 6. Específico:	</label>
+									<select class="form-control" multiple data-selected-text-format="count > 4" name="caracteristicaEspecifica" id="caracteristicaEspecifica">
+										<option value="">Seleccionar</option>
+									</select>
+
 								</div>
 							</div>
+
+							<!--<div class="col-md-6 col-xs-12">
+								<div class="form-group">
+									<label> 7. Número de Asistentes a Beneficiar:</label>
+									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off" onKeyPress="return soloNumeros( event )">
+								</div>
+							</div>-->
 						</div>
 
 
@@ -260,15 +280,9 @@
 						</div>
 
 						<div class="row">
-							<div class="col-md-6 col-xs-12">
+							<div class="col-md-3 col-xs-12">
 								<div class="form-group">
-									<label> 1. Fecha de ejecución</label>
-									<input type="date" class="form-control" name="fecha_ejecucion" id="fecha_ejecucion"  data-role1="datepicker" placeholder="aa/mm/dd" autocomplete="off" >
-								</div>
-							</div>
-							<div class="col-md-6 col-xs-12">
-								<div class="form-group">
-									<label> 2. Responsable </label>
+									<label> 1. Responsable </label>
 									<select class="form-control" name="responsable">
 										<option value="">Seleccionar</option>
 										<option value="0">Dias</option>
@@ -277,15 +291,19 @@
 									</select>
 								</div>
 							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-6 col-xs-12">
+							<div class="col-md-3 col-xs-12">
 								<div class="form-group">
-									<label> 3. Hora inicio</label>
+									<label> 1. Fecha de ejecución</label>
+									<input type="date" class="form-control" name="fecha_ejecucion" id="fecha_ejecucion"  data-role1="datepicker" placeholder="aa/mm/dd" autocomplete="off" >
+								</div>
+							</div>
+							<div class="col-md-3 col-xs-12">
+								<div class="form-group">
+									<label> 2. Hora inicio</label>
 									<input type="time" class="form-control" name="hora_inicio"  data-role1="datepicker" autocomplete="off">
 								</div>
 							</div>
-							<div class="col-md-6 col-xs-12">
+							<div class="col-md-3 col-xs-12">
 								<div class="form-group">
 									<label> 4. Hora fin</label>
 									<input type="time" class="form-control" name="hora_fin" autocomplete="off">
@@ -293,13 +311,11 @@
 							</div>
 						</div>
 
-
-
 						<div class="row">
 							<div class="col-md-12 col-xs-12">
 								<div class="form-group">
-									<p class="text-center">
-										<a href="" class="btn btn-warning" id="btn_agregar_validar_disponiblidad"> Buscar Acompañantes disponibles <span style="margin-left:10px;" class="glyphicon glyphicon-plus"></span></a>
+									<p>
+										<a href="javascript(0)" class="btn btn-primary btn-xs" id="btn_agregar_validar_disponiblidad"> Buscar Acompañantes disponibles <span style="margin-left:10px;" class="glyphicon glyphicon-plus"></span></a>
 									</p>
 								</div>
 								<div id="alerta_datos_acompanantes"></div>
@@ -334,7 +350,7 @@
 						<div class="row">
 							<div class="col-xs-12 col-sm-12">
 								<p class="text-center">
-									<a href="" class="btn btn-warning"> Agregar programación <span style="margin-left:10px;" class="glyphicon glyphicon-plus"></span></a>
+									<a href="" class="btn btn-success btn-xs"> Agregar programación <span style="margin-left:10px;" class="glyphicon glyphicon-plus"></span></a>
 								</p>
 							</div>
 						</div>
@@ -385,23 +401,28 @@
 									<div class="col-xs-12"><hr></div>
 									<div class="col-xs-12 col-md-4">
 										<div class="form-group">
-											<label class="control-label" for="Id_Localidad">Localidad </label>
-											<select name="Id_Localidad" id="Id_Localidad" class="form-control" data-value="" title="Seleccionar">
-
+											<label>Localidad </label>
+											<select class="form-control" data-live-search="true" name="localidad_escenario" id="localidad_escenario">
+												<option value="">Seleccionar</option>
+												@foreach($localidades as $localidad)
+													<option value="{{$localidad['Id_Localidad']}}">{{strtoupper($localidad['Nombre_Localidad'])}}</option>	
+												@endforeach
 											</select>
 										</div>
 									</div>
 									<div class="col-xs-12 col-md-4">
 										<div class="form-group">
 											<label class="control-label" for="Id_Upz">Upz</label>
-											<select name="Id_Upz" id="Id_Upz" class="form-control" data-json="" data-value="" title="Seleccionar">
+											<select class="form-control" data-live-search="true" name="Id_Upz_escenario" id="Id_Upz_escenario">
+												<option value="">Seleccionar</option>
 											</select>
 										</div>
 									</div>
 									<div class="col-xs-12 col-md-4">
 										<div class="form-group">
 											<label class="control-label" for="Id_Barrio">Barrio</label>
-											<select name="Id_Barrio" id="Id_Barrio" class="form-control" data-json="" data-value="" title="Seleccionar">
+											<select class="form-control" data-live-search="true" name="Id_Barrio_escenario" id="Id_Barrio_escenario">
+												<option value="">Seleccionar</option>
 											</select>
 										</div>
 									</div>

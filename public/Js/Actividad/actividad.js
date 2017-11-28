@@ -18,26 +18,31 @@ $(function()
     var selecionar_actividad = function(id)
     { 
     	$('select[name="actividad"]').html('<option value="">Cargando...</option>');
+        $('select[name="actividad"]').selectpicker('refresh');
 
         var html = '<option value="">Seleccionar</option>'; 
         $('select[name="tematica"]').html(html);
         $('select[name="componente"]').html(html);
+        $('select[name="tematica"]').selectpicker('refresh');
+        $('select[name="componente"]').selectpicker('refresh');
         $.ajax({
             url: URL+'/select_actividad/'+id,
             data: {},
             dataType: 'json',
             success: function(data)
             {
-            
                 var html = '<option value="">Seleccionar</option>'; 
                 $('select[name="tematica"]').html(html).val($('select[name="tematica"]').data('value'));
                 $('select[name="componente"]').html(html).val($('select[name="componente"]').data('value'));
 
-                  var html = '<option value="">Seleccionar actividad</option>';
+                  var html2 = '<option value="">Seleccionar actividad</option>';
                   $.each(data, function(i, eee){
-                        html += '<option value="'+eee['idActividad']+'">'+eee['actividad'].toUpperCase()+'</option>';
+                    html2 += '<option value="'+eee['idActividad']+'">'+eee['actividad'].toUpperCase()+'</option>';
                   });   
-                  $('select[name="actividad"]').html(html).val($('select[name="actividad"]').data('value'));
+                  $('select[name="actividad"]').html(html2);
+                  $('select[name="actividad"]').selectpicker('refresh');
+                  $('select[name="actividad"]').selectpicker('val', $('select[name="actividad"]').data('value'));
+
             }
         });
       
@@ -53,8 +58,11 @@ $(function()
     var selecionar_tematica = function(id)
     { 
     	$('select[name="tematica"]').html('<option value="">Cargando...</option>');
+        $('select[name="tematica"]').selectpicker('refresh');
         var html = '<option value="">Seleccionar</option>'; 
         $('select[name="componente"]').html(html);
+        $('select[name="componente"]').selectpicker('refresh');
+
         $.ajax({
             url: URL+'/select_tematica/'+id,
             data: {},
@@ -72,7 +80,9 @@ $(function()
 	                        html += '<option value="'+eee['idTematica']+'">'+eee['tematica'].toUpperCase()+'</option>';
 	                    }
                   });   
-                  $('select[name="tematica"]').html(html).val($('select[name="tematica"]').data('value'));
+                  $('select[name="tematica"]').html(html);
+                  $('select[name="tematica"]').selectpicker('refresh');
+                  $('select[name="tematica"]').selectpicker('val', $('select[name="tematica"]').data('value'));
             }
         });
     };
@@ -87,6 +97,8 @@ $(function()
     var selecionar_componente = function(id)
     { 
     	$('select[name="componente"]').html('<option value="">Cargando...</option>');
+        $('select[name="componente"]').selectpicker('refresh');
+        
         $.ajax({
             url: URL+'/select_componente/'+id,
             data: {},
@@ -101,7 +113,9 @@ $(function()
 	                        html += '<option value="'+eee['idComponente']+'">'+eee['componente'].toUpperCase()+'</option>';
 	                    //}
                   });   
-                  $('select[name="componente"]').html(html).val($('select[name="componente"]').data('value'));
+                  $('select[name="componente"]').html(html);
+                  $('select[name="componente"]').selectpicker('refresh');
+                  $('select[name="componente"]').selectpicker('val', $('select[name="componente"]').data('value'));
             }
         });
     };
@@ -142,12 +156,18 @@ $(function()
     //Carga de las Upzs comunidad
     $('select[name="localidad_comunidad"]').on('change', function(e)
     {
-        selecionar_upz_comunidad($(this).val());
+        selecionar_upz_comunidad($(this).val(),$('select[name="Id_Upz_Comunidad"]'));
     });
 
-    var selecionar_upz_comunidad = function(id)
+    //Carga de las Upzs escenario
+    $('select[name="localidad_escenario"]').on('change', function(e)
+    {
+        selecionar_upz_comunidad($(this).val(),$('select[name="Id_Upz_escenario"]'));
+    });
+
+    var selecionar_upz_comunidad = function(id,select)
     { 
-        $('select[name="Id_Upz_Comunidad"]').html('<option value="">Cargando...</option>');
+        select.html('<option value="">Cargando...</option>');
         $.ajax({
             url: URL+'/select_upz/'+id,
             data: {},
@@ -162,7 +182,9 @@ $(function()
                   {
                             html += '<option value="'+eee['Id_Upz']+'" data-othervalue="'+eee['cod_upz']+'">'+eee['Upz'].toUpperCase()+'</option>';
                   });   
-                  $('select[name="Id_Upz_Comunidad"]').html(html).val($('select[name="Id_Upz_Comunidad"]').data('value'));
+                  select.html(html);
+                  select.selectpicker('refresh');
+                  select.selectpicker('val', select.data('value'));
             }
         });
     };
@@ -170,11 +192,16 @@ $(function()
     $('select[name="Id_Upz_Comunidad"]').on('change', function(e)
     {
         var otherValue=$(this).find('option:selected').attr('data-othervalue');
-        console.log(otherValue);
-        selecionar_barrios_comunidad(otherValue);
+        selecionar_barrios_comunidad(otherValue,$('select[name="Id_Barrio_Comunidad"]'));
     });
 
-    var selecionar_barrios_comunidad = function(id)
+    $('select[name="Id_Upz_escenario"]').on('change', function(e)
+    {
+        var otherValue=$(this).find('option:selected').attr('data-othervalue');
+        selecionar_barrios_comunidad(otherValue,$('select[name="Id_Barrio_escenario"]'));
+    });
+
+    var selecionar_barrios_comunidad = function(id, select)
     { 
        $('select[name="Id_Barrio_Comunidad"]').html('<option value="">Cargando...</option>');
         $.ajax({
@@ -184,14 +211,47 @@ $(function()
             success: function(data)
             {
                 var html = '<option value="">Seleccionar</option>'; 
-                $('select[name="Id_Barrio_Comunidad"]').html(html).val($('select[name="Id_Barrio_Comunidad"]').data('value'));
+                select.html(html).val($('select[name="Id_Barrio_Comunidad"]').data('value'));
 
                   var html = '<option value="">Seleccionar</option>';
                   $.each(data, function(i, eee)
                   {
                             html += '<option value="'+eee['IdBarrio']+'"  >'+eee['Barrio'].toUpperCase()+'</option>';
                   });   
-                  $('select[name="Id_Barrio_Comunidad"]').html(html).val($('select[name="Id_Barrio_Comunidad"]').data('value'));
+                  select.html(html);
+                  select.selectpicker('refresh');
+                  select.selectpicker('val', $('select[name="Id_Barrio_Comunidad"]').data('value'));
+            }
+        });
+    };
+
+    //Caracterisiticas especificas de la población
+    $('select[name="caracteristicaPoblacion"]').on('change', function(e)
+    {
+        var otherValue = $(this).val();   
+        selecionar_caracteristica_poblacion(otherValue);
+    });
+
+    var selecionar_caracteristica_poblacion = function(id)
+    { 
+       $('select[name="caracteristicaEspecifica"]').html('');
+       $('select[name="caracteristicaEspecifica"]').selectpicker('refresh');
+       $('select[name="caracteristicaEspecifica"]').selectpicker('val', $('select[name="caracteristicaEspecifica"]').data('value'));
+
+        $.ajax({
+            url: URL+'/select_caracteristicas_especificas_poblacion/'+id,
+            data: {},
+            dataType: 'json',
+            success: function(data)
+            {
+                  var html = '<option value="">Seleccionar</option>';
+                  $.each(data, function(i, eee)
+                  {
+                            html += '<option value="'+eee['i_pk_id']+'"  >'+eee['vc_elemento'].toUpperCase()+'</option>';
+                  });   
+                  $('select[name="caracteristicaEspecifica"]').html(html);
+                  $('select[name="caracteristicaEspecifica"]').selectpicker('refresh');
+                  $('select[name="caracteristicaEspecifica"]').selectpicker('val', $('select[name="caracteristicaEspecifica"]').data('value'));
             }
         });
     };
@@ -301,7 +361,7 @@ $(function()
         var hora_fin = $('input[name="hora_fin"]').val();
         var localidad_comunidad = $('select[name="localidad_comunidad"]').find('option:selected').val();
         
-        if(fecha_ejecucion!="" ||  hora_inicio!=""  ||  hora_fin!="")
+        if(fecha_ejecucion!='' &&  hora_inicio!=''  &&  hora_fin!='' && responsable!='')
         {
            
             if(localidad_comunidad==""){

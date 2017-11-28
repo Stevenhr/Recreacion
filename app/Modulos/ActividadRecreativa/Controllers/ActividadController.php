@@ -11,6 +11,8 @@ use App\Modulos\Programa\Programa;
 use App\Modulos\Actividad\Actividad;
 use App\Modulos\Componente\Componente;
 use App\Modulos\Tematica\Tematica;
+use App\Modulos\CaracteristicaPoblacion\CaracteristicaPoblacion;
+use App\Modulos\CaracteristicaPoblacion\Elementoscaracteristicas;
 use App\Modulos\Configuracion\Configuracion;
 use App\Modulos\Usuario\ConfiguracionPersona;
 use App\Http\Controllers\Controller;
@@ -21,8 +23,7 @@ class ActividadController extends Controller
 	public function inicio()
 	{
 		$Programa=Programa::where('IdPrograma','<>',7)->get();
-
-
+		$caracteristicaPoblacion=CaracteristicaPoblacion::where('i_estado',0)->get();
 		$Locali_gestor=ConfiguracionPersona::where('i_fk_id_persona',$_SESSION['Usuario'][0])->where('i_id_tipo_persona',Configuracion::GESTOR)->get();
 		
 		$locali[]="";
@@ -37,6 +38,7 @@ class ActividadController extends Controller
 		$datos=[
             "localidades"=>$Localidad,
             "programas"=>$Programa,
+            "caracteristicasPoblacion"=>$caracteristicaPoblacion,
             'punto' => null,
 		];
 		
@@ -79,6 +81,12 @@ class ActividadController extends Controller
 	{
 		$upzs = Barrio::where('CodUpz',$id)->get();
 		return response()->json($upzs);
+	}
+
+	public function select_caracteristicas_especificas_poblacion(Request $request, $id)
+	{
+		$especificos = Elementoscaracteristicas::where('i_fk_id_carac',$id)->get();
+		return response()->json($especificos);
 	}
 
 	public function disponibilidad_acopanante(Request $request)
