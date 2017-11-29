@@ -491,6 +491,65 @@ $(function()
 
     marker.addListener('click', toggleBounce);
 
+
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        var target = $(e.target).attr("href") // activated tab
+     //   alert(target);
+        $.post(
+            URL+'/validaPasos',
+            $('#form_registro_actividad').serialize(),
+            function(data){
+                if(data.status == 'error')
+                {
+                    validador(data.errors);
+                    var listaError='';
+                    var num=1;
+                    $.each(data.errors, function(i, e){
+                      listaError += '<li class="list-group-item text-danger">'+num+'. '+e+'</li>';
+                      num++;
+                    });
+                    $('#list_error').html(listaError);
+                    $('#myModal_mal').modal('show');
+                    
+                } 
+                else 
+                {
+                    validador(data.errors);
+                    //$("#home").addClass("active");
+                    $('#myModal_bien').modal('show');
+                     setTimeout(function(){
+                          document.getElementById("form_registro_actividad").reset();
+                          $('#myModal_bien').modal('hide');
+                      },1500)
+                    
+                }
+            }
+        );
+        e.preventDefault();
+    });
+
+    var validador = function(data)
+    {
+
+        $('#form_registro_actividad .form-group').removeClass('has-error');
+        var selector = '';
+        for (var error in data){
+            if (typeof data[error] !== 'function') {
+                switch(error)
+                {
+
+                    case 'programa':
+                    case 'actividad':
+                    case 'tematica':
+                    case 'componente':
+                        selector = 'select';
+                    break;
+                }
+                $('#form_registro_actividad '+selector+'[name="'+error+'"]').closest('.form-group').addClass('has-error');
+            }
+        }
+    }
+
 });
 
 function soloNumeros(evt) 

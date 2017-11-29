@@ -69,7 +69,7 @@
 				<!--FIN:: MENU DE CREACIÓN DE LA ACTIVIDAD-->
 
 
-
+			<form method="POST" id="form_registro_actividad">
 				<!-- DATOS BASICOS DE LA ACTIVIDAD  -->
 				<div class="tab-content">
 					
@@ -529,9 +529,30 @@
 
 					<div class="clearfix"></div>
 				</div>
+			</form>
 
 			</div>
 		</div>
+
+
+		<div class="modal fade"  id="myModal_mal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header modal-header-danger">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 style="color: #fff;"><i class="glyphicon glyphicon-remove"></i> Error!!</h4>
+              </div>
+              <div class="modal-body">
+                <p>Datos vacios:</p>
+                <ul class="list-group" id="list_error"> 
+                </ul>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" id="cerrar">Cerrar</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
 
 </div>
 

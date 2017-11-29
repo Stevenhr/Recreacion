@@ -16,6 +16,8 @@ use App\Modulos\CaracteristicaPoblacion\Elementoscaracteristicas;
 use App\Modulos\Configuracion\Configuracion;
 use App\Modulos\Usuario\ConfiguracionPersona;
 use App\Http\Controllers\Controller;
+use Validator;
+
 
 class ActividadController extends Controller 
 {
@@ -136,5 +138,30 @@ class ActividadController extends Controller
 		];
 		return response()->json($data);
 	}
+
+
+	public function validaPasos(Request $request)
+	{
+		$messages = [
+		    'programa.required'    => 'El campo :attribute se encuentra vacio.',
+		    'actividad.required'    => 'El campo :attribute se encuentra vacio.',
+		    'tematica.required' => 'El campo :attribute se encuentra vacio.',
+		    'componente.required'      => 'El campo :attribute se encuentra vacio.',
+		];
+
+		$validator = Validator::make($request->all(),
+		    [
+				'programa' => 'required',
+				'actividad' => 'required',
+				'tematica' => 'required',
+				'componente' => 'required',
+        	],$messages);
+        
+        if ($validator->fails())
+            return response()->json(array('status' => 'error', 'errors' => $validator->errors()));
+        else
+        	return response()->json(array('status' => 'bien', 'bien' => $validator->errors()));
+       
+    }
 
 }

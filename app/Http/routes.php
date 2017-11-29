@@ -85,6 +85,11 @@ Route::group(['prefix' => 'actividad', 'middleware' => 'auth'], function()
         'uses' => $controller.'ActividadController@disponibilidad_acopanante',
         'as' => 'selecionar_barrio'
     ]);
+
+    Route::post('validaPasos',[
+        'uses' => $controller.'ActividadController@validaPasos',
+        'as' => 'validaPasos'
+    ]);
 });
 
 Route::group(['prefix' => 'usuarios', 'middleware' => 'auth'], function()
