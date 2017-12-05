@@ -25,24 +25,24 @@
 						<div class="liner"></div>
 						
 						<li class="active">
-							<a href="#home" data-toggle="tab" title="welcome">
+							<a href="#datos_comunidad" data-toggle="tab" title="bootsnipp goodies">
 								<span class="round-tabs one">
+									<i class="glyphicon glyphicon-user"></i>
+								</span>
+							</a>
+						</li>
+
+						<li >
+							<a href="#home" data-toggle="tab" title="welcome">
+								<span class="round-tabs two">
 									<i class="glyphicon glyphicon-th"></i>
 								</span> 
 							</a>
 						</li>
 
 						<li>
-							<a href="#datos_comunidad" data-toggle="tab" title="bootsnipp goodies">
-								<span class="round-tabs three">
-									<i class="glyphicon glyphicon-user"></i>
-								</span>
-							</a>
-						</li>
-
-						<li>
 							<a href="#profile" data-toggle="tab" title="profile">
-								<span class="round-tabs two">
+								<span class="round-tabs three">
 									<i class="glyphicon glyphicon-calendar"></i>
 								</span> 
 							</a>
@@ -72,8 +72,8 @@
 			<form method="POST" id="form_registro_actividad">
 				<!-- DATOS BASICOS DE LA ACTIVIDAD  -->
 				<div class="tab-content">
-					
-					<div class="tab-pane fade in active" id="home">
+					<div class="tab-pane fade" id="home">
+						
 						<div class="row">
 							<div class="col-md-12 col-xs-12">
 								<h3 class="head text-center">Datos basicos de la actividad</h3>
@@ -88,6 +88,7 @@
 							<div class="col-md-3 col-xs-12">
 								<div class="form-group">
 									<label> 1. Programa </label>
+									<input type="hidden" name="id_datos" id="id_datos" value="0">
 									<select class="form-control" data-live-search="true" name="programa">
 										<option value="">Seleccionar</option>
 										@foreach($programas as $programa)
@@ -173,7 +174,7 @@
 
 
 
-					<div class="tab-pane fade" id="datos_comunidad">
+					<div class="tab-pane fade in active" id="datos_comunidad">
 						
 						<div class="row">
 							<div class="col-xs-12 col-sm-12">
@@ -188,6 +189,7 @@
 							<div class="col-md-4 col-xs-12">
 								<div class="form-group">
 									<label> 1. Localidad </label>
+									<input type="hidden" name="id" id="id" value="0">
 									<select class="form-control" data-live-search="true" name="localidad_comunidad" id="localidad_comunidad">
 										<option value="">Seleccionar</option>
 										@foreach($localidades as $localidad)
@@ -218,7 +220,7 @@
 							<div class="col-md-4 col-xs-12">
 								<div class="form-group">
 									<label> 4. Institución, Grupo, Comunidad:	</label>
-									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
+									<input type="text" class="form-control" name="institucion_g_c" autocomplete="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
 								</div>
 							</div>
 
@@ -538,18 +540,21 @@
 		<div class="modal fade"  id="myModal_mal">
           <div class="modal-dialog">
             <div class="modal-content">
+              
               <div class="modal-header modal-header-danger">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 style="color: #fff;"><i class="glyphicon glyphicon-remove"></i> Error!!</h4>
               </div>
+
               <div class="modal-body">
-                <p>Datos vacios:</p>
+                <p>Mensaje:</p>
                 <ul class="list-group" id="list_error"> 
                 </ul>
               </div>
+              
               <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal" id="cerrar">Cerrar</button>
               </div>
+
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->

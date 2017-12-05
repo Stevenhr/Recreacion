@@ -143,25 +143,106 @@ class ActividadController extends Controller
 	public function validaPasos(Request $request)
 	{
 		$messages = [
+		    'localidad_comunidad.required'    => 'El campo :attribute se encuentra vacio.',
+		    'Id_Upz_Comunidad.required'    => 'El campo :attribute se encuentra vacio.',
+		    'Id_Barrio_Comunidad.required' => 'El campo :attribute se encuentra vacio.',
+		    'institucion_g_c.required'      => 'El campo :attribute se encuentra vacio.',
+		    'caracteristicaPoblacion.required'      => 'El campo :attribute se encuentra vacio.',
+		    'caracteristicaEspecifica.required'      => 'El campo :attribute se encuentra vacio.',
+		];
+
+
+		$validator = Validator::make($request->all(),
+	    [
+			'localidad_comunidad' => 'required',
+			'Id_Upz_Comunidad' => 'required',
+			'Id_Barrio_Comunidad' => 'required',
+			'institucion_g_c' => 'required',
+			'caracteristicaPoblacion' => 'required',
+			'caracteristicaEspecifica' => 'required',
+    	],$messages);
+        
+        if ($validator->fails())
+            return response()->json(array('status' => 'error', 'errors' => $validator->errors()));
+        
+
+        if($request->input('id') == '0')
+        {
+            return $this->crear_datos_comunidad($request->all());
+        }
+        else
+        {
+            return $this->modificar_datos_comunidad($request->all());  
+        }
+    }
+
+    public function crear_datos_comunidad($input)
+    {
+        $actividadrecreativa = new ActividadRecreativa;
+        $actividadrecreativa['i_fk_localidadComunidad']=$input['localidad_comunidad'];
+		$actividadrecreativa['i_fk_upzComunidad']=$input['Id_Upz_Comunidad'];
+		$actividadrecreativa['i_fk_barrioComunidad']=$input['Id_Barrio_Comunidad'];
+		$actividadrecreativa['vc_institutoGrupoComunidad']=$input['institucion_g_c'];
+		$actividadrecreativa['vc_caracteristicaPoblacion']=$input['caracteristicaPoblacion'];
+		$actividadrecreativa->save();
+        return response()->json(array('status' => 'creado', 'datos' => $actividadrecreativa,'mensaje'=>'<strong>DATOS DE LA COMUNIDAD REGISTRADOS:</strong><br><strong>Registro Realizado!!</Strong> Datos registrados exitosamente.'));
+    }
+
+     public function modificar_datos_comunidad($input)
+    {
+        $actividadrecreativa =  ActividadRecreativa::find($input['id']);
+        $actividadrecreativa['i_fk_localidadComunidad']=$input['localidad_comunidad'];
+		$actividadrecreativa['i_fk_upzComunidad']=$input['Id_Upz_Comunidad'];
+		$actividadrecreativa['i_fk_barrioComunidad']=$input['Id_Barrio_Comunidad'];
+		$actividadrecreativa['vc_institutoGrupoComunidad']=$input['institucion_g_c'];
+		$actividadrecreativa['vc_caracteristicaPoblacion']=$input['caracteristicaPoblacion'];
+		$actividadrecreativa->save();
+        return response()->json(array('status' => 'creado', 'datos' => $actividadrecreativa,'mensaje'=>'<strong>DATOS DE LA COMUNIDAD MODIFICADOS:</strong><br><Strong>Modificación Realizada!!</Strong> Datos modificados exitosamente.'));
+    }
+
+
+
+    public function validarDatosActividad(Request $request)
+	{
+		$messages = [
 		    'programa.required'    => 'El campo :attribute se encuentra vacio.',
 		    'actividad.required'    => 'El campo :attribute se encuentra vacio.',
 		    'tematica.required' => 'El campo :attribute se encuentra vacio.',
 		    'componente.required'      => 'El campo :attribute se encuentra vacio.',
 		];
 
+
 		$validator = Validator::make($request->all(),
-		    [
-				'programa' => 'required',
-				'actividad' => 'required',
-				'tematica' => 'required',
-				'componente' => 'required',
-        	],$messages);
+	    [
+			'programa' => 'required',
+			'actividad' => 'required',
+			'tematica' => 'required',
+			'componente' => 'required',
+    	],$messages);
         
         if ($validator->fails())
             return response()->json(array('status' => 'error', 'errors' => $validator->errors()));
-        else
-        	return response()->json(array('status' => 'bien', 'bien' => $validator->errors()));
-       
+
+        if($request->input('id_datos') == '0')
+        {
+            return $this->crear_datos_actividad($request->all());
+        }
+        
     }
+
+
+    public function crear_datos_actividad($input)
+    {
+
+        $datosActividad = new DatosActividad;
+        $datosActividad['i_fk_id_actividad']=$input['id'];
+		$datosActividad['i_fk_programa']=$input['programa'];
+		$datosActividad['i_fk_actividad']=$input['actividad'];
+		$datosActividad['i_fk_tematica']=$input['tematica'];
+		$datosActividad['i_fk_componente']=$input['componente'];
+		$datosActividad->save();
+        return response()->json(array('status' => 'creado', 'datos' => $datosActividad,'mensaje'=>'<strong>DATOS DE LA ACTIVIDAD REGISTRADOS:</strong><br><strong>Registro Realizado!!</Strong> Datos registrados exitosamente.'));
+    }
+
 
 }

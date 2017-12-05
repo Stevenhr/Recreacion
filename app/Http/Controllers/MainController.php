@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Modulos\Usuario\ConfiguracionPersona;
 use Idrd\Usuarios\Repo\PersonaInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session; 
 
 class MainController extends Controller {
 
@@ -17,14 +18,13 @@ class MainController extends Controller {
 	{
 		if (isset($_SESSION['Usuario']))
 			$this->Usuario = $_SESSION['Usuario'];
-
+		
 		$this->repositorio_personas = $repositorio_personas;
 	}
 
 	public function welcome()
 	{
-		$data['seccion'] = '';
-		return view('welcome', $data);
+		return view('welcome');
 	}
 
     public function index(Request $request)
@@ -43,6 +43,8 @@ class MainController extends Controller {
 				'permiso1' => array_key_exists(1, $permissions_array) ? intval($permissions_array[1]) : 0
 			];
 
+			//dd($permisos);
+
 			$_SESSION['Usuario'] = $user_array;
             $persona = $this->repositorio_personas->obtener($_SESSION['Usuario'][0]);
             $configuraciones = ConfiguracionPersona::where('i_fk_id_persona', $_SESSION['Usuario'][0]);
@@ -53,6 +55,7 @@ class MainController extends Controller {
 			$_SESSION['Usuario']['Roles'] = $configuraciones;
 			$_SESSION['Nombre']=$persona["Primer_Apellido"]." ".$persona["Segundo_Apellido"]." ".$persona["Primer_Nombre"]." ".$persona["Segundo_Nombre"];
 			$this->Usuario = $_SESSION['Usuario'];
+
 		} else {
 			if (!isset($_SESSION['Usuario']))
 				$_SESSION['Usuario'] = '';

@@ -234,9 +234,6 @@ $(function()
 
     var selecionar_caracteristica_poblacion = function(id)
     { 
-       $('select[name="caracteristicaEspecifica"]').html('');
-       $('select[name="caracteristicaEspecifica"]').selectpicker('refresh');
-       $('select[name="caracteristicaEspecifica"]').selectpicker('val', $('select[name="caracteristicaEspecifica"]').data('value'));
 
         $.ajax({
             url: URL+'/select_caracteristicas_especificas_poblacion/'+id,
@@ -260,96 +257,46 @@ $(function()
     var datos_actividad = [];
     $('#btn_agregar_datos_actividad').on('click', function(e)
     {
-
-
-        var id_programa = $('select[name="programa"]').val();
-        var programa = $('select[name="programa"]').find(':selected').text();
-        var id_actividad = $('select[name="actividad"]').val();
-        var actividad = $('select[name="actividad"]').find(':selected').text();
-        var id_tematica = $('select[name="tematica"]').val();
-        var tematica = $('select[name="tematica"]').find(':selected').text();
-        var id_componente = $('select[name="componente"]').val();
-        var componente = $('select[name="componente"]').find(':selected').text();
-        var mnsj="";
-
-        if(id_programa=="" || id_actividad=="" )
-        {
-            mnsj="<div class='alert alert-info'>"
-                  +"<strong>Datos Vacios!</strong> Algunos campos del formulario están vacios."
-                  +"</div>";
-        }
-        else
-        {
-            var paso=0;
-            if(datos_actividad.length!=0){
-                $.each(datos_actividad, function(i, e) {
-                    if(e['id_programa']==id_programa && e['id_actividad']==id_actividad && e['id_tematica']==id_tematica && e['id_componente']==id_componente){
-                        paso=2;
-                        return false;
-                    }else if(e['id_programa']==id_programa && e['id_actividad']==id_actividad ){
-                        paso=1;
-                    }else{
-                        paso=0;
-                        return false;
-                    }
-                });
-            }else{
-                paso=1;
-            }
-     
-            if(paso==1) {
-
-                if(id_tematica==""){tematica="";}
-                if(id_componente==""){componente="";}
-
-                datos_actividad.push({
-                    "id_programa": id_programa,
-                    "programa": programa,
-                    "id_actividad": id_actividad,
-                    "actividad": actividad,
-                    "id_tematica": id_tematica,
-                    "tematica": tematica,
-                    "id_componente": id_componente,
-                    "componente": componente
-                });
-                mnsj="<div class='alert alert-success'>"
-                    +"<strong>Datos Agregados!</strong> Se agregaron los datos exitosamente."
-                    +"</div>";
-
-                if(datos_actividad.length > 0)
+        var variable=window.location.hash;
+        $('#id').val(variable.replace('#', ''));
+        $.post(
+            URL+'/validarDatosActividad',
+            //{ id_programa: id_programa, id_actividad: id_actividad, id_tematica:id_tematica, id_componente:id_componente ,id_actividad:variable.replace('#', '')},
+            $('#form_registro_actividad').serialize(),
+            function(data)
+            {
+                if(data.status == 'error')
                 {
-                    var num=1;
-                    var html="";
-                    $.each(datos_actividad, function(i, e){
-                        html += '<tr class="warning"><th scope="row" class="text-center">'+num+'</th>'+
-                            '<td>'+e['programa']+'</td>'+
-                            '<td>'+e['actividad']+'</td>'+
-                            '<td>'+e['tematica']+'</td>'+
-                            '<td>'+e['componente']+'</td>'+
-                            '<td class="text-center"><button type="button" data-rel="'+i+'" data-funcion="eliminar" class="eliminar_dato_actividad"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td></tr>';
-                        num++;
-                    });
+                    validador_datos_actividad(data.errors);
+                } 
+                else 
+                {
+                    validador_datos_actividad(data.errors);    
                 }
-                $('#registros_datos').html(html);
-
-            }else if(paso==2){
-                mnsj="<div class='alert alert-info'>"
-                    +"<strong>Registro Repetido! </strong>Los datos ya fueron registrados."
-                    +"</div>";
-            }else{
-                mnsj="<div class='alert alert-info'>"
-                    +"<strong>Programa o Actividad!</strong> El programa o la actividad son diferentes a los registrados, solo se puede registrar un programa y actividad."
-                    +"</div>";
             }
-        }
-
-        $('#alerta_datos').html(mnsj);
-        setTimeout(function(){
-            $('#alerta_datos').html("");
-        }, 4000);
-
+        );
         return false;
     });
+
+    var validador_datos_actividad = function(data)
+    {
+        $('#form_registro_actividad .form-group').removeClass('has-error');
+        var selector = '';
+        for (var error in data){
+            if (typeof data[error] !== 'function') {
+                switch(error)
+                {
+                    case 'programa':
+                    case 'actividad':
+                    case 'tematica':
+                    case 'componente':
+                        selector = 'select';
+                    break;               
+                }
+                $('#form_registro_actividad '+selector+'[name="'+error+'"]').closest('.form-group').addClass('has-error');
+            }
+        }
+    }
 
 
     $('#btn_agregar_validar_disponiblidad').on('click', function(e)
@@ -493,38 +440,53 @@ $(function()
 
 
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-        var target = $(e.target).attr("href") // activated tab
-     //   alert(target);
-        $.post(
-            URL+'/validaPasos',
-            $('#form_registro_actividad').serialize(),
-            function(data){
-                if(data.status == 'error')
+
+            var target = $(e.target).attr("href") // activated tab
+
+                
+                if(target=="#profile" && !$('#home').hasClass("hide"))
                 {
-                    validador(data.errors);
-                    var listaError='';
-                    var num=1;
-                    $.each(data.errors, function(i, e){
-                      listaError += '<li class="list-group-item text-danger">'+num+'. '+e+'</li>';
-                      num++;
-                    });
-                    $('#list_error').html(listaError);
-                    $('#myModal_mal').modal('show');
-                    
-                } 
-                else 
-                {
-                    validador(data.errors);
-                    //$("#home").addClass("active");
-                    $('#myModal_bien').modal('show');
-                     setTimeout(function(){
-                          document.getElementById("form_registro_actividad").reset();
-                          $('#myModal_bien').modal('hide');
-                      },1500)
-                    
+                    var hash = window.location.hash;
+                    alert(hash);
+                   
                 }
-            }
-        );
+                
+
+                if(target=="#home" && !$('#home').hasClass("hide"))
+                {
+                    $.post(
+                        URL+'/validaPasos',
+                        $('#form_registro_actividad').serialize(),
+                        function(data){
+                            if(data.status == 'error')
+                            {
+                                validador(data.errors);
+                                var listaError='';
+                                var num=1;
+                                $('#myTab a[href="#datos_comunidad"]').tab('show')
+                                $.each(data.errors, function(i, e){
+                                  listaError += '<li class="list-group-item text-danger">'+num+'. '+e+'</li>';
+                                  num++;
+                                });
+                                $('#list_error').html(listaError);
+                                $('#myModal_mal').modal('show');
+                            } 
+                            else 
+                            {
+                                validador(data.errors);  
+                                window.location.hash = '#'+data.datos['i_pk_id'];
+                                var variable=window.location.hash;
+                                $('#id').val(variable.replace('#', ''));
+                                $('#myTab a[href="#home"]').tab('show')
+                                $('#list_error').html(data.mensaje);
+                                $('#myModal_mal').modal('show');      
+
+                                
+                            }
+                        }
+                    );
+                }
+
         e.preventDefault();
     });
 
@@ -538,12 +500,19 @@ $(function()
                 switch(error)
                 {
 
-                    case 'programa':
-                    case 'actividad':
-                    case 'tematica':
-                    case 'componente':
+                    case 'localidad_comunidad':
+                    case 'Id_Upz_Comunidad':
+                    case 'Id_Barrio_Comunidad':
+                    case 'caracteristicaPoblacion':
+                    case 'caracteristicaEspecifica':
                         selector = 'select';
                     break;
+
+
+                    case 'institucion_g_c':
+                        selector = 'input';
+                    break;
+                            
                 }
                 $('#form_registro_actividad '+selector+'[name="'+error+'"]').closest('.form-group').addClass('has-error');
             }

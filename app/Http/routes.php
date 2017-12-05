@@ -13,11 +13,12 @@ Route::get('/personas/service/ciudad/{id_pais}', '\Idrd\Usuarios\Controllers\Loc
 Route::post('/personas/service/procesar/', '\Idrd\Usuarios\Controllers\PersonaController@procesar');
 
 Route::get('/actividad_usuario/{identificacion?}', function ($identificacion = null) {
-return view('idrd.usuarios.persona_actividades', [
-'seccion' => 'Actividades',
-'identificacion' => $identificacion
-]);
+    return view('idrd.usuarios.persona_actividades', [
+        'seccion' => 'Actividades',
+        'identificacion' => $identificacion
+    ]);
 });
+
 Route::get('/usuario_tipo', function () { return view('persona_tipoPersona'); });
 Route::get('/asignarActividad', '\Idrd\Usuarios\Controllers\AsignarActividadController@asignarActividades');
 Route::get('/actividadesModulo', '\Idrd\Usuarios\Controllers\AsignarActividadController@moduloActividades');
@@ -28,10 +29,10 @@ Route::any('/logout', 'MainController@logout');
 
 Route::any('/', 'MainController@index');
 Route::any('/logout', 'MainController@logout');
-
+Route::get('/welcome', 'MainController@welcome');
 //rutas con filtro de autenticación
 Route::group(['middleware' => ['web']], function () {
-	Route::get('/welcome', 'MainController@welcome');
+	
 });
 
 
@@ -88,6 +89,11 @@ Route::group(['prefix' => 'actividad', 'middleware' => 'auth'], function()
 
     Route::post('validaPasos',[
         'uses' => $controller.'ActividadController@validaPasos',
+        'as' => 'validaPasos'
+    ]);
+
+     Route::post('validarDatosActividad',[
+        'uses' => $controller.'ActividadController@validarDatosActividad',
         'as' => 'validaPasos'
     ]);
 });

@@ -13,4 +13,11 @@ class ActividadRecreativa extends Model
 	protected $connection = ''; 
 	public $timestamps = true;
 
+
+    public function datosActividad()
+    {
+        return $this->hasMany('App\DatosActividad','i_fk_id_actividad');
+    }
+
 }
+
