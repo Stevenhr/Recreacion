@@ -1,7 +1,7 @@
 $(function()
 {
 	var URL = $('#main_actividad').data('url');
-
+    window.location.hash = '#inicio';
     $("#fecha_ejecucdion").datepicker({
       changeMonth: true,
       changeYear: true,
@@ -258,7 +258,6 @@ $(function()
     $('#btn_agregar_datos_actividad').on('click', function(e)
     {
         var variable=window.location.hash;
-        $('#id').val(variable.replace('#', ''));
         $.post(
             URL+'/validarDatosActividad',
             //{ id_programa: id_programa, id_actividad: id_actividad, id_tematica:id_tematica, id_componente:id_componente ,id_actividad:variable.replace('#', '')},
@@ -268,10 +267,38 @@ $(function()
                 if(data.status == 'error')
                 {
                     validador_datos_actividad(data.errors);
+                    var listaError='';
+                    var num=1;
+                    $('#myTab a[href="#home"]').tab('show')
+                    $.each(data.errors, function(i, e){
+                      listaError += '<li class="list-group-item text-danger">'+num+'. '+e+'</li>';
+                      num++;
+                    });
+                    $('#list_error').html(listaError);
+                    $('#myModal_mal').modal('show');
                 } 
                 else 
                 {
-                    validador_datos_actividad(data.errors);    
+                    validador_datos_actividad(data.errors);   
+                    var variable=window.location.hash;
+                    $('#id').val(variable.replace('#', ''));
+
+                    var num=1; 
+                    var html=""; 
+                    $.each(data.datos, function(i, e){ 
+                        html += '<tr class="warning"><th scope="row" class="text-center">'+num+'</th>'+ 
+                            '<td>'+e.programa['programa']+'</td>'+ 
+                            '<td>'+e.actividad['actividad']+'</td>'+ 
+                            '<td>'+e.tematica['tematica']+'</td>'+ 
+                            '<td>'+e.componente['componente']+'</td>'+ 
+                            '<td class="text-center"><button type="button" data-rel="'+e['i_pk_id']+'" data-funcion="eliminar" class="eliminar_dato_actividad"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td></tr>'; 
+                        num++; 
+                    }); 
+                    $('#registros_datos').html(html);
+
+                    $('#myTab a[href="#home"]').tab('show')
+                    $('#list_error').html(data.mensaje);
+                    $('#myModal_mal').modal('show'); 
                 }
             }
         );
@@ -301,43 +328,39 @@ $(function()
 
     $('#btn_agregar_validar_disponiblidad').on('click', function(e)
     {
-
-        var fecha_ejecucion = $('input[name="fecha_ejecucion"]').val();
-        var responsable = $('input[name="responsable"]').val();
-        var hora_inicio = $('input[name="hora_inicio"]').val();
-        var hora_fin = $('input[name="hora_fin"]').val();
-        var localidad_comunidad = $('select[name="localidad_comunidad"]').find('option:selected').val();
-        
-        if(fecha_ejecucion!='' &&  hora_inicio!=''  &&  hora_fin!='' && responsable!='')
-        {
-           
-            if(localidad_comunidad==""){
-                $('#alerta_datos_acompanantes').html('<div class="alert alert-dismissible alert-info" ><strong>Error!</strong> Localidad de la comunidad no ha sido seleccionada. <strong>Ir a paso dos</strong> </div>');
-                setTimeout(function(){
-                    $('#alerta_datos_acompanantes').html("");
-                }, 4000);
-            }
-
-            $.post(
-            
-            URL+'/disponibilidad_acopanante',
+        $.post(
+            URL+'/disponibilidad_acopanante',            
+            $('#form_registro_actividad').serialize(),
+            function(data)
             {
-                fecha_ejecucion: fecha_ejecucion,
-                responsable: responsable,
-                localidad_comunidad:localidad_comunidad,
-                hora_inicio:hora_inicio,
-                hora_fin:hora_fin
-            },
-            'json'
-            ).done(function(data)
-            {
-              
-                if(data.opcion=="Verfique hay un cruze de horarios"){
-                    $('#alerta_datos_acompanantes').html('<div class="alert alert-dismissible alert-info" ><strong>Error!</strong> '+data.opcion+' <strong>ID de actividades con conflicto: '+data.id_actividades+'</strong> </div>');
-                    setTimeout(function(){
-                        $('#alerta_datos_acompanantes').html("");
-                    }, 4000);
+                
+                if(data.status == 'error')
+                {
+                    validador_disponibilidad_responsables(data.errors);
+
+                    var listaError='';
+                    var num=1;
+                    
+                    $.each(data.errors, function(i, e){
+                      listaError += '<li class="list-group-item text-danger">'+num+'. '+e+'</li>';
+                      num++;
+                    });
+                    $('#list_error').html(listaError);
+                    $('#myModal_mal').modal('show');
+                } 
+                else 
+                {
+                    validador_disponibilidad_responsables(data.errors);   
+                    if(data.opcion=="Verfique hay un cruze de horarios"){
+                        $('#alerta_datos_acompanantes').html('<div class="alert alert-dismissible alert-info" ><strong>Error!</strong> '+data.opcion+' <strong>ID de actividades con conflicto: '+data.id_actividades+'</strong> </div>');
+                        setTimeout(function(){
+                            $('#alerta_datos_acompanantes').html("");
+                        }, 4000);
+                    }
+                    $('#list_error').html("Verfique hay un cruze de horarios");
+                    $('#myModal_mal').modal('show'); 
                 }
+
                
                /*if(data)
                 {
@@ -356,48 +379,62 @@ $(function()
                 }
                 */
 
-            }).fail(function(xhr, status, error)
-            {
-                alert(error);
-            });
+            }
 
-            e.preventDefault();
-
-        }else{
-            $('#alerta_datos_acompanantes').html('<div class="alert alert-dismissible alert-info" ><strong>Error!</strong> Datos incompletos para la consulta. </div>');
-            setTimeout(function(){
-                $('#alerta_datos_acompanantes').html("");
-            }, 4000);
-        }
+        );
 
         return false;
     });
 
+     var validador_disponibilidad_responsables = function(data)
+    {
+        $('#form_registro_actividad .form-group').removeClass('has-error');
+        var selector = '';
+        for (var error in data){
+            if (typeof data[error] !== 'function') {
+                switch(error)
+                {
+                    case 'responsable':
+                        selector = 'select';
+                    break;      
+
+                    case 'fecha_ejecucion':
+                    case 'hora_inicio':
+                    case 'hora_fin':
+                        selector = 'input';
+                    break;            
+                }
+                $('#form_registro_actividad '+selector+'[name="'+error+'"]').closest('.form-group').addClass('has-error');
+            }
+        }
+    }
+
     $('#datos_actividad').delegate('button[data-funcion="eliminar"]','click',function (e) {
         var id = $(this).data('rel');
-        console.log(id);
-        datos_actividad.splice(id, 1);
+        $.get(
+            URL+'/eliminarDatosActividad/'+id,
+            function(data)
+            {
+                var num=1; 
+                var html=""; 
+                $('#registros_datos').html(html);
+                $.each(data.datos, function(i, e){ 
+                    html += '<tr class="warning"><th scope="row" class="text-center">'+num+'</th>'+ 
+                        '<td>'+e.programa['programa']+'</td>'+ 
+                        '<td>'+e.actividad['actividad']+'</td>'+ 
+                        '<td>'+e.tematica['tematica']+'</td>'+ 
+                        '<td>'+e.componente['componente']+'</td>'+ 
+                        '<td class="text-center"><button type="button" data-rel="'+e['i_pk_id']+'" data-funcion="eliminar" class="eliminar_dato_actividad"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td></tr>'; 
+                    num++; 
+                }); 
+                $('#registros_datos').html(html);
 
-        $('#alerta_datos').html('<div class="alert alert-dismissible alert-success" ><strong>Exito!</strong> Dato eliminado de la actividad con exito. </div>');
-        setTimeout(function(){
-            $('#alerta_datos').html("");
-        }, 4000);
-
-        if(datos_actividad.length >= 0)
-        {
-            var num=1;
-            var html="";
-            $.each(datos_actividad, function(i, e){
-                html += '<tr class="warning"><th scope="row" class="text-center">'+num+'</th>'+
-                    '<td>'+e['programa']+'</td>'+
-                    '<td>'+e['actividad']+'</td>'+
-                    '<td>'+e['tematica']+'</td>'+
-                    '<td>'+e['componente']+'</td>'+
-                    '<td class="text-center"><button type="button" data-rel="'+i+'" data-funcion="eliminar" class="eliminar_dato_actividad"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td></tr>';
-                num++;
-            });
-        }
-        $('#registros_datos').html(html);
+                $('#myTab a[href="#home"]').tab('show')
+                $('#list_error').html(data.mensaje);
+                $('#myModal_mal').modal('show'); 
+            }
+        );
+        return false;
 
     });
 
@@ -412,7 +449,9 @@ $(function()
         if (marker.getAnimation() !== null)
         {
             marker.setAnimation(null);
-        } else {
+        } 
+        else 
+        {
             marker.setAnimation(google.maps.Animation.BOUNCE);
         }
     }
@@ -423,7 +462,6 @@ $(function()
         $('input[name="Longitud"]').val(e.latLng.lng());
     }
     
-
     var map = new google.maps.Map($("#map").get(0), {
         center: {lat: latitud, lng: longitud},
         zoom: 13
@@ -439,55 +477,83 @@ $(function()
     marker.addListener('click', toggleBounce);
 
 
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+    $('.nav-tabs a').click(function (e) {
 
-            var target = $(e.target).attr("href") // activated tab
-
+            var target = $(this).attr("href") // activated tab
                 
-                if(target=="#profile" && !$('#home').hasClass("hide"))
+                if(target=="#profile")
                 {
                     var hash = window.location.hash;
-                    alert(hash);
-                   
+                    var id=hash.replace('#', '');
+                    if(id>0){
+                        $.get(
+                            URL+'/validardatosactividadregistrados/'+id,
+                            function(data)
+                            {
+                                if(data.status == 'ok')
+                                {
+                                    $('#id').val(id);
+                                    $('#myTab a[href="#profile"]').tab('show');
+                                    $('#list_error').html(data.mensaje);
+                                    $('#myModal_mal').modal('show');  
+                                } 
+                                else 
+                                {
+                                    $('#id').val(id);
+                                    $('#myTab a[href="#home"]').tab('show');
+                                    $('#list_error').html(data.mensaje);
+                                    $('#myModal_mal').modal('show');     
+                                }
+                            }
+                        );
+                    }else{
+                        $('#myTab a[href="#datos_comunidad"]').tab('show')
+                        $('#list_error').html("<strong> ACTIVIDAD NO HA SIDO CREADA:</strong> Registre los datos del primer paso.");
+                        $('#myModal_mal').modal('show');  
+                    }
                 }
                 
 
-                if(target=="#home" && !$('#home').hasClass("hide"))
+                if(target=="#home")
                 {
                     $.post(
                         URL+'/validaPasos',
                         $('#form_registro_actividad').serialize(),
                         function(data){
+
                             if(data.status == 'error')
                             {
                                 validador(data.errors);
                                 var listaError='';
                                 var num=1;
-                                $('#myTab a[href="#datos_comunidad"]').tab('show')
+                                
+                                $('#myTab a[href="#datos_comunidad"]').tab('show');
+
                                 $.each(data.errors, function(i, e){
                                   listaError += '<li class="list-group-item text-danger">'+num+'. '+e+'</li>';
                                   num++;
                                 });
+
                                 $('#list_error').html(listaError);
                                 $('#myModal_mal').modal('show');
                             } 
                             else 
                             {
-                                validador(data.errors);  
+                                validador(data.status);  
                                 window.location.hash = '#'+data.datos['i_pk_id'];
                                 var variable=window.location.hash;
-                                $('#id').val(variable.replace('#', ''));
-                                $('#myTab a[href="#home"]').tab('show')
+                                var id=variable.replace('#', '');
+                                $('#id').val(id);
+                                $('#myTab a[href="#home"]').tab('show');
                                 $('#list_error').html(data.mensaje);
                                 $('#myModal_mal').modal('show');      
-
-                                
                             }
                         }
                     );
                 }
 
         e.preventDefault();
+        return false;
     });
 
     var validador = function(data)

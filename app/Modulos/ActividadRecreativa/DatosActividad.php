@@ -19,4 +19,25 @@ class DatosActividad extends Model
         return $this->belongsTo('App\ActividadRecreativa','i_fk_id_actividad');
     }
 
+    public function programa()
+    {
+        return $this->belongsTo('App\Modulos\Programa\Programa','i_fk_programa');
+    }
+
+    public function actividad()
+    {
+        return $this->belongsTo('App\Modulos\Actividad\Actividad','i_fk_actividad');
+    }
+
+    public function tematica()
+    {
+        return $this->belongsTo('App\Modulos\Tematica\Tematica','i_fk_tematica');
+    }
+
+    public function componente()
+    {
+        return $this->belongsTo('App\Modulos\Componente\Componente','i_fk_tematica');
+    }
+
+
 }

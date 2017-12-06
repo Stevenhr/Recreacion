@@ -27,7 +27,7 @@
 						<li class="active">
 							<a href="#datos_comunidad" data-toggle="tab" title="bootsnipp goodies">
 								<span class="round-tabs one">
-									<i class="glyphicon glyphicon-user"></i>
+									<i class="glyphicon glyphicon-user"></i><br>I
 								</span>
 							</a>
 						</li>
@@ -35,7 +35,7 @@
 						<li >
 							<a href="#home" data-toggle="tab" title="welcome">
 								<span class="round-tabs two">
-									<i class="glyphicon glyphicon-th"></i>
+									<i class="glyphicon glyphicon-floppy-saved"></i><br>II
 								</span> 
 							</a>
 						</li>
@@ -43,7 +43,7 @@
 						<li>
 							<a href="#profile" data-toggle="tab" title="profile">
 								<span class="round-tabs three">
-									<i class="glyphicon glyphicon-calendar"></i>
+									<i class="glyphicon glyphicon-floppy-saved"></i><br>III
 								</span> 
 							</a>
 						</li>
@@ -51,7 +51,7 @@
 						<li>
 							<a href="#settings" data-toggle="tab" title="blah blah">
 								<span class="round-tabs four">
-									<i class="glyphicon glyphicon-globe"></i>
+									<i class="glyphicon glyphicon-floppy-saved"></i><br>IV
 								</span> 
 							</a>
 						</li>
@@ -59,7 +59,7 @@
 						<li>
 							<a href="#doner" data-toggle="tab" title="completed">
 								<span class="round-tabs five">
-									<i class="glyphicon glyphicon-ok"></i>
+									<i class="glyphicon glyphicon-floppy-saved"></i><br>V
 								</span>
 							</a>
 						</li>
@@ -76,7 +76,7 @@
 						
 						<div class="row">
 							<div class="col-md-12 col-xs-12">
-								<h3 class="head text-center">Datos basicos de la actividad</h3>
+								<h3 class="head text-center"><strong>PASO II:</strong> Datos basicos de la actividad</h3>
 								<p class="narrow text-center">
 									Espacio para registrar las actividades basicas de la actvidad.
 								</p>
@@ -137,7 +137,7 @@
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-xs-12">
 								<div class="form-group">
-									<label> Registro de datos de la actividad</label>
+									<label>Registro de datos de la actividad</label>
 									<div class="bs-example" data-example-id="bordered-table"> 
 										<table class="table display no-wrap table-condensed table-bordered table-min" id="datos_actividad">
 											<thead> 
@@ -178,7 +178,7 @@
 						
 						<div class="row">
 							<div class="col-xs-12 col-sm-12">
-								<h3 class="head text-center">DATOS DE LA COMUNIDAD</h3>
+								<h3 class="head text-center"><strong>PASO I:</strong> DATOS DE LA COMUNIDAD</h3>
 								<p class="narrow text-center">
 									Registro del tipo de comunidad que va asistir a la actividad.
 								</p>
@@ -273,7 +273,7 @@
 						
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-xs-12">
-								<h3 class="head text-center">Programación y asignación de la actividad</h3>
+								<h3 class="head text-center"><strong>PASO III</strong> Programación y asignación de la actividad</h3>
 								<p class="narrow text-center">
 									Espacio para registrar la programación y asignación de la activadad, se puede agregar varias actividades que coincidan con los mismos datos en los diferentes ítem
 								</p>

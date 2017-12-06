@@ -94,8 +94,19 @@ Route::group(['prefix' => 'actividad', 'middleware' => 'auth'], function()
 
      Route::post('validarDatosActividad',[
         'uses' => $controller.'ActividadController@validarDatosActividad',
-        'as' => 'validaPasos'
+        'as' => 'validadatosactividad'
     ]);
+
+    Route::get('eliminarDatosActividad/{id}',[
+        'uses' => $controller.'ActividadController@eliminarDatosActividad',
+        'as' => 'eliminadatosactividad'
+    ]);
+
+    Route::get('validardatosactividadregistrados/{id}',[
+        'uses' => $controller.'ActividadController@validardatosactividadregistrados',
+        'as' => 'validardatosactividadregistrados'
+    ]);
+
 });
 
 Route::group(['prefix' => 'usuarios', 'middleware' => 'auth'], function()

@@ -7,6 +7,7 @@ use App\Localidad;
 use App\Modulos\Parques\Upz;
 use App\Modulos\Parques\Barrio;
 use App\Modulos\ActividadRecreativa\ActividadRecreativa;
+use App\Modulos\ActividadRecreativa\DatosActividad;
 use App\Modulos\Programa\Programa;
 use App\Modulos\Actividad\Actividad;
 use App\Modulos\Componente\Componente;
@@ -93,6 +94,27 @@ class ActividadController extends Controller
 
 	public function disponibilidad_acopanante(Request $request)
 	{
+
+		$messages = [
+		    'responsable.required'    => 'El campo :attribute se encuentra vacio.',
+		    'fecha_ejecucion.required'    => 'El campo :attribute se encuentra vacio.',
+		    'hora_inicio.required' => 'El campo :attribute se encuentra vacio.',
+		    'hora_fin.required'      => 'El campo :attribute se encuentra vacio.',
+		];
+
+
+		$validator = Validator::make($request->all(),
+	    [
+			'responsable' => 'required',
+			'fecha_ejecucion' => 'required',
+			'hora_inicio' => 'required',
+			'hora_fin' => 'required',
+    	],$messages);
+        
+        if ($validator->fails())
+            return response()->json(array('status' => 'error', 'errors' => $validator->errors()));
+
+
 		$hora_inicio = $request['hora_inicio'];
 		$hora_fin = $request['hora_fin'];
 
@@ -136,7 +158,7 @@ class ActividadController extends Controller
 			'opcion'=>$opcion,
 			'id_actividades'=>$actividad
 		];
-		return response()->json($data);
+		return response()->json(array('status' => 'bien', 'errors' =>$data));
 	}
 
 
@@ -207,8 +229,8 @@ class ActividadController extends Controller
 		$messages = [
 		    'programa.required'    => 'El campo :attribute se encuentra vacio.',
 		    'actividad.required'    => 'El campo :attribute se encuentra vacio.',
-		    'tematica.required' => 'El campo :attribute se encuentra vacio.',
-		    'componente.required'      => 'El campo :attribute se encuentra vacio.',
+		    'tematica.required'    => 'El campo :attribute se encuentra vacio.',
+		    'componente.required'    => 'El campo :attribute se encuentra vacio.',
 		];
 
 
@@ -220,14 +242,13 @@ class ActividadController extends Controller
 			'componente' => 'required',
     	],$messages);
         
-        if ($validator->fails())
+        if ($validator->fails()){
             return response()->json(array('status' => 'error', 'errors' => $validator->errors()));
-
-        if($request->input('id_datos') == '0')
+        }
+        else
         {
             return $this->crear_datos_actividad($request->all());
         }
-        
     }
 
 
@@ -238,11 +259,39 @@ class ActividadController extends Controller
         $datosActividad['i_fk_id_actividad']=$input['id'];
 		$datosActividad['i_fk_programa']=$input['programa'];
 		$datosActividad['i_fk_actividad']=$input['actividad'];
-		$datosActividad['i_fk_tematica']=$input['tematica'];
-		$datosActividad['i_fk_componente']=$input['componente'];
+		$datosActividad['i_fk_tematica']=($input['tematica']=='')?null:$input['tematica'];
+		$datosActividad['i_fk_componente']=($input['componente']=='')?null:$input['componente'];
 		$datosActividad->save();
-        return response()->json(array('status' => 'creado', 'datos' => $datosActividad,'mensaje'=>'<strong>DATOS DE LA ACTIVIDAD REGISTRADOS:</strong><br><strong>Registro Realizado!!</Strong> Datos registrados exitosamente.'));
+
+		$datosActividadTodos = DatosActividad::with('programa','actividad','tematica','componente')->where('i_fk_id_actividad',$input['id'])->get();
+
+        return response()->json(array('status' => 'creado', 'datos' => $datosActividadTodos,'mensaje'=>'<strong>DATOS DE LA ACTIVIDAD REGISTRADOS:</strong><br><strong>Registro Realizado!!</Strong> Datos registrados exitosamente.'));
     }
+
+    public function eliminarDatosActividad(Request $request, $id)
+	{
+		$datoactivida = DatosActividad::find($id);
+		$datoactivida->delete();
+		$datosActividadTodos = DatosActividad::with('programa','actividad','tematica','componente')->where('i_fk_id_actividad',$datoactivida['i_fk_id_actividad'])->get();
+
+		return response()->json(array('datos' => $datosActividadTodos,'mensaje'=>'<strong>DATO ELIMINADO:</strong><br><strong>Registro eliminado!!</Strong> Datos elimiando exitosamente.'));
+	}
+
+	public function validardatosactividadregistrados(Request $request, $id)
+	{
+		
+		$datoactivida = DatosActividad::where('i_fk_id_actividad',$id)->get();
+
+		if($datoactivida->count()){
+			$mensaje="<strong>BIEN!!</strong> Sigue con el siguiente paso de la programación y asignación de la actividad";
+			$status="ok";
+		}else{
+			$mensaje="<strong>DATOS INCOMPLETOS:</strong> No se han registrado los datos basicos de la actividad.";
+			$status="mal";
+		}
+		return response()->json(array('status' => $status, 'datos' => $datoactivida, 'mensaje'=>$mensaje));
+	}
+
 
 
 }
