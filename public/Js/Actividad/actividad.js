@@ -508,7 +508,7 @@ $(function()
                         );
                     }else{
                         $('#myTab a[href="#datos_comunidad"]').tab('show')
-                        $('#list_error').html("<strong> ACTIVIDAD NO HA SIDO CREADA:</strong> Registre los datos del primer paso.");
+                        $('#list_error').html("<div class='alert alert-info'><strong> ACTIVIDAD NO HA SIDO CREADA:</strong> Registre los datos del primer paso.</div>");
                         $('#myModal_mal').modal('show');  
                     }
                 }
@@ -550,6 +550,11 @@ $(function()
                             }
                         }
                     );
+                }
+
+                if(target=="#datos_comunidad")
+                {
+                    $('#myTab a[href="#datos_comunidad"]').tab('show');
                 }
 
         e.preventDefault();

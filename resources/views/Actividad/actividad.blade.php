@@ -540,19 +540,14 @@
 		<div class="modal fade"  id="myModal_mal">
           <div class="modal-dialog">
             <div class="modal-content">
-              
-              <div class="modal-header modal-header-danger">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-              </div>
 
               <div class="modal-body">
-                <p>Mensaje:</p>
-                <ul class="list-group" id="list_error"> 
-                </ul>
+              	<h4><strong>MENSAJE:</strong></h4><br>
+                <ul class="list-group" id="list_error"></ul>
               </div>
               
               <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal" id="cerrar">Cerrar</button>
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" id="cerrar">Cerrar</button>
               </div>
 
             </div><!-- /.modal-content -->

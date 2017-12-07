@@ -207,7 +207,7 @@ class ActividadController extends Controller
 		$actividadrecreativa['vc_institutoGrupoComunidad']=$input['institucion_g_c'];
 		$actividadrecreativa['vc_caracteristicaPoblacion']=$input['caracteristicaPoblacion'];
 		$actividadrecreativa->save();
-        return response()->json(array('status' => 'creado', 'datos' => $actividadrecreativa,'mensaje'=>'<strong>DATOS DE LA COMUNIDAD REGISTRADOS:</strong><br><strong>Registro Realizado!!</Strong> Datos registrados exitosamente.'));
+        return response()->json(array('status' => 'creado', 'datos' => $actividadrecreativa,'mensaje'=>'<div class="alert alert-success"><center><strong>DATOS DE LA COMUNIDAD REGISTRADOS:</strong></center><br><br>Datos registrados exitosamente en el sistema, la actividad <strong>'.$actividadrecreativa['i_pk_id'].'</strong> ya se encuentra en sus actividades, siga con el <strong>PASO II.</strong> Recuerde que debe completar los 5 pasos para que sea visible al responsable destinado para su aprobación. <br><br> <center><strong>ID: '.$actividadrecreativa['i_pk_id'].'</strong></center></div>'));
     }
 
      public function modificar_datos_comunidad($input)
@@ -219,7 +219,7 @@ class ActividadController extends Controller
 		$actividadrecreativa['vc_institutoGrupoComunidad']=$input['institucion_g_c'];
 		$actividadrecreativa['vc_caracteristicaPoblacion']=$input['caracteristicaPoblacion'];
 		$actividadrecreativa->save();
-        return response()->json(array('status' => 'creado', 'datos' => $actividadrecreativa,'mensaje'=>'<strong>DATOS DE LA COMUNIDAD MODIFICADOS:</strong><br><Strong>Modificación Realizada!!</Strong> Datos modificados exitosamente.'));
+        return response()->json(array('status' => 'creado', 'datos' => $actividadrecreativa,'mensaje'=>'<div class="alert alert-success"><strong>DATOS DE LA COMUNIDAD MODIFICADOS:</strong><br><Strong>Modificación Realizada!!</Strong> Datos modificados exitosamente.</div>'));
     }
 
 
@@ -265,7 +265,7 @@ class ActividadController extends Controller
 
 		$datosActividadTodos = DatosActividad::with('programa','actividad','tematica','componente')->where('i_fk_id_actividad',$input['id'])->get();
 
-        return response()->json(array('status' => 'creado', 'datos' => $datosActividadTodos,'mensaje'=>'<strong>DATOS DE LA ACTIVIDAD REGISTRADOS:</strong><br><strong>Registro Realizado!!</Strong> Datos registrados exitosamente.'));
+        return response()->json(array('status' => 'creado', 'datos' => $datosActividadTodos,'mensaje'=>'<div class="alert alert-success"><strong>DATOS DE LA ACTIVIDAD REGISTRADOS:</strong><br><strong>Registro Realizado!!</Strong> Datos registrados exitosamente.</div>'));
     }
 
     public function eliminarDatosActividad(Request $request, $id)
@@ -274,7 +274,7 @@ class ActividadController extends Controller
 		$datoactivida->delete();
 		$datosActividadTodos = DatosActividad::with('programa','actividad','tematica','componente')->where('i_fk_id_actividad',$datoactivida['i_fk_id_actividad'])->get();
 
-		return response()->json(array('datos' => $datosActividadTodos,'mensaje'=>'<strong>DATO ELIMINADO:</strong><br><strong>Registro eliminado!!</Strong> Datos elimiando exitosamente.'));
+		return response()->json(array('datos' => $datosActividadTodos,'mensaje'=>'<div class="alert alert-danger"><strong>DATO ELIMINADO:</strong><br><strong>Registro eliminado!!</Strong> Datos elimiando exitosamente.</div>'));
 	}
 
 	public function validardatosactividadregistrados(Request $request, $id)
@@ -283,10 +283,10 @@ class ActividadController extends Controller
 		$datoactivida = DatosActividad::where('i_fk_id_actividad',$id)->get();
 
 		if($datoactivida->count()){
-			$mensaje="<strong>BIEN!!</strong> Sigue con el siguiente paso de la programación y asignación de la actividad";
+			$mensaje="<div class='alert alert-success'><strong>BIEN!!</strong> Sigue con el siguiente paso de la programación y asignación de la actividad</div>";
 			$status="ok";
 		}else{
-			$mensaje="<strong>DATOS INCOMPLETOS:</strong> No se han registrado los datos basicos de la actividad.";
+			$mensaje="<div class='alert alert-danger'><strong>DATOS INCOMPLETOS:</strong> No se han registrado los datos basicos de la actividad.</div>";
 			$status="mal";
 		}
 		return response()->json(array('status' => $status, 'datos' => $datoactivida, 'mensaje'=>$mensaje));
