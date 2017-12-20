@@ -38,7 +38,7 @@ class ActividadController extends Controller
 
 		$Localidad = Localidad::whereIn('Id_Localidad',$locali)->get();
 
-		$resposanblesActividad = ConfiguracionPersona::with('persona')->where('i_id_tipo_persona',Configuracion::RESPOSANBLE_ACTIVIDAD)->whereIn('i_id_localidad',$locali)->get();
+		$resposanblesActividad = ConfiguracionPersona::with('persona')->where('i_id_tipo_persona',Configuracion::RESPOSANBLE_ACTIVIDAD)->whereIn('i_id_localidad',$locali)->groupBy('i_fk_id_persona')->get();
 
 		$datos=[
             "localidades"=>$Localidad,
@@ -121,42 +121,78 @@ class ActividadController extends Controller
 		$hora_inicio = $request['hora_inicio'];
 		$hora_fin = $request['hora_fin'];
 
-		$actividades = ActividadRecreativa::where('d_fechaEjecucion',$request['fecha_ejecucion'])->where('i_fk_localidadComunidad',$request['localidad_comunidad'])->get();
+		$actividades = ActividadRecreativa::where('d_fechaEjecucion',$request['fecha_ejecucion'])
+						->where('i_fk_localidadComunidad',$request['localidad_comunidad'])
+						->where('i_fk_usuarioResponsable',$request['responsable'])
+						->get();
 		$opcion="";		
-		$actividad="";	
+		$mensaje="";	
+		$actividad=array();
 
-		foreach ($actividades as $dia) 
+		if($actividades->count())
 		{
-			if(strtotime($hora_inicio) >= strtotime($dia['t_horaInicio']) 
-			&& 
-			   strtotime($hora_inicio) <= strtotime($dia['t_horaFin']))
+			foreach ($actividades as $dia) 
 			{
-				$opcion='Verfique hay un cruze de horarios 1';
-				$actividad=$actividad."   ".$dia['i_pk_id'];
-			}else if(strtotime($hora_fin) >=  strtotime($dia['t_horaInicio'])
+				if(strtotime($hora_inicio) >= strtotime($dia['t_horaInicio']) 
 				&& 
-			   strtotime($hora_fin) <= strtotime($dia['t_horaFin']))
-			{
-				$opcion='Verfique hay un cruze de horarios 2';
-				$actividad=$actividad."   ".$dia['i_pk_id'];
-			}else if(strtotime($hora_fin) >  strtotime($dia['t_horaFin'])
-				&& 
-			   strtotime($hora_inicio) < strtotime($dia['t_horaInicio']))
-			{ 
-				$opcion='Verfique hay un cruze de horarios 3';
-				$actividad=$actividad."   ".$dia['i_pk_id'];
-			}else{
-				$opcion='Bien';
-				$actividad=$actividad."   ".$dia['i_pk_id'];
+				   strtotime($hora_inicio) <= strtotime($dia['t_horaFin']))
+				{
+					$opcion='Error';
+					$mensaje='Verfique hay un cruze de horarios 1';
+					array_push($actividad,$dia['i_pk_id']);
+				}else if(strtotime($hora_fin) >=  strtotime($dia['t_horaInicio'])
+					&& 
+				   strtotime($hora_fin) <= strtotime($dia['t_horaFin']))
+				{
+					$opcion='Error';
+					$mensaje='Verfique hay un cruze de horarios 2';
+					array_push($actividad,$dia['i_pk_id']);
+				}else if(strtotime($hora_fin) >  strtotime($dia['t_horaFin'])
+					&& 
+				   strtotime($hora_inicio) < strtotime($dia['t_horaInicio']))
+				{ 
+					$opcion='Error';
+					$mensaje='Verfique hay un cruze de horarios 3';
+					array_push($actividad,$dia['i_pk_id']);
+				}else{
+					$opcion='Bien';
+					$mensaje='Disponibilidad validada con éxito. No se encontró ningún cruce de horarios.1';
+				}
 			}
+		}else{
+			$opcion='Bien';
+			$mensaje='Disponibilidad validada con éxito. No se encontró ningún cruce de horarios.2';
 		}
+
+		$actividadesCruzadas='';
+		if(sizeof($actividad)>0){
+				$actividadesCruzadas=ActividadRecreativa::whereIn('i_pk_id',$actividad)
+						->get();
+		}
+
+		$tabla='<table class="table display no-wrap table-condensed table-bordered table-min" id="datos_actividad">
+            <thead> 
+                <tr class="active"> 
+                    <th>#</th> 
+                    <th>Programa</th> 
+                    <th>Actividad</th> 
+                    <th>Tematica</th> 
+                    <th>Componente</th> 
+                    <th>Eliminar</th> 
+                </tr> 
+            </thead>
+                <tbody id="registros_datos">';
+
+        $tabla=$tabla.'</tbody>
+        </table>';
 
 		//$confgu_persona = ConfiguracionPersona::with('persona')->where('i_id_localidad',strval($request['localidad_comunidad']))->where('i_id_tipo_persona',2)->get();
 		$data =[
-			'opcion'=>$opcion,
-			'id_actividades'=>$actividad
+			'status'=>$opcion,
+			'id_actividades'=>$tabla,
+			'mensaje'=>$mensaje
 		];
-		return response()->json(array('status' => 'bien', 'errors' =>$data));
+		return response()->json($data);
 	}
 
 

@@ -289,7 +289,7 @@
 										<option value="">Seleccionar</option>
 										@foreach($resosablesActividad as $responsable)
 											<option value="{{$responsable->persona['Id_Persona']}}">
-												{{strtoupper($responsable->persona['Primer_Apellido'].' '.$responsable->persona['Segundo_Apellido'].' '.$responsable->persona['Primer_Nombre'].' '.$responsable->persona['Segundo_Nombre'].' - '.$responsable->localidad['Nombre_Localidad'])}}
+												{{strtoupper($responsable->persona['Primer_Apellido'].' '.$responsable->persona['Segundo_Apellido'].' '.$responsable->persona['Primer_Nombre'].' '.$responsable->persona['Segundo_Nombre'])}}
 											</option>	
 										@endforeach
 									</select>

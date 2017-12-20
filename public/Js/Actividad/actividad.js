@@ -334,25 +334,19 @@ $(function()
             function(data)
             {
                 
-                if(data.status == 'error')
+                if(data.status != 'Bien')
                 {
-                    validador_disponibilidad_responsables(data.errors);
-
-                    var listaError='';
-                    var num=1;
-                    
-                    $.each(data.errors, function(i, e){
-                      listaError += '<li class="list-group-item text-danger">'+num+'. '+e+'</li>';
-                      num++;
-                    });
-                    $('#list_error').html(listaError);
-                    $('#myModal_mal').modal('show');
+                    validador_disponibilidad_responsables(data.errors);   
+                    $('#list_error').html('<div class="alert alert-dismissible alert-info" ><strong>Error!</strong> '+data.mensaje+' <br><br><strong>ID de actividades con conflicto: <br><br>'+data.id_actividades+'</strong> </div>');
+                    $('#myModal_mal').modal('show'); 
                 } 
                 else 
                 {
-                    validador_disponibilidad_responsables(data.errors);   
-                    $('#list_error').html('<div class="alert alert-dismissible alert-info" ><strong>Error!</strong> '+data.opcion+' <strong>ID de actividades con conflicto: '+data.id_actividades+'</strong> </div>');
-                    $('#myModal_mal').modal('show'); 
+                    validador_disponibilidad_responsables(data.errors);
+
+                    listaError = '<div class="alert alert-dismissible alert-success" ><strong>Bien!</strong> '+data.mensaje+'<strong></div>';
+                    $('#list_error').html(listaError);
+                    $('#myModal_mal').modal('show');
                 }
 
                
