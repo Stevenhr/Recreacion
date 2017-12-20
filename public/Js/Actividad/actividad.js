@@ -351,13 +351,7 @@ $(function()
                 else 
                 {
                     validador_disponibilidad_responsables(data.errors);   
-                    if(data.opcion=="Verfique hay un cruze de horarios"){
-                        $('#alerta_datos_acompanantes').html('<div class="alert alert-dismissible alert-info" ><strong>Error!</strong> '+data.opcion+' <strong>ID de actividades con conflicto: '+data.id_actividades+'</strong> </div>');
-                        setTimeout(function(){
-                            $('#alerta_datos_acompanantes').html("");
-                        }, 4000);
-                    }
-                    $('#list_error').html("Verfique hay un cruze de horarios");
+                    $('#list_error').html('<div class="alert alert-dismissible alert-info" ><strong>Error!</strong> '+data.opcion+' <strong>ID de actividades con conflicto: '+data.id_actividades+'</strong> </div>');
                     $('#myModal_mal').modal('show'); 
                 }
 
@@ -508,7 +502,7 @@ $(function()
                         );
                     }else{
                         $('#myTab a[href="#datos_comunidad"]').tab('show')
-                        $('#list_error').html("<div class='alert alert-info'><strong> ACTIVIDAD NO HA SIDO CREADA:</strong> Registre los datos del primer paso.</div>");
+                        $('#list_error').html("<div class='alert alert-danger'><center><strong> ACTIVIDAD NO HA SIDO CREADA:</strong></center> <br><br>Registre los datos del primer <strong>PASO I.</strong> <br><br><strong>Gracias!!!</strong></div>");
                         $('#myModal_mal').modal('show');  
                     }
                 }

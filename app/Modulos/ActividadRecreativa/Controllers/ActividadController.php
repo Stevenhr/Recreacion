@@ -38,10 +38,13 @@ class ActividadController extends Controller
 
 		$Localidad = Localidad::whereIn('Id_Localidad',$locali)->get();
 
+		$resposanblesActividad = ConfiguracionPersona::with('persona')->where('i_id_tipo_persona',Configuracion::RESPOSANBLE_ACTIVIDAD)->whereIn('i_id_localidad',$locali)->get();
+
 		$datos=[
             "localidades"=>$Localidad,
             "programas"=>$Programa,
             "caracteristicasPoblacion"=>$caracteristicaPoblacion,
+            "resosablesActividad"=>$resposanblesActividad,
             'punto' => null,
 		];
 		
@@ -122,36 +125,31 @@ class ActividadController extends Controller
 		$opcion="";		
 		$actividad="";	
 
-			foreach ($actividades as $dia) {
-
-				if(strtotime($hora_inicio) >= strtotime($dia['t_horaInicio']) 
+		foreach ($actividades as $dia) 
+		{
+			if(strtotime($hora_inicio) >= strtotime($dia['t_horaInicio']) 
+			&& 
+			   strtotime($hora_inicio) <= strtotime($dia['t_horaFin']))
+			{
+				$opcion='Verfique hay un cruze de horarios 1';
+				$actividad=$actividad."   ".$dia['i_pk_id'];
+			}else if(strtotime($hora_fin) >=  strtotime($dia['t_horaInicio'])
 				&& 
-				   strtotime($hora_inicio) <= strtotime($dia['t_horaFin']))
-				{
-					$opcion='Verfique hay un cruze de horarios';
-					$actividad=$actividad."   ".$dia['i_pk_id'];
-				}
-						
-								
-				if(strtotime($hora_fin) >=  strtotime($dia['t_horaInicio'])
-					&& 
-				   strtotime($hora_fin) <= strtotime($dia['t_horaFin']))
-				{
-					$opcion='Verfique hay un cruze de horarios';
-					$actividad=$actividad."   ".$dia['i_pk_id'];
-				}
-
-
-				if(strtotime($hora_fin) >  strtotime($dia['t_horaFin'])
-					&& 
-				   strtotime($hora_inicio) < strtotime($dia['t_horaInicio']))
-				{ 
-					$opcion='Verfique hay un cruze de horarios';
-					$actividad=$actividad."   ".$dia['i_pk_id'];
-				}
-
+			   strtotime($hora_fin) <= strtotime($dia['t_horaFin']))
+			{
+				$opcion='Verfique hay un cruze de horarios 2';
+				$actividad=$actividad."   ".$dia['i_pk_id'];
+			}else if(strtotime($hora_fin) >  strtotime($dia['t_horaFin'])
+				&& 
+			   strtotime($hora_inicio) < strtotime($dia['t_horaInicio']))
+			{ 
+				$opcion='Verfique hay un cruze de horarios 3';
+				$actividad=$actividad."   ".$dia['i_pk_id'];
+			}else{
+				$opcion='Bien';
+				$actividad=$actividad."   ".$dia['i_pk_id'];
 			}
-
+		}
 
 		//$confgu_persona = ConfiguracionPersona::with('persona')->where('i_id_localidad',strval($request['localidad_comunidad']))->where('i_id_tipo_persona',2)->get();
 		$data =[
@@ -219,7 +217,7 @@ class ActividadController extends Controller
 		$actividadrecreativa['vc_institutoGrupoComunidad']=$input['institucion_g_c'];
 		$actividadrecreativa['vc_caracteristicaPoblacion']=$input['caracteristicaPoblacion'];
 		$actividadrecreativa->save();
-        return response()->json(array('status' => 'creado', 'datos' => $actividadrecreativa,'mensaje'=>'<div class="alert alert-success"><strong>DATOS DE LA COMUNIDAD MODIFICADOS:</strong><br><Strong>Modificación Realizada!!</Strong> Datos modificados exitosamente.</div>'));
+        return response()->json(array('status' => 'creado', 'datos' => $actividadrecreativa,'mensaje'=>'<div class="alert alert-success"><center><strong>DATOS DE LA COMUNIDAD ACTUALIZADOS:</strong></center><br><br>DATOS DE LA COMUNIDAD actualizados exitosamente en el sistema de la actividad <strong>'.$input['id'].'</strong>. Continue con el <strong>PASO II</strong><br><br><strong>Gracias!!!</strong></center></div>'));
     }
 
 
@@ -265,7 +263,7 @@ class ActividadController extends Controller
 
 		$datosActividadTodos = DatosActividad::with('programa','actividad','tematica','componente')->where('i_fk_id_actividad',$input['id'])->get();
 
-        return response()->json(array('status' => 'creado', 'datos' => $datosActividadTodos,'mensaje'=>'<div class="alert alert-success"><strong>DATOS DE LA ACTIVIDAD REGISTRADOS:</strong><br><strong>Registro Realizado!!</Strong> Datos registrados exitosamente.</div>'));
+        return response()->json(array('status' => 'creado', 'datos' => $datosActividadTodos,'mensaje'=>'<div class="alert alert-success"><center><strong>DATOS DE LA ACTIVIDAD REGISTRADOS:</strong></center><br><br>DATOS DE LA ACTIVIDAD registrados exitosamente en el sistema de la actividad <strong>'.$input['id'].'</strong>. Continue registrando más datos de la actividad o con el <strong>PASO III</strong><br><br><strong>Gracias!!!</strong></center></div>'));
     }
 
     public function eliminarDatosActividad(Request $request, $id)
@@ -283,10 +281,10 @@ class ActividadController extends Controller
 		$datoactivida = DatosActividad::where('i_fk_id_actividad',$id)->get();
 
 		if($datoactivida->count()){
-			$mensaje="<div class='alert alert-success'><strong>BIEN!!</strong> Sigue con el siguiente paso de la programación y asignación de la actividad</div>";
+			$mensaje='<div class="alert alert-success"><center><strong>DATOS BASICOS DE LA ACTIVIDAD VALIDADOS:</strong></center><br><br>DATOS BASICOS DE LA ACTIVIDAD validados exitosamente en el sistema de la actividad <strong>'.$id.'</strong>. Continue con el <strong>PASO III</strong><br><br><strong>Gracias!!!</strong></center></div>';
 			$status="ok";
 		}else{
-			$mensaje="<div class='alert alert-danger'><strong>DATOS INCOMPLETOS:</strong> No se han registrado los datos basicos de la actividad.</div>";
+			$mensaje='<div class="alert alert-danger"><center><strong>DATOS INCOMPLETOS:</strong></center><br>No se han agregado los datos basicos de la actividad <strong>'.$id.'</strong>, siga con el <strong>PASO II.</strong><br><br><strong>Gracias!!!</strong></div>';
 			$status="mal";
 		}
 		return response()->json(array('status' => $status, 'datos' => $datoactivida, 'mensaje'=>$mensaje));

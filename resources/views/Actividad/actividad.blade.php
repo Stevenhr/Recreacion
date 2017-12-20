@@ -287,9 +287,11 @@
 									<label> 1. Responsable </label>
 									<select class="form-control" name="responsable">
 										<option value="">Seleccionar</option>
-										<option value="0">Dias</option>
-										<option value="1">Meses</option>
-										<option value="2">Años</option>
+										@foreach($resosablesActividad as $responsable)
+											<option value="{{$responsable->persona['Id_Persona']}}">
+												{{strtoupper($responsable->persona['Primer_Apellido'].' '.$responsable->persona['Segundo_Apellido'].' '.$responsable->persona['Primer_Nombre'].' '.$responsable->persona['Segundo_Nombre'].' - '.$responsable->localidad['Nombre_Localidad'])}}
+											</option>	
+										@endforeach
 									</select>
 								</div>
 							</div>
