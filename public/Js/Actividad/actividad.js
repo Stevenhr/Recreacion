@@ -333,7 +333,9 @@ $(function()
             $('#form_registro_actividad').serialize(),
             function(data)
             {
-                
+                var variable=window.location.hash;
+                $('#id').val(variable.replace('#', ''));
+
                 if(data.status != 'Bien')
                 {
                     if(data.status=='Campos'){
@@ -356,15 +358,22 @@ $(function()
                 else 
                 {
                     validador_disponibilidad_responsables(data.errors);
+                    //$persona["Primer_Apellido"]." ".$persona["Segundo_Apellido"]." ".$persona["Primer_Nombre"]." ".$persona["Segundo_Nombre"]
                     $('#responsable_validada').val(data.request['responsable']);
                     $('#fecha_ejecucion_validada').val(data.request['fecha_ejecucion']);
                     $('#hora_inicio_validada').val(data.request['hora_inicio']);
                     $('#hora_fin_validada').val(data.request['hora_fin']);
+                    
+                    $('#label0').text('DATOS VALIDADOS:');
+                    $('#label1').text('Responsable: '+data.request['responsablenombre']['Primer_Apellido']+' '+data.request['responsablenombre']['Segundo_Apellido']+' '+data.request['responsablenombre']['Primer_Nombre']);
+                    $('#label2').text('Fecha: '+data.request['fecha_ejecucion']);
+                    $('#label3').text('Hora inicio: '+data.request['hora_inicio']);
+                    $('#label4').text('Hora fin: '+data.request['hora_fin']);
+                    
                     listaError = '<div class="alert alert-dismissible alert-success" ><strong>Bien!</strong> '+data.mensaje+'<strong></div>';
                     $('#list_error').html(listaError);
                     $('#myModal_mal').modal('show');
                 }
-
             }
 
         );

@@ -17,11 +17,16 @@ use App\Modulos\CaracteristicaPoblacion\Elementoscaracteristicas;
 use App\Modulos\Configuracion\Configuracion;
 use App\Modulos\Usuario\ConfiguracionPersona;
 use App\Http\Controllers\Controller;
+use Idrd\Usuarios\Repo\PersonaInterface;
 use Validator;
 
 
 class ActividadController extends Controller 
 {
+	public function __construct(PersonaInterface $repositorio_personas)
+	{
+		$this->repositorio_personas = $repositorio_personas;
+	}
 
 	public function inicio()
 	{
@@ -198,11 +203,40 @@ class ActividadController extends Controller
         </table>';
 
 		//$confgu_persona = ConfiguracionPersona::with('persona')->where('i_id_localidad',strval($request['localidad_comunidad']))->where('i_id_tipo_persona',2)->get();
+		if($opcion=='Bien'){
+	        $persona = $this->repositorio_personas->obtener($request['responsable']);
+	        
+	        $actividadrecreativa =  ActividadRecreativa::find($request['id']);
+	        $actividadrecreativa['d_fechaEjecucion']=$request['fecha_ejecucion'];
+			$actividadrecreativa['t_horaInicio']=$request['hora_inicio'];
+			$actividadrecreativa['t_horaFin']=$request['hora_fin'];
+			$actividadrecreativa['i_fk_usuarioResponsable']=$request['responsable'];
+			$actividadrecreativa->save();
+
+			$datosvalidados=[
+				'hora_inicio'=>$request['hora_inicio'],
+				'hora_fin'=>$request['hora_fin'],
+				'fecha_ejecucion'=>$request['fecha_ejecucion'],
+				'localidad_comunidad'=>$request['localidad_comunidad'],
+				'responsable'=>$request['responsable'],
+				'responsablenombre'=>$persona
+			];
+		}else{
+			$datosvalidados=[
+				'hora_inicio'=>'',
+				'hora_fin'=>'',
+				'fecha_ejecucion'=>'',
+				'localidad_comunidad'=>'',
+				'responsable'=>'',
+				'responsablenombre'=>''
+			];
+		}	
+
 		$data =[
 			'status'=>$opcion,
 			'id_actividades'=>$tabla,
 			'mensaje'=>$mensaje,
-			'request'=>$request
+			'request'=>$datosvalidados
 		];
 		return response()->json($data);
 	}
@@ -247,6 +281,7 @@ class ActividadController extends Controller
     public function crear_datos_comunidad($input)
     {
         $actividadrecreativa = new ActividadRecreativa;
+        $actividadrecreativa['i_fk_usuario']=$_SESSION['Usuario'][0];
         $actividadrecreativa['i_fk_localidadComunidad']=$input['localidad_comunidad'];
 		$actividadrecreativa['i_fk_upzComunidad']=$input['Id_Upz_Comunidad'];
 		$actividadrecreativa['i_fk_barrioComunidad']=$input['Id_Barrio_Comunidad'];
@@ -259,6 +294,7 @@ class ActividadController extends Controller
      public function modificar_datos_comunidad($input)
     {
         $actividadrecreativa =  ActividadRecreativa::find($input['id']);
+        $actividadrecreativa['i_fk_usuario']=$_SESSION['Usuario'][0];
         $actividadrecreativa['i_fk_localidadComunidad']=$input['localidad_comunidad'];
 		$actividadrecreativa['i_fk_upzComunidad']=$input['Id_Upz_Comunidad'];
 		$actividadrecreativa['i_fk_barrioComunidad']=$input['Id_Barrio_Comunidad'];

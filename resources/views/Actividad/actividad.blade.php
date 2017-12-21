@@ -323,7 +323,7 @@
 							<div class="col-md-12 col-xs-12">
 								<div class="form-group">
 									<p>
-										<a href="javascript(0)" class="btn btn-success btn-xs" id="btn_agregar_validar_disponiblidad"> Agregar datos validados<span style="margin-left:10px;" class="glyphicon glyphicon-plus"></span></a>
+										<a href="javascript(0)" class="btn btn-success btn-xs" id="btn_agregar_validar_disponiblidad"> Validar datos<span style="margin-left:10px;" class="glyphicon glyphicon-plus"></span></a>
 									</p>
 								</div>
 								<div id="alerta_datos_acompanantes"></div>
@@ -333,32 +333,51 @@
 						<div class="row">
 							<div class="col-md-3 col-xs-12">
 								<div class="form-group">
-									<label id="label1"></label>
+									<span class="label label-warning" id="label0"></span>
 								</div>
 							</div>
 							<div class="col-md-3 col-xs-12">
 								<div class="form-group">
-									<label id="label2"></label>
+									<span class="label label-warning" id="label1"></span>
 								</div>
 							</div>
-							<div class="col-md-3 col-xs-12">
+							<div class="col-md-2 col-xs-12">
 								<div class="form-group">
-									<label id="label3"></label>
+									<span class="label label-warning" id="label2"></span>
 								</div>
 							</div>
-							<div class="col-md-3 col-xs-12">
+							<div class="col-md-2 col-xs-12">
 								<div class="form-group">
-									<label id="label4"></label>
+									<span class="label label-warning" id="label3"></span>
+								</div>
+							</div>
+							<div class="col-md-2 col-xs-12">
+								<div class="form-group">
+									<span class="label label-warning" id="label4"></span>
 								</div>
 							</div>
 						</div>
 
-						
+						<div class="row">
+							<div class="col-xs-12 col-sm-12"><br><hr>
+							</div>	
+						</div>
 
 						<div class="row">
 							<div class="col-xs-12 col-sm-12">
 								<div class="form-group">
-									<label> 5. Registro de acompañantes</label>
+									<label>Registro de acompañantes</label><br>
+								</div>
+							</div>
+
+							<div class="col-xs-12 col-sm-12">
+								<p class="form-group">
+									<a href="" class="btn btn-success btn-xs"> Búsqueda de acompañamtes <span style="margin-left:10px;" class="glyphicon glyphicon-plus"></span></a>
+								</p>
+							</div>
+
+							<div class="col-xs-12 col-sm-12">
+								<div class="form-group">
 									<div class="bs-example" data-example-id="bordered-table"> 
 										<table id="tabla_responsable" class="table display no-wrap table-condensed table-bordered table-min"> 
 											<thead> 
@@ -375,14 +394,6 @@
 										</table> 
 									</div>
 								</div>
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="col-xs-12 col-sm-12">
-								<p class="text-center">
-									<a href="" class="btn btn-success btn-xs"> Agregar programación <span style="margin-left:10px;" class="glyphicon glyphicon-plus"></span></a>
-								</p>
 							</div>
 						</div>
 
