@@ -115,7 +115,7 @@ class ActividadController extends Controller
     	],$messages);
         
         if ($validator->fails())
-            return response()->json(array('status' => 'error', 'errors' => $validator->errors()));
+            return response()->json(array('status' => 'Campos', 'errors' => $validator->errors()));
 
 
 		$hora_inicio = $request['hora_inicio'];
@@ -129,7 +129,7 @@ class ActividadController extends Controller
 		$mensaje="";	
 		$actividad=array();
 
-		if($actividades->count())
+		if($actividades->count()>0)
 		{
 			foreach ($actividades as $dia) 
 			{
@@ -138,21 +138,21 @@ class ActividadController extends Controller
 				   strtotime($hora_inicio) <= strtotime($dia['t_horaFin']))
 				{
 					$opcion='Error';
-					$mensaje='Verfique hay un cruze de horarios 1';
+					$mensaje='Los datos que intenta ingresar tienen un cruce de horarios con una o mas actividades ya registradas. Por favor valide y registre nuevamente los datos. ';
 					array_push($actividad,$dia['i_pk_id']);
 				}else if(strtotime($hora_fin) >=  strtotime($dia['t_horaInicio'])
 					&& 
 				   strtotime($hora_fin) <= strtotime($dia['t_horaFin']))
 				{
 					$opcion='Error';
-					$mensaje='Verfique hay un cruze de horarios 2';
+					$mensaje='Los datos que intenta ingresar tienen un cruce de horarios con una o mas actividades ya registradas. Por favor valide y registre nuevamente los datos. ';
 					array_push($actividad,$dia['i_pk_id']);
 				}else if(strtotime($hora_fin) >  strtotime($dia['t_horaFin'])
 					&& 
 				   strtotime($hora_inicio) < strtotime($dia['t_horaInicio']))
 				{ 
 					$opcion='Error';
-					$mensaje='Verfique hay un cruze de horarios 3';
+					$mensaje='Los datos que intenta ingresar tienen un cruce de horarios con una o mas actividades ya registradas. Por favor valide y registre nuevamente los datos. ';
 					array_push($actividad,$dia['i_pk_id']);
 				}else{
 					$opcion='Bien';
@@ -166,23 +166,34 @@ class ActividadController extends Controller
 
 		$actividadesCruzadas='';
 		if(sizeof($actividad)>0){
-				$actividadesCruzadas=ActividadRecreativa::whereIn('i_pk_id',$actividad)
-						->get();
+				$actividadesCruzadas=ActividadRecreativa::whereIn('i_pk_id',$actividad)->get();
 		}
 
 		$tabla='<table class="table display no-wrap table-condensed table-bordered table-min" id="datos_actividad">
             <thead> 
                 <tr class="active"> 
                     <th>#</th> 
-                    <th>Programa</th> 
-                    <th>Actividad</th> 
-                    <th>Tematica</th> 
-                    <th>Componente</th> 
-                    <th>Eliminar</th> 
+                    <th>Id</th> 
+                    <th>Fecha</th> 
+                    <th>Hora incio</th> 
+                    <th>Hora fin</th> 
                 </tr> 
             </thead>
-                <tbody id="registros_datos">';
-
+                <tbody>';
+            $num=1;
+            if($actividadesCruzadas!=''){
+                foreach ($actividadesCruzadas as $atividadmet) {
+                    // dd($atividadmet);
+                    $tabla=$tabla."<tr class='danger'>
+                        <td>".$num."</td>
+                        <td><center>".$atividadmet['i_pk_id']."</center></td>
+                        <td >".$atividadmet['d_fechaEjecucion']."</td>
+                        <td>".$atividadmet['t_horaInicio']."</td>
+                        <td>".$atividadmet['t_horaFin']."</td>
+                    </tr>";
+                    $num++;
+                }
+            }
         $tabla=$tabla.'</tbody>
         </table>';
 
@@ -190,7 +201,8 @@ class ActividadController extends Controller
 		$data =[
 			'status'=>$opcion,
 			'id_actividades'=>$tabla,
-			'mensaje'=>$mensaje
+			'mensaje'=>$mensaje,
+			'request'=>$request
 		];
 		return response()->json($data);
 	}

@@ -293,24 +293,28 @@
 											</option>	
 										@endforeach
 									</select>
+									<input type="hidden" class="form-control" name="responsable_validada" id="responsable_validada" data-role1="datepicker" autocomplete="off">
 								</div>
 							</div>
 							<div class="col-md-3 col-xs-12">
 								<div class="form-group">
 									<label> 1. Fecha de ejecución</label>
 									<input type="date" class="form-control" name="fecha_ejecucion" id="fecha_ejecucion"  data-role1="datepicker" placeholder="aa/mm/dd" autocomplete="off" >
+									<input type="hidden" class="form-control" name="fecha_ejecucion_validada" id="fecha_ejecucion_validada"  data-role1="datepicker" placeholder="aa/mm/dd" autocomplete="off" >
 								</div>
 							</div>
 							<div class="col-md-3 col-xs-12">
 								<div class="form-group">
 									<label> 2. Hora inicio</label>
 									<input type="time" class="form-control" name="hora_inicio"  data-role1="datepicker" autocomplete="off">
+									<input type="hidden" class="form-control" name="hora_inicio_validada"  id="hora_inicio_validada" data-role1="datepicker" autocomplete="off">
 								</div>
 							</div>
 							<div class="col-md-3 col-xs-12">
 								<div class="form-group">
 									<label> 4. Hora fin</label>
 									<input type="time" class="form-control" name="hora_fin" autocomplete="off">
+									<input type="hidden" class="form-control" name="hora_fin_validada" id="hora_fin_validada" autocomplete="off">
 								</div>
 							</div>
 						</div>
@@ -319,10 +323,33 @@
 							<div class="col-md-12 col-xs-12">
 								<div class="form-group">
 									<p>
-										<a href="javascript(0)" class="btn btn-primary btn-xs" id="btn_agregar_validar_disponiblidad"> Buscar Acompañantes disponibles <span style="margin-left:10px;" class="glyphicon glyphicon-plus"></span></a>
+										<a href="javascript(0)" class="btn btn-success btn-xs" id="btn_agregar_validar_disponiblidad"> Agregar datos validados<span style="margin-left:10px;" class="glyphicon glyphicon-plus"></span></a>
 									</p>
 								</div>
 								<div id="alerta_datos_acompanantes"></div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-3 col-xs-12">
+								<div class="form-group">
+									<label id="label1"></label>
+								</div>
+							</div>
+							<div class="col-md-3 col-xs-12">
+								<div class="form-group">
+									<label id="label2"></label>
+								</div>
+							</div>
+							<div class="col-md-3 col-xs-12">
+								<div class="form-group">
+									<label id="label3"></label>
+								</div>
+							</div>
+							<div class="col-md-3 col-xs-12">
+								<div class="form-group">
+									<label id="label4"></label>
+								</div>
 							</div>
 						</div>
 

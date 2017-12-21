@@ -336,36 +336,34 @@ $(function()
                 
                 if(data.status != 'Bien')
                 {
-                    validador_disponibilidad_responsables(data.errors);   
-                    $('#list_error').html('<div class="alert alert-dismissible alert-info" ><strong>Error!</strong> '+data.mensaje+' <br><br><strong>ID de actividades con conflicto: <br><br>'+data.id_actividades+'</strong> </div>');
-                    $('#myModal_mal').modal('show'); 
+                    if(data.status=='Campos'){
+                        validador_disponibilidad_responsables(data.errors);   
+                        var listaError='';
+                        var num=1;
+                        $.each(data.errors, function(i, e){
+                          listaError += '<li class="list-group-item text-danger">'+num+'. '+e+'</li>';
+                          num++;
+                        });
+                        $('#list_error').html(listaError);
+                        $('#myModal_mal').modal('show');
+                    }
+                    else if(data.status=='Error'){
+                        validador_disponibilidad_responsables(data.errors);   
+                        $('#list_error').html('<div class="alert alert-dismissible alert-info" ><strong>Error!</strong> '+data.mensaje+' <br><br><strong>ID de actividades con conflicto: <br><br>'+data.id_actividades+'</strong> </div>');
+                        $('#myModal_mal').modal('show'); 
+                    }
                 } 
                 else 
                 {
                     validador_disponibilidad_responsables(data.errors);
-
+                    $('#responsable_validada').val(data.request['responsable']);
+                    $('#fecha_ejecucion_validada').val(data.request['fecha_ejecucion']);
+                    $('#hora_inicio_validada').val(data.request['hora_inicio']);
+                    $('#hora_fin_validada').val(data.request['hora_fin']);
                     listaError = '<div class="alert alert-dismissible alert-success" ><strong>Bien!</strong> '+data.mensaje+'<strong></div>';
                     $('#list_error').html(listaError);
                     $('#myModal_mal').modal('show');
                 }
-
-               
-               /*if(data)
-                {
-                    var num=1;
-                    var html="";
-                    $.each(data, function(i, e){
-                        html += '<tr class="warning"><th scope="row" class="text-center">'+num+'</th>'+
-                            '<td>'+e.persona['Primer_Apellido']+' '+e.persona['Segundo_Apellido']+' '+e.persona['Primer_Nombre']+' '+e.persona['Segundo_Nombre']+'</td>'+
-                            '<td>'+e['i_id_ambito']+'</td>'+
-                            '<td>'+e['i_id_localidad']+'</td>'+
-                            '<td>'+e['i_id_tipo_persona']+'</td>'+
-                            '<td class="text-center"><button type="button" data-rel="'+i+'" data-funcion="eliminar" class="eliminar_dato_actividad"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td></tr>';
-                        num++;
-                    });
-                    $('#registros_datos_acompanante').html(html);
-                }
-                */
 
             }
 
