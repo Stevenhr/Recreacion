@@ -107,6 +107,11 @@ Route::group(['prefix' => 'actividad', 'middleware' => 'auth'], function()
         'as' => 'validardatosactividadregistrados'
     ]);
 
+     Route::get('validardatosactividadregistradosPasoIII/{id}',[
+        'uses' => $controller.'ActividadController@validardatosactividadregistradospasoIII',
+        'as' => 'validardatosactividadregistradosPasoIII'
+    ]);
+
 });
 
 Route::group(['prefix' => 'usuarios', 'middleware' => 'auth'], function()

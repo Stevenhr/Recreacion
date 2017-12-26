@@ -129,6 +129,7 @@ class ActividadController extends Controller
 		$actividades = ActividadRecreativa::where('d_fechaEjecucion',$request['fecha_ejecucion'])
 						->where('i_fk_localidadComunidad',$request['localidad_comunidad'])
 						->where('i_fk_usuarioResponsable',$request['responsable'])
+						->where('i_pk_id','<>',$request['id'])
 						->get();
 		$opcion="";		
 		$mensaje="";	
@@ -364,12 +365,34 @@ class ActividadController extends Controller
 		
 		$datoactivida = DatosActividad::where('i_fk_id_actividad',$id)->get();
 
-		if($datoactivida->count()){
+		if($datoactivida->count()>0){
 			$mensaje='<div class="alert alert-success"><center><strong>DATOS BASICOS DE LA ACTIVIDAD VALIDADOS:</strong></center><br><br>DATOS BASICOS DE LA ACTIVIDAD validados exitosamente en el sistema de la actividad <strong>'.$id.'</strong>. Continue con el <strong>PASO III</strong><br><br><strong>Gracias!!!</strong></center></div>';
 			$status="ok";
 		}else{
-			$mensaje='<div class="alert alert-danger"><center><strong>DATOS INCOMPLETOS:</strong></center><br>No se han agregado los datos basicos de la actividad <strong>'.$id.'</strong>, siga con el <strong>PASO II.</strong><br><br><strong>Gracias!!!</strong></div>';
+			$mensaje='<div class="alert alert-danger"><center><strong>DATOS INCOMPLETOS:</strong></center><br>No se han agregado los datos basicos de la actividad <strong>'.$id.'</strong>, registre el <strong>PASO II.</strong><br><br><strong>Gracias!!!</strong></div>';
 			$status="mal";
+		}
+		return response()->json(array('status' => $status, 'datos' => $datoactivida, 'mensaje'=>$mensaje));
+	}
+
+
+	public function validardatosactividadregistradospasoIII(Request $request, $id)
+	{
+		
+		$datoactivida = ActividadRecreativa::find($id);
+		
+		if($datoactivida->count()>0)
+		{
+		    if($datoactivida['d_fechaEjecucion']!='')
+			{
+				$mensaje='<div class="alert alert-success"><center><strong>DATOS BASICOS DE LA ACTIVIDAD VALIDADOS:</strong></center><br><br>DATOS BASICOS DE LA ACTIVIDAD validados exitosamente en el sistema de la actividad <strong>'.$id.'</strong>. Continue con el <strong>PASO III</strong><br><br><strong>Gracias!!!</strong></center></div>';
+				$status="ok";
+			}
+			else
+			{
+				$mensaje='<div class="alert alert-danger"><center><strong>DATOS INCOMPLETOS:</strong></center><br>No se han agregado la programación y asignación de la actividad <strong>'.$id.'</strong>, registre el <strong>PASO III.</strong><br><br><strong>Gracias!!!</strong></div>';
+				$status="mal";
+			}
 		}
 		return response()->json(array('status' => $status, 'datos' => $datoactivida, 'mensaje'=>$mensaje));
 	}

@@ -1,3 +1,4 @@
+
 $(function()
 {
 	var URL = $('#main_actividad').data('url');
@@ -434,80 +435,14 @@ $(function()
     });
 
 
-    var latitud = $('input[name="Latitud"]').val() ? parseFloat($('input[name="Latitud"]').val()) : 59.327;
-    var longitud = $('input[name="Longitud"]').val() ? parseFloat($('input[name="Longitud"]').val()) : 18.067;
-    var zoom = $('input[name="Id_Punto"]').val() == '0' ? 11 : 13;
-
-
-    function toggleBounce()
-    {
-        if (marker.getAnimation() !== null)
-        {
-            marker.setAnimation(null);
-        } 
-        else 
-        {
-            marker.setAnimation(google.maps.Animation.BOUNCE);
-        }
-    }
-
-    function actualizarPosicion(e)
-    {
-        $('input[name="Latitud"]').val(e.latLng.lat());
-        $('input[name="Longitud"]').val(e.latLng.lng());
-    }
-    
-    var map = new google.maps.Map($("#map").get(0), {
-        center: {lat: latitud, lng: longitud},
-        zoom: 13
-    });
-
-    var marker = new google.maps.Marker({
-        map: map,
-        draggable: true,
-        animation: google.maps.Animation.DROP,
-        position: {lat: latitud, lng: longitud}
-    });
-
-    marker.addListener('click', toggleBounce);
-
-
     $('.nav-tabs a').click(function (e) {
 
             var target = $(this).attr("href") // activated tab
                 
-                if(target=="#profile")
+                if(target=="#datos_comunidad")
                 {
-                    var hash = window.location.hash;
-                    var id=hash.replace('#', '');
-                    if(id>0){
-                        $.get(
-                            URL+'/validardatosactividadregistrados/'+id,
-                            function(data)
-                            {
-                                if(data.status == 'ok')
-                                {
-                                    $('#id').val(id);
-                                    $('#myTab a[href="#profile"]').tab('show');
-                                    $('#list_error').html(data.mensaje);
-                                    $('#myModal_mal').modal('show');  
-                                } 
-                                else 
-                                {
-                                    $('#id').val(id);
-                                    $('#myTab a[href="#home"]').tab('show');
-                                    $('#list_error').html(data.mensaje);
-                                    $('#myModal_mal').modal('show');     
-                                }
-                            }
-                        );
-                    }else{
-                        $('#myTab a[href="#datos_comunidad"]').tab('show')
-                        $('#list_error').html("<div class='alert alert-danger'><center><strong> ACTIVIDAD NO HA SIDO CREADA:</strong></center> <br><br>Registre los datos del primer <strong>PASO I.</strong> <br><br><strong>Gracias!!!</strong></div>");
-                        $('#myModal_mal').modal('show');  
-                    }
-                }
-                
+                    $('#myTab a[href="#datos_comunidad"]').tab('show');
+                }                
 
                 if(target=="#home")
                 {
@@ -547,10 +482,72 @@ $(function()
                     );
                 }
 
-                if(target=="#datos_comunidad")
+                if(target=="#profile")
                 {
-                    $('#myTab a[href="#datos_comunidad"]').tab('show');
+                    var hash = window.location.hash;
+                    var id=hash.replace('#', '');
+                    if(id>0){
+                        $.get(
+                            URL+'/validardatosactividadregistrados/'+id,
+                            function(data)
+                            {
+                                if(data.status == 'ok')
+                                {
+                                    $('#id').val(id);
+                                    $('#myTab a[href="#profile"]').tab('show');
+                                    $('#list_error').html(data.mensaje);
+                                    $('#myModal_mal').modal('show');  
+                                } 
+                                else 
+                                {
+                                    $('#id').val(id);
+                                    $('#myTab a[href="#home"]').tab('show');
+                                    $('#list_error').html(data.mensaje);
+                                    $('#myModal_mal').modal('show');     
+                                }
+                            }
+                        );
+                    }else{
+                        $('#myTab a[href="#datos_comunidad"]').tab('show')
+                        $('#list_error').html("<div class='alert alert-danger'><center><strong> ACTIVIDAD NO HA SIDO CREADA:</strong></center> <br><br>Registre los datos del primer <strong>PASO I.</strong> <br><br><strong>Gracias!!!</strong></div>");
+                        $('#myModal_mal').modal('show');  
+                    }
                 }
+
+                if(target=="#settings")
+                {
+                    var hash = window.location.hash;
+                    var id=hash.replace('#', '');
+                    if(id>0){
+                        $.get(
+                            URL+'/validardatosactividadregistradosPasoIII/'+id,
+                            function(data)
+                            {
+                                if(data.status == 'ok')
+                                {
+                                    $('#myTab a[href="#settings"]').tab('show');
+                                } 
+                                else 
+                                {
+                                    $('#id').val(id);
+                                    $('#list_error').html(data.mensaje);
+                                    $('#myModal_mal').modal('show');     
+                                }
+                            }
+                        );
+                    }else{
+                        $('#myTab a[href="#datos_comunidad"]').tab('show')
+                        $('#list_error').html("<div class='alert alert-danger'><center><strong> ACTIVIDAD NO HA SIDO CREADA:</strong></center> <br><br>Registre los datos del primer <strong>PASO I.</strong> <br><br><strong>Gracias!!!</strong></div>");
+                        $('#myModal_mal').modal('show');  
+                    }
+                    
+                }
+
+                 if(target=="#doner")
+                {
+                    $('#myTab a[href="#doner"]').tab('show');
+                }
+                
 
         e.preventDefault();
         return false;
@@ -586,6 +583,7 @@ $(function()
     }
 
 });
+
 
 function soloNumeros(evt) 
     {
