@@ -2,6 +2,7 @@
 $(function()
 {
 	var URL = $('#main_actividad').data('url');
+    var URL_PARQUES = $('#main').data('url-parques');
     window.location.hash = '#inicio';
     $("#fecha_ejecucdion").datepicker({
       changeMonth: true,
@@ -582,6 +583,69 @@ $(function()
         }
     }
 
+    $('input[name="Cod_IDRD"]').on('blur', function(e)
+    {
+        var key = $(this).val();
+        if (key)
+        {
+            $.get(
+                URL_PARQUES+'/service/buscar/'+$(this).val(),
+                {},
+                function(data)
+                {
+                    if(data.length > 0)
+                    {
+                        $('input[name="Direccion"]').val(data[0].Direccion);
+                        $('input[name="Escenario"]').val(data[0].Nombre);
+                        $.when($('select[name="Id_Localidad"]').val(data[0].Id_Localidad).trigger('change')).done(function(){
+                            if(data[0].upz)
+                                $('select[name="Id_Upz"]').val(data[0].upz['Id_Upz']);
+                        });
+                    }
+                },
+                'json'
+            )
+        }
+    });
+
+
+    var latitud = 4.738367555801973;
+    var longitud = -74.22956602123418;
+    var zoom = 12;
+
+    function actualizarPosicion(e)
+    {
+        $('input[name="Latitud"]').val(e.latLng.lat());
+        $('input[name="Longitud"]').val(e.latLng.lng());
+    }
+
+    function toggleBounce()
+    {
+        if (marker.getAnimation() !== null)
+        {
+            marker.setAnimation(null);
+        } else {
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+        }
+    }
+    
+    var map = new google.maps.Map($("#map").get(0), {
+      center: {lat: latitud, lng: longitud},
+      zoom: zoom
+    });
+
+    var marker = new google.maps.Marker({
+        map: map,
+        draggable: true,
+        animation: google.maps.Animation.DROP,
+        position: {lat: 4.656674901073374, lng: -74.08563868549504}
+    });
+
+    marker.addListener('click', toggleBounce);
+
+    marker.addListener('dragend', actualizarPosicion);
+
+
 });
 
 
@@ -598,3 +662,7 @@ function soloNumeros(evt)
             return false;
         }
     }
+
+
+
+

@@ -24,6 +24,7 @@ Route::get('/asignarActividad', '\Idrd\Usuarios\Controllers\AsignarActividadCont
 Route::get('/actividadesModulo', '\Idrd\Usuarios\Controllers\AsignarActividadController@moduloActividades');
 Route::get('/actividadesPersona/{id}', '\Idrd\Usuarios\Controllers\AsignarActividadController@personaActividades');
 Route::any('PersonasActividadesProceso', '\Idrd\Usuarios\Controllers\AsignarActividadController@PersonasActividadesProceso');
+Route::get('/parques/service/buscar/{key}', '\Idrd\Parques\Controllers\ParqueController@buscar');
 Route::any('/', 'MainController@index');
 Route::any('/logout', 'MainController@logout');
 
@@ -107,9 +108,14 @@ Route::group(['prefix' => 'actividad', 'middleware' => 'auth'], function()
         'as' => 'validardatosactividadregistrados'
     ]);
 
-     Route::get('validardatosactividadregistradosPasoIII/{id}',[
+    Route::get('validardatosactividadregistradosPasoIII/{id}',[
         'uses' => $controller.'ActividadController@validardatosactividadregistradospasoIII',
         'as' => 'validardatosactividadregistradosPasoIII'
+    ]);
+
+    Route::get('service/buscar/{id}',[
+        'uses' => $controller.'ActividadController@buscar',
+        'as' => 'buscarDatosParques'
     ]);
 
 });
