@@ -128,7 +128,7 @@
               <div class="alert" role="alert">
                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                 <span >USUARIO:</span>
-                <b>{{$_SESSION['Nombre']}}</b>
+                <b>{{dd($_SESSION)}}</b>
               </div>
             </div>
           </div>

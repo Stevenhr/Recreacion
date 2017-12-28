@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 /*
 |--------------------------------------------------------------------------
 | Routes Usuarios
@@ -25,18 +25,18 @@ Route::get('/actividadesModulo', '\Idrd\Usuarios\Controllers\AsignarActividadCon
 Route::get('/actividadesPersona/{id}', '\Idrd\Usuarios\Controllers\AsignarActividadController@personaActividades');
 Route::any('PersonasActividadesProceso', '\Idrd\Usuarios\Controllers\AsignarActividadController@PersonasActividadesProceso');
 Route::get('/parques/service/buscar/{key}', '\Idrd\Parques\Controllers\ParqueController@buscar');
-Route::any('/', 'MainController@index');
-Route::any('/logout', 'MainController@logout');
+
 
 Route::any('/', 'MainController@index');
 Route::any('/logout', 'MainController@logout');
 Route::get('/welcome', 'MainController@welcome');
+
+
+
+
 //rutas con filtro de autenticación
 Route::group(['middleware' => ['web']], function () {
 	
-});
-
-
 /*
 |--------------------------------------------------------------------------
 | Routes Actividad
@@ -129,3 +129,4 @@ Route::group(['prefix' => 'usuarios', 'middleware' => 'auth'], function()
 
 
 
+});

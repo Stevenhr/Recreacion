@@ -4,7 +4,7 @@ return array(
  
   'conexion' => 'db_principal', 
    
-  'modulo' => '', 
+  'modulo' => '35', 
   'seccion' => 'Personas', 
   'prefijo_ruta' => 'personas', 
   'prefijo_ruta_modulo' => 'actividad', 
