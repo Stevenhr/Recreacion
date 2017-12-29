@@ -490,7 +490,7 @@
 						<div class="col-xs-12 col-md-6">
 							<div class="form-group ">
 								<label class="control-label" for="">Ubicación:   </label>
-								<div id="map" style="height: 320px;width: 800px"></div>
+								<div id="map" style="height: 350px;width: 100%"></div>
 							</div>
 						</div>
 

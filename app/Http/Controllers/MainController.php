@@ -60,15 +60,14 @@ class MainController extends Controller {
 			$_SESSION['Usuario'] = $user_array;
 			
             $persona = $this->repositorio_personas->obtener($_SESSION['Usuario'][0]);
-            $configuraciones = ConfiguracionPersona::where('i_fk_id_persona', $_SESSION['Usuario'][0]);
-            dd($configuraciones);
+            $configuraciones = ConfiguracionPersona::where('i_fk_id_persona', $_SESSION['Usuario'][0])->get();
+
 			$_SESSION['Usuario']['Persona'] = $persona;
 			$_SESSION['Usuario']['Permisos'] = $permisos;
-			$_SESSION['Usuario']['Roles'] = [];
+			$_SESSION['Usuario']['Roles'] = $configuraciones;
 			$_SESSION['Nombre']=$persona["Primer_Apellido"]." ".$persona["Segundo_Apellido"]." ".$persona["Primer_Nombre"]." ".$persona["Segundo_Nombre"];
 			$this->Usuario = $_SESSION['Usuario'];
 			
-
 		} else {
 			if (!isset($_SESSION['Usuario']))
 				$_SESSION['Usuario'] = '';
@@ -76,7 +75,6 @@ class MainController extends Controller {
 
 		if ($_SESSION['Usuario'] == '')
 			return redirect()->away('http://www.idrd.gov.co/SIM/Presentacion/');
-
 
 		return redirect('/welcome');
 	}
