@@ -227,7 +227,7 @@
 							<div class="col-md-4 col-xs-12">
 								<div class="form-group">
 									<label> 5. Características de la Poblacion a beneficiar:	</label>
-									<select class="form-control"  name="caracteristicaPoblacion" >
+									<select class="form-control"  name="caracteristicaPoblacion" id="caracteristicaPoblacion" >
 										<option value="">Seleccionar</option>
 										@foreach($caracteristicasPoblacion as $caracteristicaPoblacion)
 											<option value="{{$caracteristicaPoblacion['i_pk_id']}}">{{strtoupper($caracteristicaPoblacion['tx_caracteristicas'])}}</option>	
@@ -447,7 +447,7 @@
 											<label>Localidad </label>
 											<select class="form-control" data-live-search="true" name="localidad_escenario" id="localidad_escenario">
 												<option value="">Seleccionar</option>
-												@foreach($localidades as $localidad)
+												@foreach($TodasLocalidades as $localidad)
 													<option value="{{$localidad['Id_Localidad']}}">{{strtoupper($localidad['Nombre_Localidad'])}}</option>	
 												@endforeach
 											</select>

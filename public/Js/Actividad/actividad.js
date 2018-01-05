@@ -254,6 +254,15 @@ $(function()
             }
         });
     };
+    var temas_seleccionados = {};
+    $('select[name="caracteristicaEspecifica"]').on('changed.bs.select', function(i, ov, nv)
+    {
+        if (!temas_seleccionados.hasOwnProperty($('select[name="caracteristicaPoblacion"]').val()))
+            temas_seleccionados[$('select[name="caracteristicaPoblacion"]').val()] = [];
+
+        temas_seleccionados[$('select[name="caracteristicaPoblacion"]').val()] = $('select[name="caracteristicaEspecifica"]').selectpicker('val');
+        console.log(temas_seleccionados);
+    });
 
     // Agregar datos de la actividad
     var datos_actividad = [];
@@ -597,9 +606,9 @@ $(function()
                     {
                         $('input[name="Direccion"]').val(data[0].Direccion);
                         $('input[name="Escenario"]').val(data[0].Nombre);
-                        $.when($('select[name="Id_Localidad"]').val(data[0].Id_Localidad).trigger('change')).done(function(){
+                        $.when($('select[name="localidad_escenario"]').val(data[0].Id_Localidad).trigger('change')).done(function(){
                             if(data[0].upz)
-                                $('select[name="Id_Upz"]').val(data[0].upz['Id_Upz']);
+                                $('select[name="Id_Upz_escenario"]').val(data[0].upz['Id_Upz']);
                         });
                     }
                 },

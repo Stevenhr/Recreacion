@@ -42,11 +42,13 @@ class ActividadController extends Controller
 		}
 
 		$Localidad = Localidad::whereIn('Id_Localidad',$locali)->get();
+		$Localidades = Localidad::all();
 
 		$resposanblesActividad = ConfiguracionPersona::with('persona')->where('i_id_tipo_persona',Configuracion::RESPOSANBLE_ACTIVIDAD)->whereIn('i_id_localidad',$locali)->groupBy('i_fk_id_persona')->get();
 
 		$datos=[
             "localidades"=>$Localidad,
+            "TodasLocalidades"=>$Localidades,
             "programas"=>$Programa,
             "caracteristicasPoblacion"=>$caracteristicaPoblacion,
             "resosablesActividad"=>$resposanblesActividad,
