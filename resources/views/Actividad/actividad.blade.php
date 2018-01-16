@@ -242,7 +242,7 @@
 									<select class="form-control" multiple data-selected-text-format="count > 4" name="caracteristicaEspecifica" id="caracteristicaEspecifica">
 										<option value="">Seleccionar</option>
 									</select>
-
+									<input type="hidden" name="datosCaracterisitica" id="datosCaracterisitica">
 								</div>
 							</div>
 
@@ -412,7 +412,7 @@
 					<div class="tab-pane fade" id="settings">
 
 						<div class="col-xs-12 col-md-12">
-							<h3 class="head text-center">DATOS DEL ESCENARIO</h3>
+							<h3 class="head text-center"><strong class="text-danger">PASO IV: </strong>DATOS DEL ESCENARIO</h3>
 						</div>
 
 						<div class="col-xs-12 col-md-6">
@@ -422,7 +422,7 @@
 
 										<div class="form-group">
 											<label class="control-label" for="Direccion">Dirección</label>
-											<input type="text" name="Direccion" class="form-control" value="">
+											<input type="text" name="Direccion"  id="Direccion" class="form-control" value="">
 										</div>
 									</div>
 									<div class="col-xs-12">
@@ -473,13 +473,13 @@
 									<div class="col-md-6 col-xs-12">
 										<div class="form-group">
 											<label class="control-label" for="Cod_IDRD">Latitud</label>
-											<input type="text" class="form-control" name="Latitud" value="">
+											<input type="text" class="form-control" name="Latitud" value="" readonly>
 										</div>
 									</div>
 									<div class="col-md-6 col-xs-12">
 										<div class="form-group">
 											<label class="control-label" for="Cod_IDRD">Longitud</label>
-											<input type="text" class="form-control" name="Longitud" value="">
+											<input type="text" class="form-control" name="Longitud" value="" readonly>
 										</div>
 									</div>
 									

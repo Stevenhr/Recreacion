@@ -161,12 +161,6 @@ $(function()
         selecionar_upz_comunidad($(this).val(),$('select[name="Id_Upz_Comunidad"]'));
     });
 
-    //Carga de las Upzs escenario
-    $('select[name="localidad_escenario"]').on('change', function(e)
-    {
-        selecionar_upz_comunidad($(this).val(),$('select[name="Id_Upz_escenario"]'));
-    });
-
     var selecionar_upz_comunidad = function(id,select)
     { 
         select.html('<option value="">Cargando...</option>');
@@ -178,6 +172,37 @@ $(function()
             {
                 var html = '<option value="">Seleccionar</option>'; 
                 $('select[name="Id_Barrio_Comunidad"]').html(html).val($('select[name="Id_Barrio_Comunidad"]').data('value'));
+
+                  var html = '<option value="">Seleccionar</option>';
+                  $.each(data.upzs, function(i, eee)
+                  {
+                            html += '<option value="'+eee['Id_Upz']+'" data-othervalue="'+eee['cod_upz']+'">'+eee['Upz'].toUpperCase()+'</option>';
+                  });   
+                  select.html(html);
+                  select.selectpicker('refresh');
+                  select.selectpicker('val', select.data('value'));
+            }
+        });
+    };
+
+    //Carga de las Upzs escenario
+    $('select[name="localidad_escenario"]').on('hidden.bs.select', function(e)
+    {
+       
+        selecionar_upz_escenario($(this).val(),$('select[name="Id_Upz_escenario"]'));
+    });
+
+    var selecionar_upz_escenario = function(id,select)
+    { 
+        select.html('<option value="">Cargando...</option>');
+        $.ajax({
+            url: URL+'/select_upz/'+id,
+            data: {},
+            dataType: 'json',
+            success: function(data)
+            {
+                var html = '<option value="">Seleccionar</option>'; 
+                $('select[name="Id_Barrio_escenario"]').html(html).val($('select[name="Id_Barrio_escenario"]').data('value'));
 
                   var html = '<option value="">Seleccionar</option>';
                   $.each(data.upzs, function(i, eee)
@@ -228,6 +253,8 @@ $(function()
     };
 
     //Caracterisiticas especificas de la población
+    var temas_seleccionados = {};
+
     $('select[name="caracteristicaPoblacion"]').on('change', function(e)
     {
         var otherValue = $(this).val();   
@@ -236,7 +263,6 @@ $(function()
 
     var selecionar_caracteristica_poblacion = function(id)
     { 
-
         $.ajax({
             url: URL+'/select_caracteristicas_especificas_poblacion/'+id,
             data: {},
@@ -250,18 +276,21 @@ $(function()
                   });   
                   $('select[name="caracteristicaEspecifica"]').html(html);
                   $('select[name="caracteristicaEspecifica"]').selectpicker('refresh');
-                  $('select[name="caracteristicaEspecifica"]').selectpicker('val', $('select[name="caracteristicaEspecifica"]').data('value'));
+                  $('select[name="caracteristicaEspecifica"]').selectpicker('val',  temas_seleccionados[id]);
             }
         });
     };
-    var temas_seleccionados = {};
+    
     $('select[name="caracteristicaEspecifica"]').on('changed.bs.select', function(i, ov, nv)
     {
         if (!temas_seleccionados.hasOwnProperty($('select[name="caracteristicaPoblacion"]').val()))
             temas_seleccionados[$('select[name="caracteristicaPoblacion"]').val()] = [];
 
         temas_seleccionados[$('select[name="caracteristicaPoblacion"]').val()] = $('select[name="caracteristicaEspecifica"]').selectpicker('val');
-        console.log(temas_seleccionados);
+        
+        var datosCaracterisitica = JSON.stringify(temas_seleccionados);
+        $('input[name="datosCaracterisitica"]').val(datosCaracterisitica);
+
     });
 
     // Agregar datos de la actividad
@@ -555,7 +584,50 @@ $(function()
 
                  if(target=="#doner")
                 {
-                    $('#myTab a[href="#doner"]').tab('show');
+                    var hash = window.location.hash;
+                    var id=hash.replace('#', '');
+                    
+                    if(id>0)
+                    {
+                        $.post(
+                            URL+'/validardatosactividadregistradosPasoIV',
+                            $('#form_registro_actividad').serialize(),
+                            function(data)
+                            {   
+                                if(data.status == 'error')
+                                {
+                                    validadorDatosEscenario(data.errors);
+                                    var listaError='';
+                                    var num=1;
+                                    
+                                    $('#myTab a[href="#settings"]').tab('show');
+
+                                    $.each(data.errors, function(i, e){
+                                      listaError += '<li class="list-group-item text-danger">'+num+'. '+e+'</li>';
+                                      num++;
+                                    });
+
+                                    $('#list_error').html(listaError);
+                                    $('#myModal_mal').modal('show');
+                                } 
+                                else 
+                                {
+                                    validadorDatosEscenario(data.status);  
+                                    window.location.hash = '#'+data.datos['i_pk_id'];
+                                    var variable=window.location.hash;
+                                    var id=variable.replace('#', '');
+                                    $('#id').val(id);
+                                    $('#myTab a[href="#doner"]').tab('show');
+                                    $('#list_error').html(data.mensaje);
+                                    $('#myModal_mal').modal('show');      
+                                }
+                            }
+                        );
+                    }else{
+                        $('#myTab a[href="#datos_comunidad"]').tab('show')
+                        $('#list_error').html("<div class='alert alert-danger'><center><strong> ACTIVIDAD NO HA SIDO CREADA:</strong></center> <br><br>Registre los datos del primer <strong>PASO I.</strong> <br><br><strong>Gracias!!!</strong></div>");
+                        $('#myModal_mal').modal('show');  
+                    }
                 }
                 
 
@@ -592,6 +664,35 @@ $(function()
         }
     }
 
+     var validadorDatosEscenario = function(data)
+    {
+
+        $('#form_registro_actividad .form-group').removeClass('has-error');
+        var selector = '';
+        for (var error in data){
+            if (typeof data[error] !== 'function') {
+                switch(error)
+                {
+                    case 'localidad_escenario':
+                    case 'Id_Upz_escenario':
+                    case 'Id_Barrio_escenario':
+                        selector = 'select';
+                    break;
+
+
+                    case 'Direccion':
+                    case 'Escenario':
+                    case 'Latitud':
+                    case 'Longitud':
+                        selector = 'input';
+                    break;
+                            
+                }
+                $('#form_registro_actividad '+selector+'[name="'+error+'"]').closest('.form-group').addClass('has-error');
+            }
+        }
+    }
+
     $('input[name="Cod_IDRD"]').on('blur', function(e)
     {
         var key = $(this).val();
@@ -606,9 +707,14 @@ $(function()
                     {
                         $('input[name="Direccion"]').val(data[0].Direccion);
                         $('input[name="Escenario"]').val(data[0].Nombre);
+
                         $.when($('select[name="localidad_escenario"]').val(data[0].Id_Localidad).trigger('change')).done(function(){
-                            if(data[0].upz)
-                                $('select[name="Id_Upz_escenario"]').val(data[0].upz['Id_Upz']);
+                            if(data[0].upz){
+                                var  html = '<option value="'+data[0].upz['Id_Upz']+'">'+data[0].upz['Upz']+'</option>';
+                                $('select[name="Id_Upz_escenario"]').html(html);
+                                $('select[name="Id_Upz_escenario"]').selectpicker('refresh');
+                                $('select[name="Id_Upz_escenario"]').selectpicker('val', data[0].upz['Id_Upz']);
+                            }
                         });
                     }
                 },

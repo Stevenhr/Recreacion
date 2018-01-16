@@ -256,7 +256,6 @@ class ActividadController extends Controller
 		    'caracteristicaEspecifica.required'      => 'El campo :attribute se encuentra vacio.',
 		];
 
-
 		$validator = Validator::make($request->all(),
 	    [
 			'localidad_comunidad' => 'required',
@@ -270,7 +269,6 @@ class ActividadController extends Controller
         if ($validator->fails())
             return response()->json(array('status' => 'error', 'errors' => $validator->errors()));
         
-
         if($request->input('id') == '0')
         {
             return $this->crear_datos_comunidad($request->all());
@@ -289,7 +287,7 @@ class ActividadController extends Controller
 		$actividadrecreativa['i_fk_upzComunidad']=$input['Id_Upz_Comunidad'];
 		$actividadrecreativa['i_fk_barrioComunidad']=$input['Id_Barrio_Comunidad'];
 		$actividadrecreativa['vc_institutoGrupoComunidad']=$input['institucion_g_c'];
-		$actividadrecreativa['vc_caracteristicaPoblacion']=$input['caracteristicaPoblacion'];
+		$actividadrecreativa['vc_caracteristicaPoblacion']=json_encode($input['datosCaracterisitica']);
 		$actividadrecreativa->save();
         return response()->json(array('status' => 'creado', 'datos' => $actividadrecreativa,'mensaje'=>'<div class="alert alert-success"><center><strong>DATOS DE LA COMUNIDAD REGISTRADOS:</strong></center><br><br>Datos registrados exitosamente en el sistema, la actividad <strong>'.$actividadrecreativa['i_pk_id'].'</strong> ya se encuentra en sus actividades, siga con el <strong>PASO II.</strong> Recuerde que debe completar los 5 pasos para que sea visible al responsable destinado para su aprobación. <br><br> <center><strong>ID: '.$actividadrecreativa['i_pk_id'].'</strong></center></div>'));
     }
@@ -302,7 +300,7 @@ class ActividadController extends Controller
 		$actividadrecreativa['i_fk_upzComunidad']=$input['Id_Upz_Comunidad'];
 		$actividadrecreativa['i_fk_barrioComunidad']=$input['Id_Barrio_Comunidad'];
 		$actividadrecreativa['vc_institutoGrupoComunidad']=$input['institucion_g_c'];
-		$actividadrecreativa['vc_caracteristicaPoblacion']=$input['caracteristicaPoblacion'];
+		$actividadrecreativa['vc_caracteristicaPoblacion']=json_encode($input['datosCaracterisitica']);
 		$actividadrecreativa->save();
         return response()->json(array('status' => 'creado', 'datos' => $actividadrecreativa,'mensaje'=>'<div class="alert alert-success"><center><strong>DATOS DE LA COMUNIDAD ACTUALIZADOS:</strong></center><br><br>DATOS DE LA COMUNIDAD actualizados exitosamente en el sistema de la actividad <strong>'.$input['id'].'</strong>. Continue con el <strong>PASO II</strong><br><br><strong>Gracias!!!</strong></center></div>'));
     }
@@ -398,6 +396,56 @@ class ActividadController extends Controller
 		}
 		return response()->json(array('status' => $status, 'datos' => $datoactivida, 'mensaje'=>$mensaje));
 	}
+
+
+	public function validardatosactividadregistradosPasoIV(Request $request)
+	{
+		$messages = [
+		    'Direccion.required'    => 'El campo :attribute se encuentra vacio.',
+		    'Escenario.required'    => 'El campo :attribute se encuentra vacio.',
+		    'localidad_escenario.required'      => 'El campo :attribute se encuentra vacio.',
+		    'Id_Upz_escenario.required'      => 'El campo :attribute se encuentra vacio.',
+		    'Id_Barrio_escenario.required'      => 'El campo :attribute se encuentra vacio.',
+		    'Latitud.required'      => 'El campo :attribute se encuentra vacio.',
+		    'Longitud.required'      => 'El campo :attribute se encuentra vacio.',
+		];
+
+		$validator = Validator::make($request->all(),
+	    [
+			'Direccion' => 'required',
+			'Escenario' => 'required',
+			'localidad_escenario' => 'required',
+			'Id_Upz_escenario' => 'required',
+			'Id_Barrio_escenario' => 'required',
+			'Latitud' => 'required',
+			'Longitud' => 'required',
+    	],$messages);
+        
+        if ($validator->fails()){
+            return response()->json(array('status' => 'error', 'errors' => $validator->errors()));
+        }
+        else{
+        	return $this->crear_datos_escenario($request->all());
+        }
+    }
+
+
+
+    public function crear_datos_escenario($input)
+    {
+		//Latitud
+		//Longitud
+
+		$actividadrecreativa =  ActividadRecreativa::find($input['id']);
+	    $actividadrecreativa['i_fk_localidadEscenario']=$input['localidad_escenario'];
+		$actividadrecreativa['i_fk_upzEscenario']=$input['Id_Upz_escenario'];
+		$actividadrecreativa['i_fk_barrioEscenario']=$input['Id_Barrio_escenario'];
+		$actividadrecreativa['vc_direccion']=$input['Direccion'];
+		$actividadrecreativa['vc_escenario']=$input['Escenario'];
+		$actividadrecreativa->save();
+
+        return response()->json(array('status' => 'creado', 'datos' => $actividadrecreativa,'mensaje'=>'<div class="alert alert-success"><center><strong>DATOS DE LA ACTIVIDAD REGISTRADOS:</strong></center><br><br>DATOS DEL ESCENARIO registrados exitosamente en el sistema de la actividad <strong>'.$input['id'].'</strong>. Continue registrando los aspectos a tener en cuenta <strong>PASO V</strong><br><br><strong>Gracias!!!</strong></center></div>'));
+    }
 
 
 
