@@ -761,6 +761,69 @@ $(function()
     marker.addListener('dragend', actualizarPosicion);
 
 
+    $('#registrarActividad').on('click', function(e)
+    {
+        var variable=window.location.hash;
+        $.post(
+            URL+'/registroActividadPasoV',
+            $('#form_registro_actividad').serialize(),
+            function(data)
+            {
+                if(data.status == 'error')
+                {
+                    validador_registro_actividad(data.errors);
+                    var listaError='';
+                    var num=1;
+                    $('#myTab a[href="#doner"]').tab('show')
+                    $.each(data.errors, function(i, e){
+                      listaError += '<li class="list-group-item text-danger">'+num+'. '+e+'</li>';
+                      num++;
+                    });
+                    $('#list_error').html(listaError);
+                    $('#myModal_mal').modal('show');
+                } 
+                else 
+                {
+                    validador_registro_actividad(data.errors);   
+                    $('#id').val(0);
+                    $('#list_error').html(data.mensaje);
+                    $('#myModal_mal').modal('show'); 
+
+                    setTimeout(function(){
+                          $('#myModal_mal').modal('hide');
+                          window.location.reload(true);
+                    }, 2000)
+
+                    
+                }
+            }
+        );
+        return false;
+    });
+
+    var validador_registro_actividad = function(data)
+    {
+        $('#form_registro_actividad .form-group').removeClass('has-error');
+        var selector = '';
+        for (var error in data){
+            if (typeof data[error] !== 'function') {
+                switch(error)
+                {
+                    case 'hora_implementacion':
+                    case 'punto_encuentro':
+                    case 'nombre_persona':
+                    case 'telefono_persona':
+                    case 'roll_comunidad':
+                        selector = 'input';
+                    break;               
+                }
+                $('#form_registro_actividad '+selector+'[name="'+error+'"]').closest('.form-group').addClass('has-error');
+            }
+        }
+    }
+
+
+
 });
 
 

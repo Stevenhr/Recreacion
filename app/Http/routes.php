@@ -118,6 +118,11 @@ Route::group(['prefix' => 'actividad', 'middleware' => 'auth'], function()
         'as' => 'validardatosactividadregistradosPasoIV'
     ]);
 
+    Route::post('registroActividadPasoV',[
+        'uses' => $controller.'ActividadController@registroActividadPasoV',
+        'as' => 'registroActividadPasoV'
+    ]);
+
     Route::get('service/buscar/{id}',[
         'uses' => $controller.'ActividadController@buscar',
         'as' => 'buscarDatosParques'

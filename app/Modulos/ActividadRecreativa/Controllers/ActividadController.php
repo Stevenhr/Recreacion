@@ -449,4 +449,48 @@ class ActividadController extends Controller
 
 
 
+
+    public function registroActividadPasoV(Request $request)
+	{
+		$messages = [
+		    'hora_implementacion.required'    => 'El campo :attribute se encuentra vacio.',
+		    'punto_encuentro.required'    => 'El campo :attribute se encuentra vacio.',
+		    'nombre_persona.required'      => 'El campo :attribute se encuentra vacio.',
+		    'roll_comunidad.required'      => 'El campo :attribute se encuentra vacio.',
+		    'telefono_persona.required'      => 'El campo :attribute se encuentra vacio.',
+		];
+
+		$validator = Validator::make($request->all(),
+	    [
+			'hora_implementacion' => 'required',
+			'punto_encuentro' => 'required',
+			'nombre_persona' => 'required',
+			'roll_comunidad' => 'required',
+			'telefono_persona' => 'required',
+    	],$messages);
+        
+        if ($validator->fails()){
+            return response()->json(array('status' => 'error', 'errors' => $validator->errors()));
+        }
+        else
+        {
+        	return $this->crear_registro_actividad($request->all());
+        }
+    }
+
+    public function crear_registro_actividad($input)
+    {
+
+		$actividadrecreativa =  ActividadRecreativa::find($input['id']);
+	    $actividadrecreativa['t_horaImplementacion']=$input['hora_implementacion'];
+		$actividadrecreativa['vc_puntoEncuentro']=$input['punto_encuentro'];
+		$actividadrecreativa['vc_personaContacto']=$input['nombre_persona'];
+		$actividadrecreativa['vc_rollComunidad']=$input['roll_comunidad'];
+		$actividadrecreativa['i_telefono']=$input['telefono_persona'];
+		$actividadrecreativa->save();
+        return response()->json(array('status' => 'creado', 'datos' => $actividadrecreativa,'mensaje'=>'<div class="alert alert-success"><center><strong>ACTIVIDAD REGISTRADA EXITOSAMENTE:</strong><br><br><img src="../public/Img/Institucionales/iconoModulo.png" class="rounded mx-auto d-block" alt="..."><br><br><strong>Gracias!!!</strong></center></div>'));
+    }
+
+
+
 }

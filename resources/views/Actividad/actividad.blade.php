@@ -520,40 +520,46 @@
 						</div>
 
 						<div class="row">
-							<div class="col-md-6 col-xs-12">
+							<div class="col-md-2 col-xs-12">
 								<div class="form-group">
 									<label> 1. Hora de implementación:	</label>
-									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
+									<input type="time" class="form-control" name="hora_implementacion" autocomplete="off">
 								</div>
 							</div>
 
-							<div class="col-md-6 col-xs-12">
+							<div class="col-md-4 col-xs-12">
 								<div class="form-group">
 									<label> 2. Punto de encuentro:	</label>
-									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
+									<input type="text" class="form-control" name="punto_encuentro" autocomplete="off">
 								</div>
 							</div>
 
 							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
-									<label> 3. Nombre de la persona de contacto:</label>
-									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
 								</div>
 							</div>
+
 						</div>
 
 						<div class="row">
 							<div class="col-md-6 col-xs-12">
 								<div class="form-group">
-									<label> 4. Rol en la comunidad:	</label>
-									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
+									<label> 3. Nombre de la persona de contacto:</label>
+									<input type="text" class="form-control" name="nombre_persona" autocomplete="off">
 								</div>
 							</div>
 
-							<div class="col-md-6 col-xs-12">
+							<div class="col-md-4 col-xs-12">
+								<div class="form-group">
+									<label> 4. Rol en la comunidad:	</label>
+									<input type="text" class="form-control" name="roll_comunidad" autocomplete="off">
+								</div>
+							</div>
+
+							<div class="col-md-2 col-xs-12">
 								<div class="form-group">
 									<label> 5. Telefono:	</label>
-									<input type="text" class="form-control" name="fecha_suscripcion" autocomplete="off">
+									<input type="text" class="form-control" name="telefono_persona" autocomplete="off">
 								</div>
 							</div>
 
@@ -566,7 +572,7 @@
 						<div class="row">
 							<div class="col-xs-12 col-sm-12">
 								<p class="text-center">
-									<a href="" class="btn btn-success btn-outline-rounded green"> Registrar actividad <span style="margin-left:10px;" class="glyphicon glyphicon-ok"></span></a>
+									<a href="javascript:void(0)" class="btn btn-success btn-outline-rounded green" id="registrarActividad"> Registrar actividad <span style="margin-left:10px;" class="glyphicon glyphicon-ok"></span></a>
 								</p>
 							</div>
 						</div>
