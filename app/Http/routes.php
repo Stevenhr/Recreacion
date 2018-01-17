@@ -123,6 +123,11 @@ Route::group(['prefix' => 'actividad', 'middleware' => 'auth'], function()
         'as' => 'registroActividadPasoV'
     ]);
 
+      Route::post('getCaracterisiticasEspecificas',[
+        'uses' => $controller.'ActividadController@getCaracterisiticasEspecificas',
+        'as' => 'getCaracterisiticasEspecificas'
+    ]);
+
     Route::get('service/buscar/{id}',[
         'uses' => $controller.'ActividadController@buscar',
         'as' => 'buscarDatosParques'

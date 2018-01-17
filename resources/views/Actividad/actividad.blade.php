@@ -244,6 +244,9 @@
 									</select>
 									<input type="hidden" name="datosCaracterisitica" id="datosCaracterisitica">
 								</div>
+								<div class="form-group text-right">
+									<button type="button" class="btn btn-link text-right" id="mostrar_seleccionados">Seleccionados</button>
+								</div>
 							</div>
 
 							<!--<div class="col-md-6 col-xs-12">

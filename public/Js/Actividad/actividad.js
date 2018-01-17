@@ -280,14 +280,14 @@ $(function()
             }
         });
     };
-    
+  
     $('select[name="caracteristicaEspecifica"]').on('changed.bs.select', function(i, ov, nv)
     {
         if (!temas_seleccionados.hasOwnProperty($('select[name="caracteristicaPoblacion"]').val()))
             temas_seleccionados[$('select[name="caracteristicaPoblacion"]').val()] = [];
 
-        temas_seleccionados[$('select[name="caracteristicaPoblacion"]').val()] = $('select[name="caracteristicaEspecifica"]').selectpicker('val');
-        
+        temas_seleccionados[$('select[name="caracteristicaPoblacion"]').val()] = [$('select[name="caracteristicaEspecifica"]').selectpicker('val')];
+         
         var datosCaracterisitica = JSON.stringify(temas_seleccionados);
         $('input[name="datosCaracterisitica"]').val(datosCaracterisitica);
 
@@ -821,6 +821,28 @@ $(function()
             }
         }
     }
+
+
+
+    $('#mostrar_seleccionados').on('click', function(e)
+    {
+        var listaError="";
+        var num=1;
+            
+         $.post(
+            URL+'/getCaracterisiticasEspecificas',
+            { temas_seleccionados: temas_seleccionados},
+            function(data)
+            {
+                $('#list_error').html(data);
+                $('#myModal_mal').modal('show');
+
+            }
+        );
+
+       
+        return false;
+    });
 
 
 

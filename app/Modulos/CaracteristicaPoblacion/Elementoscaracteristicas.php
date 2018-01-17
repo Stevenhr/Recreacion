@@ -13,4 +13,5 @@ class Elementoscaracteristicas extends Model
 	protected $connection = ''; 
 	public $timestamps = true;
 
+
 }

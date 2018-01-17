@@ -488,7 +488,48 @@ class ActividadController extends Controller
 		$actividadrecreativa['vc_rollComunidad']=$input['roll_comunidad'];
 		$actividadrecreativa['i_telefono']=$input['telefono_persona'];
 		$actividadrecreativa->save();
-        return response()->json(array('status' => 'creado', 'datos' => $actividadrecreativa,'mensaje'=>'<div class="alert alert-success"><center><strong>ACTIVIDAD REGISTRADA EXITOSAMENTE:</strong><br><br><img src="../public/Img/Institucionales/iconoModulo.png" class="rounded mx-auto d-block" alt="..."><br><br><strong>Gracias!!!</strong></center></div>'));
+        return response()->json(array('status' => 'creado', 'datos' => $actividadrecreativa,'mensaje'=>'<div class="alert alert-success"><center><strong>ACTIVIDAD REGISTRADA EXITOSAMENTE:</strong><br><br><img src="../public/Img/bien.png" class="rounded mx-auto d-block" alt="..." width="150px"><br><br><strong>Gracias!!!</strong></center></div>'));
+    }
+
+
+     public function getCaracterisiticasEspecificas(Request $request)
+	{
+		$locali=[];
+		$i=0;
+        foreach ($request['temas_seleccionados'] as $key) {
+        	foreach ($key as $idespecifica) {
+				foreach ($idespecifica as $idespecificad) {
+					$locali[$i]=$idespecificad;
+					$i++;
+				}
+			}
+		}
+
+		$elemCaracteristica = Elementoscaracteristicas::whereIn('i_pk_id',$locali)->get();
+
+		$tabla='<table class="table display no-wrap table-condensed table-bordered table-min" id="datos_actividad">
+            <thead> 
+                <tr class="active"> 
+                    <th>#</th> 
+                    <th>Caracteristica</th> 
+                </tr> 
+            </thead>
+                <tbody>';
+            $num=1;
+            if($elemCaracteristica!=''){
+                foreach ($elemCaracteristica as $atividadmet) {
+                    // dd($atividadmet);
+                    $tabla=$tabla."<tr class='danger'>
+                        <td>".$num."</td>
+                        <td>".$atividadmet['vc_elemento']."</center></td>
+                    </tr>";
+                    $num++;
+                }
+            }
+        $tabla=$tabla.'</tbody>
+        </table>';
+
+		return $tabla;
     }
 
 
