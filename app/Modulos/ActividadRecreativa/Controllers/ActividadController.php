@@ -338,17 +338,50 @@ class ActividadController extends Controller
     public function crear_datos_actividad($input)
     {
 
-        $datosActividad = new DatosActividad;
-        $datosActividad['i_fk_id_actividad']=$input['id'];
-		$datosActividad['i_fk_programa']=$input['programa'];
-		$datosActividad['i_fk_actividad']=$input['actividad'];
-		$datosActividad['i_fk_tematica']=($input['tematica']=='')?null:$input['tematica'];
-		$datosActividad['i_fk_componente']=($input['componente']=='')?null:$input['componente'];
-		$datosActividad->save();
+    	$datosActividadConsulta =  DatosActividad::where('i_fk_id_actividad',$input['id'])
+    	->where('i_fk_programa','<>',$input['programa'])
+    	->where('i_fk_actividad','<>',$input['actividad'])
+    	->get();
 
-		$datosActividadTodos = DatosActividad::with('programa','actividad','tematica','componente')->where('i_fk_id_actividad',$input['id'])->get();
+    	if(count($datosActividadConsulta)==0)
+    	{
 
-        return response()->json(array('status' => 'creado', 'datos' => $datosActividadTodos,'mensaje'=>'<div class="alert alert-success"><center><strong>DATOS DE LA ACTIVIDAD REGISTRADOS:</strong></center><br><br>DATOS DE LA ACTIVIDAD registrados exitosamente en el sistema de la actividad <strong>'.$input['id'].'</strong>. Continue registrando más datos de la actividad o con el <strong>PASO III</strong><br><br><strong>Gracias!!!</strong></center></div>'));
+    		$datosActividadConsulta2 =  DatosActividad::where('i_fk_id_actividad',$input['id'])
+	    	->where('i_fk_programa',$input['programa'])
+	    	->where('i_fk_actividad',$input['actividad'])
+	    	->where('i_fk_tematica',$input['tematica'])
+	    	->where('i_fk_componente',$input['componente'])
+	    	->get();
+	    	
+	    	if(count($datosActividadConsulta2)==0)
+	    	{
+			    
+			    $datosActividad = new DatosActividad;
+			    $datosActividad['i_fk_id_actividad']=$input['id'];
+				$datosActividad['i_fk_programa']=$input['programa'];
+				$datosActividad['i_fk_actividad']=$input['actividad'];
+				$datosActividad['i_fk_tematica']=($input['tematica']=='')?null:$input['tematica'];
+				$datosActividad['i_fk_componente']=($input['componente']=='')?null:$input['componente'];
+				$datosActividad->save();
+
+				$datosActividadTodos = DatosActividad::with('programa','actividad','tematica','componente')->where('i_fk_id_actividad',$input['id'])->get();
+
+			    return response()->json(array('status' => 'creado', 'datos' => $datosActividadTodos,'mensaje'=>'<div class="alert alert-success"><center><strong>DATOS DE LA ACTIVIDAD REGISTRADOS:</strong></center><br><br>DATOS DE LA ACTIVIDAD registrados exitosamente en el sistema de la actividad <strong>'.$input['id'].'</strong>. Continue registrando más datos de la actividad o con el <strong>PASO III</strong><br><br><strong>Gracias!!!</strong></center></div>'));
+
+			 }else {
+			 	$datosActividadTodos = DatosActividad::with('programa','actividad','tematica','componente')->where('i_fk_id_actividad',$input['id'])->get();
+
+			    return response()->json(array('status' => 'creado', 'datos' => $datosActividadTodos,'mensaje'=>'<div class="alert alert-danger"><center><strong>DATOS REPETIDOS:</strong></center><br><br>DATOS DE LA ACTIVIDAD ya se encuentran registrados. <br><br><strong>Gracias!!!</strong></center></div>'));
+			 }
+
+		}else{
+
+			$datosActividadTodos = DatosActividad::with('programa','actividad','tematica','componente')->where('i_fk_id_actividad',$input['id'])->get();
+
+		    return response()->json(array('status' => 'creado', 'datos' => $datosActividadTodos,'mensaje'=>'<div class="alert alert-danger"><center><strong>DATOS NO REGISTRADOS:</strong></center><br><br>DATOS DE LA ACTIVIDAD con diferente programa y actividad. <br><br><strong>Gracias!!!</strong></center></div>'));
+
+		}
+			
     }
 
     public function eliminarDatosActividad(Request $request, $id)
