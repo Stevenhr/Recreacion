@@ -13,5 +13,9 @@ class Elementoscaracteristicas extends Model
 	protected $connection = ''; 
 	public $timestamps = true;
 
+	public function caracteristicaPoblacion()
+    {
+        return $this->belongsTo('App\Modulos\CaracteristicaPoblacion\CaracteristicaPoblacion','i_fk_id_carac');
+    }
 
 }

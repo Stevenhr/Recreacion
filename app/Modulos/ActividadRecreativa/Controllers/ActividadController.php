@@ -497,21 +497,26 @@ class ActividadController extends Controller
 		$locali=[];
 		$i=0;
         foreach ($request['temas_seleccionados'] as $key) {
+        	if($key!=''){
         	foreach ($key as $idespecifica) {
+        		if($idespecifica!=''){
 				foreach ($idespecifica as $idespecificad) {
 					$locali[$i]=$idespecificad;
 					$i++;
 				}
+				}
+			}
 			}
 		}
 
-		$elemCaracteristica = Elementoscaracteristicas::whereIn('i_pk_id',$locali)->get();
+		$elemCaracteristica = Elementoscaracteristicas::with('caracteristicaPoblacion')->whereIn('i_pk_id',$locali)->get();
 
 		$tabla='<table class="table display no-wrap table-condensed table-bordered table-min" id="datos_actividad">
             <thead> 
                 <tr class="active"> 
                     <th>#</th> 
                     <th>Caracteristica</th> 
+                    <th>Especifica</th> 
                 </tr> 
             </thead>
                 <tbody>';
@@ -521,7 +526,8 @@ class ActividadController extends Controller
                     // dd($atividadmet);
                     $tabla=$tabla."<tr class='danger'>
                         <td>".$num."</td>
-                        <td>".$atividadmet['vc_elemento']."</center></td>
+                        <td>".strtoupper($atividadmet->caracteristicaPoblacion['tx_caracteristicas'])."</td>
+                        <td>".strtoupper($atividadmet['vc_elemento'])."</td>
                     </tr>";
                     $num++;
                 }
