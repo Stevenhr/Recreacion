@@ -376,7 +376,7 @@
 
 							<div class="col-xs-12 col-sm-12">
 								<p class="form-group">
-									<a href="" class="btn btn-success btn-xs"> Búsqueda de acompañamtes <span style="margin-left:10px;" class="glyphicon glyphicon-plus"></span></a>
+									<button type="button" class="btn btn-link text-right" id="busquedaAcompananteLocalidad">Acompañanantes</button> 
 								</p>
 							</div>
 

@@ -123,7 +123,7 @@ Route::group(['prefix' => 'actividad', 'middleware' => 'auth'], function()
         'as' => 'registroActividadPasoV'
     ]);
 
-      Route::post('getCaracterisiticasEspecificas',[
+    Route::post('getCaracterisiticasEspecificas',[
         'uses' => $controller.'ActividadController@getCaracterisiticasEspecificas',
         'as' => 'getCaracterisiticasEspecificas'
     ]);
@@ -131,6 +131,16 @@ Route::group(['prefix' => 'actividad', 'middleware' => 'auth'], function()
     Route::get('service/buscar/{id}',[
         'uses' => $controller.'ActividadController@buscar',
         'as' => 'buscarDatosParques'
+    ]);
+
+    Route::post('getAcompananteLocalidad',[
+        'uses' => $controller.'ActividadController@getAcompananteLocalidad',
+        'as' => 'getAcompananteLocalidad'
+    ]);
+
+    Route::post('setAcompanante',[
+        'uses' => $controller.'ActividadController@setAcompanante',
+        'as' => 'setAcompanante'
     ]);
 
 });

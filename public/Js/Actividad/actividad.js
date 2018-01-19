@@ -846,6 +846,59 @@ $(function()
 
 
 
+    $('#busquedaAcompananteLocalidad').on('click', function(e)
+    {
+        var listaError="";
+        var num=1;
+            
+         $.post(
+            URL+'/getAcompananteLocalidad',
+            $('#form_registro_actividad').serialize(),
+            function(data)
+            {
+                $('#list_error').html(data);
+                $('#myModal_mal').modal('show');
+
+            }
+        );
+
+        return false;
+    });
+
+
+    $('#myModal_mal').delegate('input:checkbox', 'change', function () {
+        var idActividad=$(this).data('rel');
+        var idUsuario=this.id;
+        if (this.checked) {
+            $.post(
+                URL+'/setAcompanante',
+                {idUsuario:idUsuario,idActividad:idActividad,opcion:'insertar'},
+                function(data)
+                {
+                    $('#confAcompanante'+idUsuario).html(data.mensaje);
+                     setTimeout(function(){
+                          $('#confAcompanante'+idUsuario).html('');
+                    }, 2000)
+                }
+            );
+        }else{
+            $.post(
+                URL+'/setAcompanante',
+                {idUsuario:idUsuario,idActividad:idActividad,opcion:'eliminar'},
+                function(data)
+                {
+                    $('#confAcompanante'+idUsuario).html(data.mensaje);
+                     setTimeout(function(){
+                          $('#confAcompanante'+idUsuario).html('');
+                    }, 2000)
+                }
+            );
+        }
+        return false;
+    });
+
+
+
 });
 
 

@@ -4,6 +4,7 @@ namespace App\Modulos\ActividadRecreativa\Controllers;
 
 use Illuminate\Http\Request;
 use App\Localidad;
+use App\Persona;
 use App\Modulos\Parques\Upz;
 use App\Modulos\Parques\Barrio;
 use App\Modulos\ActividadRecreativa\ActividadRecreativa;
@@ -12,6 +13,7 @@ use App\Modulos\Programa\Programa;
 use App\Modulos\Actividad\Actividad;
 use App\Modulos\Componente\Componente;
 use App\Modulos\Tematica\Tematica;
+use App\Modulos\Usuario\Acompanante;
 use App\Modulos\CaracteristicaPoblacion\CaracteristicaPoblacion;
 use App\Modulos\CaracteristicaPoblacion\Elementoscaracteristicas;
 use App\Modulos\Configuracion\Configuracion;
@@ -352,7 +354,7 @@ class ActividadController extends Controller
 	    	->where('i_fk_tematica',$input['tematica'])
 	    	->where('i_fk_componente',$input['componente'])
 	    	->get();
-	    	
+
 	    	if(count($datosActividadConsulta2)==0)
 	    	{
 			    
@@ -572,5 +574,82 @@ class ActividadController extends Controller
     }
 
 
+
+    public function getAcompananteLocalidad(Request $request)
+	{
+		
+
+		$actividadrecreativa =  ActividadRecreativa::find($request['id']);
+  		$localidadComunidad=$actividadrecreativa['i_fk_localidadComunidad'];
+
+  		$resposanblesActividadPorLocalidad = ConfiguracionPersona::where('i_id_tipo_persona',Configuracion::RESPOSANBLE_ACTIVIDAD)
+  			->where('i_id_localidad',$localidadComunidad)
+  			->distinct('i_fk_id_persona')
+  			->get();
+
+  		$acompananteNoDisponible =   ActividadRecreativa::where('d_fechaEjecucion','=',$actividadrecreativa['d_fechaEjecucion'])
+  								   ->whereIn('i_fk_usuarioResponsable',$resposanblesActividadPorLocalidad->pluck('i_fk_id_persona')->unique()->all())
+  								   ->distinct('i_fk_usuarioResponsable')
+  								   ->get();
+  		
+  		
+
+  		$resultado = array_diff($resposanblesActividadPorLocalidad->pluck('i_fk_id_persona')->unique()->all(),$acompananteNoDisponible->pluck('i_fk_usuarioResponsable')->unique()->all());
+
+  		$personas=Persona::whereIn('Id_Persona',$resultado)->get();
+        
+        $acompanante = Acompanante::where('i_fk_id_actividad',$request['id'])->get();
+        $listaAcompaRegistrado=$acompanante->pluck('i_fk_usuario')->unique()->all();
+        
+        $tabla='<h5>Usuarios disponibles para la fecha registrada:</h5><br><table class="table display no-wrap table-condensed table-bordered table-min" id="datosAcompanantes">
+            <thead> 
+                <tr class="active"> 
+                    <th>#</th> 
+                    <th>Nombre</th> 
+                    <th>Apellido</th> 
+                    <th>Selecionar</th>
+                </tr> 
+            </thead>
+                <tbody>';
+            $num=1;
+            if($personas!=''){
+                foreach ($personas as $persona) {
+                    // dd($atividadmet);
+                    $cheked="";
+                    if(in_array($persona['Id_Persona'], $listaAcompaRegistrado)){
+                    	$cheked="checked";
+                    }else{
+                    	$cheked="";
+                    }
+                    $tabla=$tabla."<tr>
+                        <td>".$num."</td>
+                        <td>".strtoupper($persona['Primer_Nombre']." ".$persona['Segundo_Nombre'])."</td>
+                        <td>".strtoupper($persona['Primer_Apellido']." ".$persona['Segundo_Apellido'])."</td>
+                        <td><center><input id=".$persona['Id_Persona']." type='checkbox' data-rel=".$request['id']." ".$cheked."><div id='confAcompanante".$persona['Id_Persona']."'></div></center></td>
+                    </tr>";
+                    $num++;
+                }
+            }
+        $tabla=$tabla.'</tbody>
+        </table>';
+
+		return $tabla;
+    }
+
+     public function setAcompanante(Request $request)
+	{
+		
+		if($request['opcion']=='insertar'){
+			$acompanante=  new Acompanante;
+		    $acompanante['i_fk_usuario']=$request['idUsuario'];
+			$acompanante['i_fk_id_actividad']=$request['idActividad'];
+			$acompanante->save();
+	        return response()->json(array('status' => 'creado', 'datos' => $request['idActividad'],'mensaje'=>'<div class="alert alert-success"><center><strong>Registrado</strong></div>'));
+	    }else{
+	    	$acompanante = Acompanante::where('i_fk_usuario',$request['idUsuario'])->where('i_fk_id_actividad',$request['idActividad'])->delete();
+	        return response()->json(array('status' => 'creado', 'datos' => $request['idActividad'],'mensaje'=>'<div class="alert alert-danger"><center><strong>No registrado</strong></div>'));
+	    }
+
+    }
 
 }
