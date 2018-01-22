@@ -4,11 +4,23 @@ $(function()
 	var URL = $('#main_actividad').data('url');
     var URL_PARQUES = $('#main').data('url-parques');
     window.location.hash = '#inicio';
-    $("#fecha_ejecucdion").datepicker({
-      changeMonth: true,
-      changeYear: true,
-      dateFormat: 'yy-mm-dd',
-      yearRange: '-100:+0'
+    
+
+    $('#fecha_ejecucion').datetimepicker({
+        viewMode: 'years',
+                format: 'DD/MM/YYYY'
+        });
+
+    $('#hora_inicio').datetimepicker({
+        format: 'LT'
+    });
+
+    $('#hora_fin').datetimepicker({
+        format: 'LT'
+    });
+
+    $('#hora_implementacion').datetimepicker({
+        format: 'LT'
     });
     
 	//Carga de las actividades 

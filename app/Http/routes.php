@@ -150,6 +150,17 @@ Route::group(['prefix' => 'actividad', 'middleware' => 'auth'], function()
 
 });
 
+
+Route::group(['prefix' => 'misActividades', 'middleware' => 'auth'], function()
+{
+    $controller = "\\App\\Modulos\\ActividadRecreativa\\Controllers\\";
+
+    Route::any('/mis_actividades', [
+        'uses' => $controller.'MisActividades@inicio',
+        'as' => 'mis_actividades'
+    ]);
+});
+
 Route::group(['prefix' => 'usuarios', 'middleware' => 'auth'], function()
 {
     Route::get('distribuir', '\App\Modulos\Usuario\Controllers\DistribucionController@index');

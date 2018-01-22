@@ -308,21 +308,21 @@
 							<div class="col-md-3 col-xs-12">
 								<div class="form-group">
 									<p> Fecha de ejecución</p>
-									<input type="date" class="form-control" name="fecha_ejecucion" id="fecha_ejecucion"  data-role1="datepicker" placeholder="aa/mm/dd" autocomplete="off" >
-									<input type="hidden" class="form-control" name="fecha_ejecucion_validada" id="fecha_ejecucion_validada"  data-role1="datepicker" placeholder="aa/mm/dd" autocomplete="off" >
+									<input type="text" class="form-control" name="fecha_ejecucion" id="fecha_ejecucion"  data-role1="datepicker" placeholder="dd/mm/yyyy" autocomplete="off" >
+									<input type="hidden" class="form-control" name="fecha_ejecucion_validada" id="fecha_ejecucion_validada"  data-role1="datepicker"  autocomplete="off" >
 								</div>
 							</div>
 							<div class="col-md-3 col-xs-12">
 								<div class="form-group">
 									<p> Hora inicio</p>
-									<input type="time" class="form-control" name="hora_inicio"  data-role1="datepicker" autocomplete="off">
+									<input type="text" class="form-control" name="hora_inicio" id="hora_inicio" data-role1="datepicker" autocomplete="off">
 									<input type="hidden" class="form-control" name="hora_inicio_validada"  id="hora_inicio_validada" data-role1="datepicker" autocomplete="off">
 								</div>
 							</div>
 							<div class="col-md-3 col-xs-12">
 								<div class="form-group">
 									<p> Hora fin</p>
-									<input type="time" class="form-control" name="hora_fin" autocomplete="off">
+									<input type="text" class="form-control" name="hora_fin" id="hora_fin" autocomplete="off">
 									<input type="hidden" class="form-control" name="hora_fin_validada" id="hora_fin_validada" autocomplete="off">
 								</div>
 							</div>
@@ -522,7 +522,7 @@
 							<div class="col-md-2 col-xs-12">
 								<div class="form-group">
 									<label> 1. Hora de implementación:	</label>
-									<input type="time" class="form-control" name="hora_implementacion" autocomplete="off">
+									<input type="text" class="form-control" name="hora_implementacion" id="hora_implementacion" autocomplete="off">
 								</div>
 							</div>
 

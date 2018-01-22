@@ -86,9 +86,7 @@
                   <li><a href="#">Actividad</a></li>
                   <li class="divider"></li>
                   <li class="{{ Request::is( 'proceso_actividad') ? 'active' : '' }}"><a href="{{ route('proceso_actividad') }}">Crear actividad</a></li>
-                  <li><a href="#">Sub-Item 2</a></li>
-                  <li><a href="#">Sub-Item 3</a></li>
-                  <li><a href="#">Sub-Item 4</a></li>
+                  <li class="{{ Request::is( 'mis_actividades') ? 'active' : '' }}"><a href="{{ route('mis_actividades') }}">Mis actividades</a></li>
                 </ul>
               </li>
             </ul>
