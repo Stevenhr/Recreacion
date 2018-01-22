@@ -718,12 +718,35 @@ $(function()
                                 $('select[name="Id_Upz_escenario"]').html(html);
                                 $('select[name="Id_Upz_escenario"]').selectpicker('refresh');
                                 $('select[name="Id_Upz_escenario"]').selectpicker('val', data[0].upz['Id_Upz']);
+                            
+                                $('select[name="Id_Barrio_escenario"]').html('<option value="">Cargando...</option>');
+                                $.ajax({
+                                    url: URL+'/select_barrio/'+data[0].upz['Id_Upz'],
+                                    data: {},
+                                    dataType: 'json',
+                                    success: function(data)
+                                    {
+                                        var html = '<option value="">Seleccionar</option>'; 
+                                        $('select[name="Id_Barrio_escenario"]').html(html).val($('select[name="Id_Barrio_escenario"]').data('value'));
+
+                                          var html = '<option value="">Seleccionar</option>';
+                                          $.each(data, function(i, eee)
+                                          {
+                                                    html += '<option value="'+eee['IdBarrio']+'"  >'+eee['Barrio'].toUpperCase()+'</option>';
+                                          });   
+                                          $('select[name="Id_Barrio_escenario"]').html(html);
+                                          $('select[name="Id_Barrio_escenario"]').selectpicker('refresh');
+                                          $('select[name="Id_Barrio_escenario"]').selectpicker('val', $('select[name="Id_Barrio_escenario"]').data('value'));
+                                    }
+                                });
                             }
                         });
                     }
                 },
                 'json'
             )
+
+
         }
     });
 
