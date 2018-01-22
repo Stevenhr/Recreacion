@@ -85,7 +85,7 @@ Route::group(['prefix' => 'actividad', 'middleware' => 'auth'], function()
 
     Route::post('disponibilidad_acopanante',[
         'uses' => $controller.'ActividadController@disponibilidad_acopanante',
-        'as' => 'selecionar_barrio'
+        'as' => 'disponibilidad_acopanante'
     ]);
 
     Route::post('validaPasos',[
@@ -136,6 +136,11 @@ Route::group(['prefix' => 'actividad', 'middleware' => 'auth'], function()
     Route::post('getAcompananteLocalidad',[
         'uses' => $controller.'ActividadController@getAcompananteLocalidad',
         'as' => 'getAcompananteLocalidad'
+    ]);
+
+    Route::post('getAcompananteOtraLocalidad',[
+        'uses' => $controller.'ActividadController@getAcompananteOtraLocalidad',
+        'as' => 'getAcompananteOtraLocalidad'
     ]);
 
     Route::post('setAcompanante',[

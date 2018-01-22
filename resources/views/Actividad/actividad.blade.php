@@ -285,9 +285,15 @@
 						</div>
 
 						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-xs-12">
+								<label>1. CONFIGURACION HORARIO:</label><br>
+							</div>
+						</div>
+
+						<div class="row">
 							<div class="col-md-3 col-xs-12">
 								<div class="form-group">
-									<label> 1. Responsable </label>
+									<P> Responsable </P>
 									<select class="form-control" name="responsable">
 										<option value="">Seleccionar</option>
 										@foreach($resosablesActividad as $responsable)
@@ -301,21 +307,21 @@
 							</div>
 							<div class="col-md-3 col-xs-12">
 								<div class="form-group">
-									<label> 1. Fecha de ejecución</label>
+									<p> Fecha de ejecución</p>
 									<input type="date" class="form-control" name="fecha_ejecucion" id="fecha_ejecucion"  data-role1="datepicker" placeholder="aa/mm/dd" autocomplete="off" >
 									<input type="hidden" class="form-control" name="fecha_ejecucion_validada" id="fecha_ejecucion_validada"  data-role1="datepicker" placeholder="aa/mm/dd" autocomplete="off" >
 								</div>
 							</div>
 							<div class="col-md-3 col-xs-12">
 								<div class="form-group">
-									<label> 2. Hora inicio</label>
+									<p> Hora inicio</p>
 									<input type="time" class="form-control" name="hora_inicio"  data-role1="datepicker" autocomplete="off">
 									<input type="hidden" class="form-control" name="hora_inicio_validada"  id="hora_inicio_validada" data-role1="datepicker" autocomplete="off">
 								</div>
 							</div>
 							<div class="col-md-3 col-xs-12">
 								<div class="form-group">
-									<label> 4. Hora fin</label>
+									<p> Hora fin</p>
 									<input type="time" class="form-control" name="hora_fin" autocomplete="off">
 									<input type="hidden" class="form-control" name="hora_fin_validada" id="hora_fin_validada" autocomplete="off">
 								</div>
@@ -370,35 +376,25 @@
 						<div class="row">
 							<div class="col-xs-12 col-sm-12">
 								<div class="form-group">
-									<label>Registro de acompañantes</label><br>
+									<label>2. REGISTRO DE ACOMPAÑANTE:</label><br>
 								</div>
 							</div>
 
-							<div class="col-xs-12 col-sm-12">
+							<div class="col-xs-3 col-sm-3">
 								<p class="form-group">
-									<button type="button" class="btn btn-link text-right" id="busquedaAcompananteLocalidad">Acompañanantes</button> 
+									<button type="button" class="btn btn-primary btn-block" id="busquedaAcompananteLocalidad">Acompañante de mi localidad</button>
 								</p>
 							</div>
 
-							<div class="col-xs-12 col-sm-12">
-								<div class="form-group">
-									<div class="bs-example" data-example-id="bordered-table"> 
-										<table id="tabla_responsable" class="table display no-wrap table-condensed table-bordered table-min"> 
-											<thead> 
-												<tr class="active"> 
-													<th>#</th> 
-													<th>Nombres</th> 
-													<th>Apellidos</th> 
-													<th>Validar</th> 
-												</tr> 
-											</thead> 
-											<tbody id="registros_datos_acompanante"> 
-											
-											</tbody> 
-										</table> 
-									</div>
-								</div>
+							<div class="col-xs-3 col-sm-3">
+								<p class="form-group">
+									<button type="button" class="btn btn-primary btn-block" id="busquedaAcompananteOtraLocalidad">Acompañante de otra localidad</button>
+								</p>
 							</div>
+
+							<div class="col-xs-6 col-sm-6">
+							</div>
+
 						</div>
 
 						<div class="row">

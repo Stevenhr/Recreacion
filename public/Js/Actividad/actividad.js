@@ -376,7 +376,11 @@ $(function()
                 var variable=window.location.hash;
                 $('#id').val(variable.replace('#', ''));
 
-                if(data.status != 'Bien')
+                if(data.status == 'Hora'){
+                      $('#list_error').html('<div class="alert alert-dismissible alert-info" ><strong>Error!!!</strong><br><br>Hora inicio debe ser menor a la hora final. Modifique la hora de incio y fin de la actividad. <br><br><strong>Gracias.</strong></div>');
+                      $('#myModal_mal').modal('show');
+                }
+                else if(data.status != 'Bien')
                 {
                     if(data.status=='Campos'){
                         validador_disponibilidad_responsables(data.errors);   
@@ -853,6 +857,25 @@ $(function()
             
          $.post(
             URL+'/getAcompananteLocalidad',
+            $('#form_registro_actividad').serialize(),
+            function(data)
+            {
+                $('#list_error').html(data);
+                $('#myModal_mal').modal('show');
+
+            }
+        );
+
+        return false;
+    });
+
+    $('#busquedaAcompananteOtraLocalidad').on('click', function(e)
+    {
+        var listaError="";
+        var num=1;
+            
+         $.post(
+            URL+'/getAcompananteOtraLocalidad',
             $('#form_registro_actividad').serialize(),
             function(data)
             {
