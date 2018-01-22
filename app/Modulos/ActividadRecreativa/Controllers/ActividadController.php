@@ -536,6 +536,7 @@ class ActividadController extends Controller
 	{
 		$locali=[];
 		$i=0;
+        if($request['temas_seleccionados']){
         foreach ($request['temas_seleccionados'] as $key) {
         	if($key!=''){
         	foreach ($key as $idespecifica) {
@@ -547,6 +548,7 @@ class ActividadController extends Controller
 				}
 			}
 			}
+		}
 		}
 
 		$elemCaracteristica = Elementoscaracteristicas::with('caracteristicaPoblacion')->whereIn('i_pk_id',$locali)->get();
