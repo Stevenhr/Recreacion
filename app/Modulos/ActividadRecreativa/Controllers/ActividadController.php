@@ -586,57 +586,62 @@ class ActividadController extends Controller
 
 		$actividadrecreativa =  ActividadRecreativa::find($request['id']);
   		$localidadComunidad=$actividadrecreativa['i_fk_localidadComunidad'];
-
-  		$resposanblesActividadPorLocalidad = ConfiguracionPersona::where('i_id_tipo_persona',Configuracion::RESPOSANBLE_ACTIVIDAD)
-  			->where('i_id_localidad',$localidadComunidad)
-  			->distinct('i_fk_id_persona')
-  			->get();
-
-  		$acompananteNoDisponible =   ActividadRecreativa::where('d_fechaEjecucion','=',$actividadrecreativa['d_fechaEjecucion'])
-  								   ->whereIn('i_fk_usuarioResponsable',$resposanblesActividadPorLocalidad->pluck('i_fk_id_persona')->unique()->all())
-  								   ->distinct('i_fk_usuarioResponsable')
-  								   ->get();
   		
-  		
+  		if($actividadrecreativa['d_fechaEjecucion']!=null)
+  		{
+	  		$resposanblesActividadPorLocalidad = ConfiguracionPersona::where('i_id_tipo_persona',Configuracion::RESPOSANBLE_ACTIVIDAD)
+	  			->where('i_id_localidad',$localidadComunidad)
+	  			->distinct('i_fk_id_persona')
+	  			->get();
 
-  		$resultado = array_diff($resposanblesActividadPorLocalidad->pluck('i_fk_id_persona')->unique()->all(),$acompananteNoDisponible->pluck('i_fk_usuarioResponsable')->unique()->all());
+	  		$acompananteNoDisponible =   ActividadRecreativa::where('d_fechaEjecucion','=',$actividadrecreativa['d_fechaEjecucion'])
+	  								   ->whereIn('i_fk_usuarioResponsable',$resposanblesActividadPorLocalidad->pluck('i_fk_id_persona')->unique()->all())
+	  								   ->distinct('i_fk_usuarioResponsable')
+	  								   ->get();
+	  		
+	  		
 
-  		$personas=Persona::whereIn('Id_Persona',$resultado)->get();
-        
-        $acompanante = Acompanante::where('i_fk_id_actividad',$request['id'])->get();
-        $listaAcompaRegistrado=$acompanante->pluck('i_fk_usuario')->unique()->all();
-        
-        $tabla='<h5>Usuarios disponibles para la fecha registrada:</h5><br><table class="table display no-wrap table-condensed table-bordered table-min" id="datosAcompanantes">
-            <thead> 
-                <tr class="active"> 
-                    <th>#</th> 
-                    <th>Nombre</th> 
-                    <th>Apellido</th> 
-                    <th>Selecionar</th>
-                </tr> 
-            </thead>
-                <tbody>';
-            $num=1;
-            if($personas!=''){
-                foreach ($personas as $persona) {
-                    // dd($atividadmet);
-                    $cheked="";
-                    if(in_array($persona['Id_Persona'], $listaAcompaRegistrado)){
-                    	$cheked="checked";
-                    }else{
-                    	$cheked="";
-                    }
-                    $tabla=$tabla."<tr>
-                        <td>".$num."</td>
-                        <td>".strtoupper($persona['Primer_Nombre']." ".$persona['Segundo_Nombre'])."</td>
-                        <td>".strtoupper($persona['Primer_Apellido']." ".$persona['Segundo_Apellido'])."</td>
-                        <td><center><input id=".$persona['Id_Persona']." type='checkbox' data-rel=".$request['id']." ".$cheked."><div id='confAcompanante".$persona['Id_Persona']."'></div></center></td>
-                    </tr>";
-                    $num++;
-                }
-            }
-        $tabla=$tabla.'</tbody>
-        </table>';
+	  		$resultado = array_diff($resposanblesActividadPorLocalidad->pluck('i_fk_id_persona')->unique()->all(),$acompananteNoDisponible->pluck('i_fk_usuarioResponsable')->unique()->all());
+
+	  		$personas=Persona::whereIn('Id_Persona',$resultado)->get();
+	        
+	        $acompanante = Acompanante::where('i_fk_id_actividad',$request['id'])->get();
+	        $listaAcompaRegistrado=$acompanante->pluck('i_fk_usuario')->unique()->all();
+	        
+	        $tabla='<h5>Usuarios disponibles para la fecha registrada:</h5><br><table class="table display no-wrap table-condensed table-bordered table-min" id="datosAcompanantes">
+	            <thead> 
+	                <tr class="active"> 
+	                    <th>#</th> 
+	                    <th>Nombre</th> 
+	                    <th>Apellido</th> 
+	                    <th>Selecionar</th>
+	                </tr> 
+	            </thead>
+	                <tbody>';
+	            $num=1;
+	            if($personas!=''){
+	                foreach ($personas as $persona) {
+	                    // dd($atividadmet);
+	                    $cheked="";
+	                    if(in_array($persona['Id_Persona'], $listaAcompaRegistrado)){
+	                    	$cheked="checked";
+	                    }else{
+	                    	$cheked="";
+	                    }
+	                    $tabla=$tabla."<tr>
+	                        <td>".$num."</td>
+	                        <td>".strtoupper($persona['Primer_Nombre']." ".$persona['Segundo_Nombre'])."</td>
+	                        <td>".strtoupper($persona['Primer_Apellido']." ".$persona['Segundo_Apellido'])."</td>
+	                        <td><center><input id=".$persona['Id_Persona']." type='checkbox' data-rel=".$request['id']." ".$cheked."><div id='confAcompanante".$persona['Id_Persona']."'></div></center></td>
+	                    </tr>";
+	                    $num++;
+	                }
+	            }
+	        $tabla=$tabla.'</tbody>
+	        </table>';
+	    }else{
+	    	$tabla="Error";
+	    }
 
 		return $tabla;
     }
@@ -645,59 +650,65 @@ class ActividadController extends Controller
     public function getAcompananteOtraLocalidad(Request $request)
 	{
 		
+			
 		$actividadrecreativa =  ActividadRecreativa::find($request['id']);
-  		$localidadComunidad=$actividadrecreativa['i_fk_localidadComunidad'];
+	  	$localidadComunidad=$actividadrecreativa['i_fk_localidadComunidad'];
+	  	
+	  	if($actividadrecreativa['d_fechaEjecucion']!=null)
+  		{
+	  		$resposanblesActividadPorLocalidad = ConfiguracionPersona::where('i_id_tipo_persona',Configuracion::RESPOSANBLE_ACTIVIDAD)
+	  			->where('i_id_localidad','<>',$localidadComunidad)
+	  			->distinct('i_fk_id_persona')
+	  			->get();
 
-  		$resposanblesActividadPorLocalidad = ConfiguracionPersona::where('i_id_tipo_persona',Configuracion::RESPOSANBLE_ACTIVIDAD)
-  			->where('i_id_localidad','<>',$localidadComunidad)
-  			->distinct('i_fk_id_persona')
-  			->get();
+	  		$acompananteNoDisponible =   ActividadRecreativa::where('d_fechaEjecucion','=',$actividadrecreativa['d_fechaEjecucion'])
+	  								   ->whereIn('i_fk_usuarioResponsable',$resposanblesActividadPorLocalidad->pluck('i_fk_id_persona')->unique()->all())
+	  								   ->distinct('i_fk_usuarioResponsable')
+	  								   ->get();
+	  		
+	  		
 
-  		$acompananteNoDisponible =   ActividadRecreativa::where('d_fechaEjecucion','=',$actividadrecreativa['d_fechaEjecucion'])
-  								   ->whereIn('i_fk_usuarioResponsable',$resposanblesActividadPorLocalidad->pluck('i_fk_id_persona')->unique()->all())
-  								   ->distinct('i_fk_usuarioResponsable')
-  								   ->get();
-  		
-  		
+	  		$resultado = array_diff($resposanblesActividadPorLocalidad->pluck('i_fk_id_persona')->unique()->all(),$acompananteNoDisponible->pluck('i_fk_usuarioResponsable')->unique()->all());
 
-  		$resultado = array_diff($resposanblesActividadPorLocalidad->pluck('i_fk_id_persona')->unique()->all(),$acompananteNoDisponible->pluck('i_fk_usuarioResponsable')->unique()->all());
-
-  		$personas=Persona::whereIn('Id_Persona',$resultado)->get();
-        
-        $acompanante = Acompanante::where('i_fk_id_actividad',$request['id'])->get();
-        $listaAcompaRegistrado=$acompanante->pluck('i_fk_usuario')->unique()->all();
-        
-        $tabla='<h5>Usuarios disponibles para la fecha registrada:</h5><br><table class="table display no-wrap table-condensed table-bordered table-min" id="datosAcompanantes">
-            <thead> 
-                <tr class="active"> 
-                    <th>#</th> 
-                    <th>Nombre</th> 
-                    <th>Apellido</th> 
-                    <th>Selecionar</th>
-                </tr> 
-            </thead>
-                <tbody>';
-            $num=1;
-            if($personas!=''){
-                foreach ($personas as $persona) {
-                    // dd($atividadmet);
-                    $cheked="";
-                    if(in_array($persona['Id_Persona'], $listaAcompaRegistrado)){
-                    	$cheked="checked";
-                    }else{
-                    	$cheked="";
-                    }
-                    $tabla=$tabla."<tr>
-                        <td>".$num."</td>
-                        <td>".strtoupper($persona['Primer_Nombre']." ".$persona['Segundo_Nombre'])."</td>
-                        <td>".strtoupper($persona['Primer_Apellido']." ".$persona['Segundo_Apellido'])."</td>
-                        <td><center><input id=".$persona['Id_Persona']." type='checkbox' data-rel=".$request['id']." ".$cheked."><div id='confAcompanante".$persona['Id_Persona']."'></div></center></td>
-                    </tr>";
-                    $num++;
-                }
-            }
-        $tabla=$tabla.'</tbody>
-        </table>';
+	  		$personas=Persona::whereIn('Id_Persona',$resultado)->get();
+	        
+	        $acompanante = Acompanante::where('i_fk_id_actividad',$request['id'])->get();
+	        $listaAcompaRegistrado=$acompanante->pluck('i_fk_usuario')->unique()->all();
+	        
+	        $tabla='<h5>Usuarios disponibles para la fecha registrada:</h5><br><table class="table display no-wrap table-condensed table-bordered table-min" id="datosAcompanantes">
+	            <thead> 
+	                <tr class="active"> 
+	                    <th>#</th> 
+	                    <th>Nombre</th> 
+	                    <th>Apellido</th> 
+	                    <th>Selecionar</th>
+	                </tr> 
+	            </thead>
+	                <tbody>';
+	            $num=1;
+	            if($personas!=''){
+	                foreach ($personas as $persona) {
+	                    // dd($atividadmet);
+	                    $cheked="";
+	                    if(in_array($persona['Id_Persona'], $listaAcompaRegistrado)){
+	                    	$cheked="checked";
+	                    }else{
+	                    	$cheked="";
+	                    }
+	                    $tabla=$tabla."<tr>
+	                        <td>".$num."</td>
+	                        <td>".strtoupper($persona['Primer_Nombre']." ".$persona['Segundo_Nombre'])."</td>
+	                        <td>".strtoupper($persona['Primer_Apellido']." ".$persona['Segundo_Apellido'])."</td>
+	                        <td><center><input id=".$persona['Id_Persona']." type='checkbox' data-rel=".$request['id']." ".$cheked."><div id='confAcompanante".$persona['Id_Persona']."'></div></center></td>
+	                    </tr>";
+	                    $num++;
+	                }
+	            }
+	        $tabla=$tabla.'</tbody>
+	        </table>';
+        }else{
+	    	$tabla="Error";
+	    }
 
 		return $tabla;
     }

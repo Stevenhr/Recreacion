@@ -860,8 +860,13 @@ $(function()
             $('#form_registro_actividad').serialize(),
             function(data)
             {
-                $('#list_error').html(data);
-                $('#myModal_mal').modal('show');
+                if(data=="Error"){
+                    $('#list_error').html('<div class="alert alert-dismissible alert-info" ><strong>Error!!!</strong><br><br>No se ha configurado la fecha y hora de la actividad. <br><br><strong>Gracias.</strong></div>');
+                    $('#myModal_mal').modal('show');
+                }else{
+                    $('#list_error').html(data);
+                    $('#myModal_mal').modal('show');
+                }
 
             }
         );
@@ -879,8 +884,13 @@ $(function()
             $('#form_registro_actividad').serialize(),
             function(data)
             {
-                $('#list_error').html(data);
-                $('#myModal_mal').modal('show');
+                if(data=="Error"){
+                    $('#list_error').html('<div class="alert alert-dismissible alert-info" ><strong>Error!!!</strong><br><br>No se ha configurado la fecha y hora de la actividad. <br><br><strong>Gracias.</strong></div>');
+                    $('#myModal_mal').modal('show');
+                }else{
+                    $('#list_error').html(data);
+                    $('#myModal_mal').modal('show');
+                }
 
             }
         );
