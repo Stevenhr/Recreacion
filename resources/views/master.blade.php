@@ -17,6 +17,7 @@
           <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
           <link rel="stylesheet" href="{{ asset('public/components/jquery-ui/themes/base/jquery-ui.css') }}" media="screen">    
           <link rel="stylesheet" href="{{ asset('public/Css/bootstrap.css') }}" media="screen">
+          
           <link rel="stylesheet" href="{{ asset('public/components/bootstrap-select/dist/css/bootstrap-select.css') }}" media="screen">
           <link rel="stylesheet" href="{{ asset('public/components/bootstrap-sweetalert/dist/sweetalert.css') }}" media="screen">
           <link rel="stylesheet" href="{{ asset('public/components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css') }}" media="screen">
@@ -26,6 +27,7 @@
           <link rel="stylesheet" href="{{ asset('public/components/loaders.css/loaders.min.css') }}" media="screen">
           <link rel="stylesheet" href="{{ asset('public/Css/main.css') }}" media="screen">    
           <link rel="shortcut icon" href="{{ asset('public/Img/Institucionales/iconoModulo.png') }}">  
+
       @show
 
       @section('script')

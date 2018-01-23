@@ -156,9 +156,15 @@ Route::group(['prefix' => 'misActividades', 'middleware' => 'auth'], function()
     $controller = "\\App\\Modulos\\ActividadRecreativa\\Controllers\\";
 
     Route::any('/mis_actividades', [
-        'uses' => $controller.'MisActividades@inicio',
+        'uses' => $controller.'MisActividadesController@inicio',
         'as' => 'mis_actividades'
     ]);
+
+    Route::any('/busquedaActividad', [
+        'uses' => $controller.'MisActividadesController@busquedaActividad',
+        'as' => 'busquedaActividad'
+    ]);
+    
 });
 
 Route::group(['prefix' => 'usuarios', 'middleware' => 'auth'], function()

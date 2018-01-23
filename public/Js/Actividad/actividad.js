@@ -5,11 +5,10 @@ $(function()
     var URL_PARQUES = $('#main').data('url-parques');
     window.location.hash = '#inicio';
     
-
     $('#fecha_ejecucion').datetimepicker({
-        viewMode: 'years',
-                format: 'DD/MM/YYYY'
-        });
+            viewMode: 'years',
+            format: 'DD/MM/YYYY'
+    });
 
     $('#hora_inicio').datetimepicker({
         format: 'LT'
