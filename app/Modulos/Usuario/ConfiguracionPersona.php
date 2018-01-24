@@ -8,7 +8,7 @@ class ConfiguracionPersona extends Model
 {
     protected $table = 'configuracionpersona';
 	protected $primaryKey = 'i_pk_id';
-	protected $fillable = ['i_fk_id_persona','i_id_ambito','i_id_localidad','i_id_tipo_persona'];
+	protected $fillable = ['i_fk_id_persona','i_fk_programa','i_id_localidad','i_id_tipo_persona'];
 	protected $connection = ''; 
 	public $timestamps = false;
 

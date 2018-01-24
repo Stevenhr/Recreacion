@@ -16,7 +16,7 @@ class ActividadRecreativa extends Model
 
     public function datosActividad()
     {
-        return $this->hasMany('App\DatosActividad','i_fk_id_actividad');
+        return $this->hasMany('App\Modulos\ActividadRecreativa\DatosActividad','i_fk_id_actividad');
     }
 
 }

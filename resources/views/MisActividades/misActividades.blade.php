@@ -71,7 +71,7 @@
 				  <div class="card-body">
 				    <h5 class="card-title">Por aprobar</h5>
 				    <p class="card-text">Actividades registradas por el gestor, pendientes por aprobar.</p>
-				    <a href="#" class="btn btn-default btn-xs"><span class="badge" id="uno"></span> Ir a actividades</a>
+				    <a href="#" class="btn btn-default btn-sm"><span class="badge" id="uno"></span> Ir a actividades</a>
 				  </div>
 				</div>
 			</div>
@@ -82,7 +82,7 @@
 				  <div class="card-body">
 				    <h5 class="card-title">Aprobado</h5>
 				    <p class="card-text">Actividades registradas por el gestor, revisadas y aprobadas.</p>
-				    <a href="#" class="btn btn-success btn-xs"><span class="badge" id="dos"></span> Ir a actividades</a>
+				    <a href="#" class="btn btn-success btn-sm"><span class="badge" id="dos"></span> Ir a actividades</a>
 				  </div>
 				</div>
 			</div>
@@ -93,7 +93,7 @@
 				  <div class="card-body">
 				    <h5 class="card-title">Canceladas</h5>
 				    <p class="card-text">Actividades registradas por el gestor, revisadas y canceladas.</p>
-				    <a href="#" class="btn btn-danger btn-xs"><span class="badge" id="tres"></span> Ir a actividades</a>
+				    <a href="#" class="btn btn-danger btn-sm"><span class="badge" id="tres"></span> Ir a actividades</a>
 				  </div>
 				</div>
 			</div>
@@ -103,8 +103,8 @@
 				  <img class="card-img-top" src="../public/Img/denegada.png" alt="Card image cap">
 				  <div class="card-body">
 				    <h5 class="card-title">Denegada</h5>
-				    <p class="card-text">Actividades registradas por el gestor, revisadas y denegada.</p>
-				    <a href="#" class="btn btn-warning btn-xs"><span class="badge" id="cuatro"></span> Ir a actividades</a>
+				    <p class="card-text">Actividades registradas por el gestor, revisadas y denegadas.</p>
+				    <a href="#" class="btn btn-warning btn-sm"><span class="badge" id="cuatro"></span> Ir a actividades</a>
 				  </div>
 				</div>
 			</div>

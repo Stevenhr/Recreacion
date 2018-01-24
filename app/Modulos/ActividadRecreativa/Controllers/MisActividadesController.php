@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Persona;
 use App\Modulos\ActividadRecreativa\ActividadRecreativa;
 use App\Modulos\Usuario\ConfiguracionPersona;
+use App\Modulos\Configuracion\Configuracion;
 use App\Http\Controllers\Controller;
 use Idrd\Usuarios\Repo\PersonaInterface;
 use Validator;
@@ -44,15 +45,26 @@ class MisActividadesController extends Controller
         }
         else
         {
-			$actividades = ActividadRecreativa::whereBetween('d_fechaEjecucion',[$request['fechaInicio'],$request['fechaFin']])
-			->where('i_fk_localidadComunidad',1)
+
+        	$persona_programa=ConfiguracionPersona::where('i_fk_id_persona',$_SESSION['Usuario'][0])
+        	->where('i_id_tipo_persona',Configuracion::RESPOSANBLE_PROGRAMA)
+        	->get();
+
+        	$tipo_programa=$persona_programa->pluck('i_fk_programa')->unique()->all();
+
+			$actividades = ActividadRecreativa::whereHas('datosActividad',function($query) use ($tipo_programa){
+				$query->whereIn('i_fk_programa',$tipo_programa);
+			})
+			->whereBetween('d_fechaEjecucion',[$request['fechaInicio'],$request['fechaFin']])
 			->get();
 
+
+
 			$datos =[
-				'actividadesPorRevisar'=>$actividades->where('i_estado', 0)->count(),
-				'actividadesAprobadas'=>$actividades->where('i_estado', 1)->count(),
-				'actividadesCanceladas'=>$actividades->where('i_estado', 2)->count(),
-				'actividadesDenegadas'=>$actividades->where('i_estado', 3)->count(),
+				'actividadesPorRevisar'=>$actividades->where('i_estado',Configuracion::PENDIENTE)->count(),
+				'actividadesAprobadas'=>$actividades->where('i_estado', Configuracion::APROBADO)->count(),
+				'actividadesDenegadas'=>$actividades->where('i_estado', Configuracion::DEVUELTO)->count(),
+				'actividadesCanceladas'=>$actividades->where('i_estado', Configuracion::CANCELADO)->count(),
 			];
 
             return response()->json(array('status' => 'ok', 'errors' => $validator->errors(), 'datos'=>$datos));
