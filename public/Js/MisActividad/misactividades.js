@@ -9,6 +9,10 @@ $(function () {
 
     $('#btn_buscar_Actividades').on('click', function(e)
     {
+
+    	$('.fechaInicioHiden').val($('#fechaInicio').val());
+    	$('.fechaFinHiden').val($('#fechaFin').val());
+
         $("#resultadoBusqueda").hide();
         $.post(
             URL+'/busquedaActividad',            
@@ -18,20 +22,18 @@ $(function () {
                 if(data.status == 'error')
                 {
                     validador_datos(data.errors);
-                }else{
-
+                }
+                else
+                {
                 	$('#uno').html(data.datos.actividadesPorRevisar);
 					$('#dos').html(data.datos.actividadesAprobadas);
 					$('#tres').html(data.datos.actividadesCanceladas);
 					$('#cuatro').html(data.datos.actividadesDenegadas);
                 	$("#resultadoBusqueda").show();
-
                 }
-                
                 
             }
         );
-
         return false;
     });
 
@@ -39,8 +41,10 @@ $(function () {
     {
         $('#form_consulta_actividades .form-group').removeClass('has-error');
         var selector = '';
-        for (var error in data){
-            if (typeof data[error] !== 'function') {
+        for (var error in data)
+        {
+            if (typeof data[error] !== 'function') 
+            {
                 switch(error)
                 {
                     case 'fechaInicio':
@@ -52,5 +56,7 @@ $(function () {
             }
         }
     }
+
+
 
 });

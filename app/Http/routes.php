@@ -164,7 +164,12 @@ Route::group(['prefix' => 'misActividades', 'middleware' => 'auth'], function()
         'uses' => $controller.'MisActividadesController@busquedaActividad',
         'as' => 'busquedaActividad'
     ]);
-    
+
+    Route::any('/actividadesResposableProgramaPendientes', [
+        'uses' => $controller.'MisActividadesController@actividadesResposableProgramaPendientes',
+        'as' => 'actividadesResposableProgramaPendientes'
+    ]);
+
 });
 
 Route::group(['prefix' => 'usuarios', 'middleware' => 'auth'], function()

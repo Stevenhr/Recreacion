@@ -71,4 +71,51 @@ class MisActividadesController extends Controller
         }
     }
 
+
+    public function actividadesResposableProgramaPendientes(Request $request)
+	{
+
+		$persona_programa=ConfiguracionPersona::where('i_fk_id_persona',$_SESSION['Usuario'][0])
+    	->where('i_id_tipo_persona',Configuracion::RESPOSANBLE_PROGRAMA)
+    	->get();
+
+    	$tipo_programa=$persona_programa->pluck('i_fk_programa')->unique()->all();
+
+		$actividades = ActividadRecreativa::whereHas('datosActividad',function($query) use ($tipo_programa){
+			$query->whereIn('i_fk_programa',$tipo_programa);
+		})
+		->whereBetween('d_fechaEjecucion',[$request['fechaInicioHiden'],$request['fechaFinHiden']])
+		->where('i_estado',$request['opcion'])
+		->get();
+		
+		$opcion="";
+		$color="";
+		
+		if($request['opcion']==Configuracion::PENDIENTE){
+			$opcion="Actividades en espera de revisón.";
+			$color="default";
+		}else if($request['opcion']==Configuracion::APROBADO){
+			$opcion="Actividades aprobadas.";
+			$color="success";
+		}else if($request['opcion']==Configuracion::DEVUELTO){
+			$opcion="Actividades denegadas.";
+			$color="warning";
+		}else if($request['opcion']==Configuracion::CANCELADO){
+			$opcion="Actividades canceladas.";
+			$color="danger";
+		}else{
+			$opcion="";
+			$color="";
+		}
+
+		$datos=[
+			'actividades'=>$actividades,
+			'tipo'=>$opcion,
+			'color'=>$color,
+		];
+		
+		return view('MisActividades.tablaMisActividades',$datos);
+   
+    }
+
 }
