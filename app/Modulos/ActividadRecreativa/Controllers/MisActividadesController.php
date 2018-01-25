@@ -90,28 +90,39 @@ class MisActividadesController extends Controller
 		
 		$opcion="";
 		$color="";
+		$style="";
 		
 		if($request['opcion']==Configuracion::PENDIENTE){
 			$opcion="Actividades en espera de revisón.";
 			$color="default";
+			$style ="color: black;background-color: #eeeeee;";
+
 		}else if($request['opcion']==Configuracion::APROBADO){
 			$opcion="Actividades aprobadas.";
 			$color="success";
+			$style ="color: white;background-color: #6b9c35;";
+
 		}else if($request['opcion']==Configuracion::DEVUELTO){
 			$opcion="Actividades denegadas.";
 			$color="warning";
+			$style ="color: white;background-color: #dd5600;";
+
 		}else if($request['opcion']==Configuracion::CANCELADO){
 			$opcion="Actividades canceladas.";
 			$color="danger";
+			$style ="color: white;background-color: #c71c22;";
+
 		}else{
 			$opcion="";
 			$color="";
+			$style="";
 		}
 
 		$datos=[
 			'actividades'=>$actividades,
 			'tipo'=>$opcion,
 			'color'=>$color,
+			'style'=>$style,
 		];
 		
 		return view('MisActividades.tablaMisActividades',$datos);

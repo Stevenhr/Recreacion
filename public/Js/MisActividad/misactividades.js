@@ -8,6 +8,7 @@ $(function () {
     var URL = $('#main_actividad').data('url');
 
 
+
      $('#tbl_resposablePrograma tfoot th').each( function () {
         var title = $(this).text();
         if(title!="Menu" && title!="#"){
@@ -20,7 +21,7 @@ $(function () {
         dom: 'Bfrtip',
         buttons: [
             'copy', 'csv', 'excel', 'pdf'],
-        pageLength: 8
+        pageLength: 5
     });
  
     // Apply the search
@@ -84,6 +85,21 @@ $(function () {
             }
         }
     }
+
+
+    $('#tbl_resposablePrograma').delegate('a[data-funcion="ejecucion"]','click',function (e) {  
+
+        var id = $(this).data('rel'); 
+        $('#id_actividadEjecucion').html(id);
+
+    }); 
+
+    $('#tbl_resposablePrograma').delegate('a[data-funcion="programacion"]','click',function (e) {  
+
+        var id = $(this).data('rel'); 
+        $('#id_actividadProgramacion').html(id);
+
+    }); 
 
 
 

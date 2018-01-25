@@ -29,9 +29,6 @@
   	animation: glyphicon-spin-r 1s infinite linear;
 }
 
-.table-min{
-	font-size: 12px;
-}
 
 .clear-both { clear: both; }
 
@@ -426,6 +423,13 @@ left: 35%;
 }
 
 
+tfoot input 
+    {
+        width: 100%;
+        padding: 2px;
+        box-sizing: border-box;
+    }
+
 table.table-min {
   font-size: 12px;
 } 
@@ -434,9 +438,5 @@ table.dataTable tfoot th,
 table.dataTable tfoot td,
 table.dataTable thead th, 
 table.dataTable thead td {
-  padding: 6px 8px;
-}
-
-.dataTables_wrapper table {
-  padding-top: 20px;
+  padding: 2px 2px;
 }
