@@ -13,4 +13,9 @@ class Acompanante extends Model
 	protected $connection = ''; 
 	public $timestamps = true;
 
+	public function usuario()
+    {
+        return $this->belongsTo('App\Persona','i_fk_usuario');
+    }
+
 }

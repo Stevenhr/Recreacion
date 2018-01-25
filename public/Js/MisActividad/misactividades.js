@@ -7,6 +7,34 @@ $(function () {
     });
     var URL = $('#main_actividad').data('url');
 
+
+     $('#tbl_resposablePrograma tfoot th').each( function () {
+        var title = $(this).text();
+        if(title!="Menu" && title!="#"){
+          $(this).html( '<input type="text" placeholder="Buscar"/>' );
+        }
+    } );
+ 
+    // DataTable
+    var t = $('#tbl_resposablePrograma').DataTable( {responsive: true,
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf'],
+        pageLength: 8
+    });
+ 
+    // Apply the search
+    t.columns().every( function () {
+        var that = this;
+        $( 'input', this.footer() ).on( 'keyup change', function () {
+            if ( that.search() !== this.value ) {
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    });
+
     $('#btn_buscar_Actividades').on('click', function(e)
     {
 

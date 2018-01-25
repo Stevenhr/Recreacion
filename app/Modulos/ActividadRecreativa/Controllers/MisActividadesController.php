@@ -81,7 +81,7 @@ class MisActividadesController extends Controller
 
     	$tipo_programa=$persona_programa->pluck('i_fk_programa')->unique()->all();
 
-		$actividades = ActividadRecreativa::whereHas('datosActividad',function($query) use ($tipo_programa){
+		$actividades = ActividadRecreativa::with('datosActividad.programa','datosActividad.actividad','datosActividad.tematica','datosActividad.componente','acompanates')->whereHas('datosActividad',function($query) use ($tipo_programa){
 			$query->whereIn('i_fk_programa',$tipo_programa);
 		})
 		->whereBetween('d_fechaEjecucion',[$request['fechaInicioHiden'],$request['fechaFinHiden']])

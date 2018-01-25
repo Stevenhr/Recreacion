@@ -170,10 +170,11 @@ div.oculto {
 	color: #fff !important;
 }
 
-@media (min-width: 1200px) {
-	.container {
-		width: 1600px;
-	}
+
+@media (min-width: 1200px){
+  .container {
+    width: 80%;
+  }
 }
 
 
@@ -422,4 +423,20 @@ left: 35%;
     width: 42px;
     position: absolute;
     right: 0;
+}
+
+
+table.table-min {
+  font-size: 12px;
+} 
+
+table.dataTable tfoot th, 
+table.dataTable tfoot td,
+table.dataTable thead th, 
+table.dataTable thead td {
+  padding: 6px 8px;
+}
+
+.dataTables_wrapper table {
+  padding-top: 20px;
 }

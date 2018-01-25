@@ -19,5 +19,20 @@ class ActividadRecreativa extends Model
         return $this->hasMany('App\Modulos\ActividadRecreativa\DatosActividad','i_fk_id_actividad');
     }
 
+    public function gestor()
+    {
+        return $this->belongsTo('App\Persona','i_fk_usuario');
+    }
+
+    public function responsable()
+    {
+        return $this->belongsTo('App\Persona','i_fk_usuarioResponsable');
+    }
+
+    public function acompanates()
+    {
+        return $this->hasMany('App\Modulos\Usuario\Acompanante','i_fk_id_actividad');
+    }
+
 }
 
