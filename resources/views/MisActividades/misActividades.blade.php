@@ -9,7 +9,7 @@
 
 @section('content') 
 
-<div class="container">
+<div class="container-fluid">
 	<div class="content" id="main_actividad" class="row" data-url="{{ url('misActividades') }}" ></div>
 	<div id="main" class="row" data-url="{{ url('personas') }}" data-url-parques="{{ url('parques') }}">
 		

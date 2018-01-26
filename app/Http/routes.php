@@ -170,6 +170,11 @@ Route::group(['prefix' => 'misActividades', 'middleware' => 'auth'], function()
         'as' => 'actividadesResposableProgramaPendientes'
     ]);
 
+    Route::get('datosprogramacionactividad/{id}',[
+        'uses' => $controller.'MisActividadesController@datosprogramacionactividad',
+        'as' => 'datosprogramacionactividad'
+    ]);
+
 });
 
 Route::group(['prefix' => 'usuarios', 'middleware' => 'auth'], function()

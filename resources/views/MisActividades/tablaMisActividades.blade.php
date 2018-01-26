@@ -9,9 +9,9 @@
 
 @section('content') 
 
-<div class="container">
+<div class="container-fluid">
 	<div class="content" id="main_actividad" class="row" data-url="{{ url('misActividades') }}" ></div>
-	<div id="main" class="row" data-url="{{ url('personas') }}" data-url-parques="{{ url('parques') }}">
+	<div id="main" class="row" data-url="{{ url('personas') }}" data-url-parques="{{ url('parques') }}"></div>
 		
 
 		<div class="row">
@@ -37,8 +37,8 @@
 		                    <th>Tematicas / Componentes</th>
 		                    <th>Gestor</th>
 		                    <th>Responsable</th>
-		                    <th>Confirmación</th>
-		                    <th data-priority="2">Programación / <br>Ejecución</th>
+		                    <th data-priority="2">Confirmación</th>
+		                    <th data-priority="3">Programación / <br>Ejecución</th>
 		                    
 		                </tr> 
 		            </thead>
@@ -54,8 +54,8 @@
 		                    <th>Tematicas / Componentes</th>
 		                    <th>Gestor</th>
 		                    <th>Responsable</th>
-		                    <th>Confirmación</th>
-		                    <th data-priority="2">Programación / <br>Ejecución</th>
+		                    <th data-priority="2">Confirmación</th>
+		                    <th data-priority="3">Programación / <br>Ejecución</th>
 						</tr>
 					</tfoot>
 		            <tbody>
@@ -129,13 +129,34 @@
 						</div>
 						<form id="form_agregar_estudio_comveniencia">
 							
-							<div class="modal-body">						
+							<div class="modal-body">	
+								<div class="row">
+										<table class="table table-bordered table-striped table-condensed table-responsive" id="">
+											<thead>
+												<tr>
+													<th>
+														Programa
+													</th>
+													<th>
+														Actividad
+													</th>
+													<th>
+														Temática
+													</th>
+													<th>
+														Componente
+													</th>
+												</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+								</div>					
 							</div>
 
 							<div class="modal-footer" >
 								<div class="row">
 									<div class="col-xs-12 col-sm-12" style="text-align: left;">
-										<button type="submit" class="btn btn-success" id="RegistrarEstudio">REGISTRAR</button>
 										<button type="button" class="btn btn-default" data-dismiss="modal">CERRAR</button>
 									</div>
 								</div>
@@ -161,13 +182,123 @@
 						</div>
 						<form id="form_agregar_estudio_comveniencia">
 							
-							<div class="modal-body">						
+							<div class="modal-body">		
+								<div class="row">
+									<div class="col-xs-12 col-sm-12">
+										<h4>DATOS DE LA COMUNIDAD:</h4>
+									</div>
+
+									<div class="col-xs-4 col-sm-4">
+										<label>Localidad:</label>
+										<p id="modalLocalidadP"></p>
+									</div>
+									<div class="col-xs-4 col-sm-4">
+										<label>Upz:</label>
+										<p id="modalUpzP"></p>
+									</div>
+									<div class="col-xs-4 col-sm-4">
+										<label>Barrio:</label>
+										<p id="modalBarrioP"></p>
+									</div>
+
+
+									<div class="col-xs-4 col-sm-4">
+										<label>Institución, Grupo, Comunidad:</label>
+										<p id="modalinstitucionGrupoCP"></p>
+									</div>
+									<div class="col-xs-4 col-sm-4">
+										<label>Características de la Población:</label>
+										<p id="modalCaracteristicasP"></p>
+									</div>
+									<div class="col-xs-4 col-sm-4">
+										<label>Específico:</label>
+										<p id="modalCaracEspecificasP"></p>
+									</div>
+
+
+									<div class="col-xs-12 col-sm-12">
+										<h4>DATOS DE LA ACTIVIDAD:</h4>
+									</div>
+
+									<div class="col-xs-12 col-sm-12">
+										<table class="table table-bordered table-striped table-condensed table-responsive">
+											<thead>
+												<tr>
+													<th>
+														Programa
+													</th>
+													<th>
+														Actividad
+													</th>
+													<th>
+														Temática
+													</th>
+													<th>
+														Componente
+													</th>
+												</tr>
+											</thead>
+											<tbody id="datosModalActividad">
+											</tbody>
+										</table>
+									</div>
+
+									<div class="col-xs-12 col-sm-12">
+										<h4>PROGRAMACIÓN Y ASIGNACIÓN DE LA ACTIVIDAD:</h4>
+									</div>
+
+									<div class="col-xs-3 col-sm-3">
+										<label>Responsable:</label>
+										<p id="modalResponsableP"></p>
+									</div>
+									<div class="col-xs-3 col-sm-3">
+										<label>Fecha ejecución:</label>
+										<p id="modalFechaEjecucionP"></p>
+									</div>
+									<div class="col-xs-3 col-sm-3">
+										<label>Hora inicio:</label>
+										<p id="modalHoraInicioP"></p>
+									</div>
+									<div class="col-xs-3 col-sm-3">
+										<label>Hora fin:</label>
+										<p id="modalHoraFinP"></p>
+									</div>
+
+									<div class="col-xs-12 col-sm-12">
+										<h4>DATOS DEL ESCENARIO:</h4>
+									</div>
+
+									<div class="col-xs-4 col-sm-4">
+										<label>Dirección:</label>
+										<p id="modalDireccionEP"></p>
+									</div>
+									<div class="col-xs-4 col-sm-4">
+										<label>Escenario:</label>
+										<p id="modalEscenarioEP"></p>
+									</div>
+									<div class="col-xs-4 col-sm-4">
+										<label>Codigo IDRD:</label>
+										<p id="modalCodigoIP"></p>
+									</div>
+									<div class="col-xs-4 col-sm-4">
+										<label>Localidad:</label>
+										<p id="modalLocalidadEP"></p>
+									</div>
+									<div class="col-xs-4 col-sm-4">
+										<label>Upz:</label>
+										<p id="modalUpzEP"></p>
+									</div>
+									<div class="col-xs-4 col-sm-4">
+										<label>Barrio:</label>
+										<p id="modalBarrioEP"></p>
+									</div>
+
+								</div>					
 							</div>
 
 							<div class="modal-footer" >
 								<div class="row">
 									<div class="col-xs-12 col-sm-12" style="text-align: left;">
-										<button type="submit" class="btn btn-success" id="RegistrarEstudio">REGISTRAR</button>
 										<button type="button" class="btn btn-default" data-dismiss="modal">CERRAR</button>
 									</div>
 								</div>
@@ -180,7 +311,7 @@
 			</div>
 
  
-    </div>
+    
 </div>
 
 @stop

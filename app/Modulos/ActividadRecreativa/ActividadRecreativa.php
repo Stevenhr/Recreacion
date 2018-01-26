@@ -34,5 +34,35 @@ class ActividadRecreativa extends Model
         return $this->hasMany('App\Modulos\Usuario\Acompanante','i_fk_id_actividad');
     }
 
+    public function localidad_comunidad()
+    {
+        return $this->belongsTo('App\Modulos\Parques\Localidad','i_fk_localidadComunidad');
+    }
+
+    public function upz_comunidad()
+    {
+        return $this->belongsTo('App\Modulos\Parques\Upz','i_fk_upzComunidad');
+    }
+
+    public function barrio_comunidad()
+    {
+        return $this->belongsTo('App\Modulos\Parques\Barrio','i_fk_barrioComunidad');
+    }
+
+    public function localidad_escenario()
+    {
+        return $this->belongsTo('App\Modulos\Parques\Localidad','i_fk_localidadEscenario');
+    }
+
+    public function upz_escenario()
+    {
+        return $this->belongsTo('App\Modulos\Parques\Upz','i_fk_upzEscenario');
+    }
+
+    public function barrio_escenario()
+    {
+        return $this->belongsTo('App\Modulos\Parques\Barrio','i_fk_barrioEscenario');
+    }
+
 }
 
