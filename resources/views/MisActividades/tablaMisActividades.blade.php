@@ -98,8 +98,8 @@
 			                        <td></td>
 			                        <th class="text-center">
 			                        	<ul class="list-group">
-										  <li class="list-group-item"><a href="javascript:void(0)" data-rel="{{$actividad['i_pk_id']}}" data-funcion="programacion" data-toggle="modal" data-target="#modalProgramacion"><span class="glyphicon glyphicon-eye-open"></span></a> Ver programaciòn</li>
-										  <li class="list-group-item"><a href="javascript:void(0)" data-rel="{{$actividad['i_pk_id']}}" data-funcion="ejecucion" data-toggle="modal" data-target="#modalEjecucion"><span class="glyphicon glyphicon-eye-open text-success"></span></a> Ver Ejecuciòn</li>
+										  <li class="list-group-item"><button type="button" class="btn btn-link btn-xs" data-rel="{{$actividad['i_pk_id']}}" data-funcion="programacion" data-toggle="modal" data-target="#modalProgramacion"><span class="glyphicon glyphicon-eye-open"></span> Ver programaciòn </button></li>
+										  <li class="list-group-item"><button type="button"  class="btn btn-link btn-xs"data-rel="{{$actividad['i_pk_id']}}" data-funcion="ejecucion" data-toggle="modal" data-target="#modalEjecucion"><span class="glyphicon glyphicon-eye-open text-success"></span> Ver Ejecuciòn</button></li>
 										</ul>
 			                        </th>
 			                    </tr>
@@ -181,13 +181,13 @@
 							<b>ID:</b> <label id="id_actividadProgramacion"></label></h3>
 						</div>
 						<form id="form_agregar_estudio_comveniencia">
-							
-							<div class="modal-body">		
+							<div id="cargando"></div>
+							<div class="modal-body" id="modalBody">		
 								<div class="row">
 									<div class="col-xs-12 col-sm-12">
 										<h4>DATOS DE LA COMUNIDAD:</h4>
 									</div>
-
+																		
 									<div class="col-xs-4 col-sm-4">
 										<label>Localidad:</label>
 										<p id="modalLocalidadP"></p>
@@ -292,6 +292,37 @@
 										<label>Barrio:</label>
 										<p id="modalBarrioEP"></p>
 									</div>
+
+
+									<div class="col-xs-12 col-sm-12">
+										<h4>ASPECTOS A TENER EN CUENTA:</h4>
+									</div>
+
+
+									<div class="col-xs-4 col-sm-4">
+										<label>Hora de implementación:</label>
+										<p id="horaImplementacion"></p>
+									</div>
+									<div class="col-xs-4 col-sm-4">
+										<label>Punto de encuentro:</label>
+										<p id="puntoEncuentro"></p>
+									</div>
+									<div class="col-xs-4 col-sm-4">
+										<label>Nombre de la persona de contacto:</label>
+										<p id="nombreContacto"></p>
+									</div>
+									<div class="col-xs-4 col-sm-4">
+										<label>Rol en la comunidad:</label>
+										<p id="rollComunidad"></p>
+									</div>
+									<div class="col-xs-4 col-sm-4">
+										<label>Telefono:</label>
+										<p id="telefono"></p>
+									</div>
+									<div class="col-xs-4 col-sm-4">
+									</div>
+
+
 
 								</div>					
 							</div>

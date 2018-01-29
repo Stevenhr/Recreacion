@@ -64,5 +64,10 @@ class ActividadRecreativa extends Model
         return $this->belongsTo('App\Modulos\Parques\Barrio','i_fk_barrioEscenario');
     }
 
+    public function datos_caracteristicas()
+    {
+      return $this->belongsToMany('App\Modulos\CaracteristicaPoblacion\Elementoscaracteristicas','caracteristicas_actividad','i_fk_id_actividadrecreodeportiva','i_fk_id_elementoscaracteristicas')->withPivot('created_at');
+    }
+
 }
 

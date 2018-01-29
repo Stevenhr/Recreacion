@@ -131,13 +131,12 @@ class MisActividadesController extends Controller
 
     public function datosprogramacionactividad(Request $request, $id)
 	{
-		
 		$actividad = ActividadRecreativa::with(['datosActividad' => function($query) {
 			$query->with('programa', 'actividad','tematica','componente');
-		} ,'acompanates','localidad_comunidad','upz_comunidad','barrio_comunidad','responsable'])
+		} ,'acompanates','localidad_comunidad','upz_comunidad','barrio_comunidad','responsable','localidad_escenario', 'upz_escenario', 'barrio_escenario'])
 		->find($id);
 
 		return response()->json($actividad);
 	}
-
+	
 }

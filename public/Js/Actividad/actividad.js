@@ -285,15 +285,17 @@ $(function()
                   {
                             html += '<option value="'+eee['i_pk_id']+'"  >'+eee['vc_elemento'].toUpperCase()+'</option>';
                   });   
+                  console.log(temas_seleccionados[id]);
                   $('select[name="caracteristicaEspecifica"]').html(html);
                   $('select[name="caracteristicaEspecifica"]').selectpicker('refresh');
-                  $('select[name="caracteristicaEspecifica"]').selectpicker('val',  temas_seleccionados[id]);
+                  $('select[name="caracteristicaEspecifica"]').selectpicker('val',  (temas_seleccionados[id])?temas_seleccionados[id][0]:[]);
             }
         });
     };
   
     $('select[name="caracteristicaEspecifica"]').on('changed.bs.select', function(i, ov, nv)
     {
+
         if (!temas_seleccionados.hasOwnProperty($('select[name="caracteristicaPoblacion"]').val()))
             temas_seleccionados[$('select[name="caracteristicaPoblacion"]').val()] = [];
 

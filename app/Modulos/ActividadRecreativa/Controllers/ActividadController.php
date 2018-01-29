@@ -296,6 +296,29 @@ class ActividadController extends Controller
 		$actividadrecreativa['vc_institutoGrupoComunidad']=$input['institucion_g_c'];
 		$actividadrecreativa['vc_caracteristicaPoblacion']=json_encode($input['datosCaracterisitica']);
 		$actividadrecreativa->save();
+
+		
+		$data_r = json_decode($input['datosCaracterisitica']);
+
+
+        if($data_r){
+        foreach ($data_r as $key) {
+        	if($key!=''){
+        	foreach ($key as $idespecifica) {
+        		if($idespecifica!=''){
+				foreach ($idespecifica as $idespecificad) {
+					
+					$actividadrecreativa->datos_caracteristicas()->attach($actividadrecreativa->i_pk_id,[
+                        'i_fk_id_elementoscaracteristicas'=>$idespecificad
+                    ]);
+				}
+				}
+			}
+			}
+		}
+		}
+
+		
         return response()->json(array('status' => 'creado', 'datos' => $actividadrecreativa,'mensaje'=>'<div class="alert alert-success"><center><strong>DATOS DE LA COMUNIDAD REGISTRADOS:</strong></center><br><br>Datos registrados exitosamente en el sistema, la actividad <strong>'.$actividadrecreativa['i_pk_id'].'</strong> ya se encuentra en sus actividades, siga con el <strong>PASO II.</strong> Recuerde que debe completar los 5 pasos para que sea visible al responsable destinado para su aprobación. <br><br> <center><strong>ID: '.$actividadrecreativa['i_pk_id'].'</strong></center></div>'));
     }
 
@@ -308,6 +331,22 @@ class ActividadController extends Controller
 		$actividadrecreativa['i_fk_barrioComunidad']=$input['Id_Barrio_Comunidad'];
 		$actividadrecreativa['vc_institutoGrupoComunidad']=$input['institucion_g_c'];
 		$actividadrecreativa['vc_caracteristicaPoblacion']=json_encode($input['datosCaracterisitica']);
+
+		$data_r = json_decode($input['datosCaracterisitica']);
+        if($data_r){
+            foreach($data_r as $obj){
+            	$i=0;
+
+            	foreach($obj as $especifica){
+
+                    $actividadrecreativa->datos_caracteristicas()->attach([
+                        'i_fk_id_elementoscaracteristicas'=>$especifica[$i]
+                    ]);
+                    $i++;
+                }
+            }
+        }
+
 		$actividadrecreativa->save();
         return response()->json(array('status' => 'creado', 'datos' => $actividadrecreativa,'mensaje'=>'<div class="alert alert-success"><center><strong>DATOS DE LA COMUNIDAD ACTUALIZADOS:</strong></center><br><br>DATOS DE LA COMUNIDAD actualizados exitosamente en el sistema de la actividad <strong>'.$input['id'].'</strong>. Continue con el <strong>PASO II</strong><br><br><strong>Gracias!!!</strong></center></div>'));
     }

@@ -90,30 +90,48 @@ $(function () {
     $('#tbl_resposablePrograma').delegate('a[data-funcion="ejecucion"]','click',function (e) {  
 
         var id = $(this).data('rel'); 
-
         $('#id_actividadEjecucion').html(id);
 
     }); 
 
-    $('#tbl_resposablePrograma').delegate('a[data-funcion="programacion"]','click',function (e) {  
+    $('#tbl_resposablePrograma').delegate('button[data-funcion="programacion"]','click',function (e) {  
 
         var id = $(this).data('rel'); 
+        
+        $('#modalBody').hide();
+        $('#cargando').html('<center><p>Cargando...</p><img class="card-img-top" src="../public/Img/loading.gif" alt="Card image cap" style="position: relative;"></center>');
+        
+        $('#modalLocalidadP').html('');
+        $('#modalUpzP').html('');
+        $('#modalBarrioP').html('');
+        $('#modalinstitucionGrupoCP').html('');
+        $('#modalCaracteristicasP').html('');
+        $('#modalCaracEspecificasP').html('');
+        $('#modalResponsableP').html('');
+        $('#modalFechaEjecucionP').html('');
+        $('#modalHoraInicioP').html('');
+        $('#modalHoraFinP').html('');
+        $('#modalDireccionEP').html('');
+        $('#modalEscenarioEP').html('');
+        $('#modalCodigoIP').html('');
+        $('#modalLocalidadEP').html('');
+        $('#modalUpzEP').html('');
+        $('#modalBarrioEP').html('');
+        $('#datosModalActividad').html('');
+
         $.get(
             URL+'/datosprogramacionactividad/'+id,
             function(data)
             {
-                console.log(data);
-
-                $('#modalLocalidadP').html(data.localidad_comunidad['Localidad']);
+                
+                $('#modalLocalidadP').html(data.localidad_comunidad['Localidad']); 
                 $('#modalUpzP').html(data.upz_comunidad['Upz']);
                 $('#modalBarrioP').html(data.barrio_comunidad['Barrio']);
 
 
                 $('#modalinstitucionGrupoCP').html(data['vc_institutoGrupoComunidad']);
-                $('#modalCaracteristicasP').html('');
-                $('#modalCaracEspecificasP').html('');
 
-                $('#modalResponsableP').html(data.responsable['Primer_Apellido']+' '+data.responsable['Segundo_Apellido']+' '+data.responsable['Primer_Nombre']);
+                $('#modalResponsableP').html(data.responsable['Primer_Apellido']+' '+data.responsable['Segundo_Apellido']+' '+data.responsable['Primer_Nombr']);
                 $('#modalFechaEjecucionP').html(data['d_fechaEjecucion']);
                 $('#modalHoraInicioP').html(data['t_horaInicio']);
                 $('#modalHoraFinP').html(data['t_horaFin']);
@@ -126,6 +144,13 @@ $(function () {
                 $('#modalUpzEP').html(data.upz_escenario['Upz']);
                 $('#modalBarrioEP').html(data.barrio_escenario['Barrio']);
 
+                $('#horaImplementacion').html(data['t_horaImplementacion']);
+                $('#puntoEncuentro').html(data['vc_puntoEncuentro']);
+                $('#nombreContacto').html(data['vc_personaContacto']);
+                $('#rollComunidad').html(data['vc_rollComunidad']);
+                $('#telefono').html(data['i_telefono']);
+
+                
                 var html = '';
                 if(data.datos_actividad.length > 0)
                 {
@@ -136,6 +161,8 @@ $(function () {
                     });
                 }
                 $('#datosModalActividad').html(html);
+                $('#cargando').html('');
+                $('#modalBody').show();
             }
         );
         $('#id_actividadProgramacion').html(id);
