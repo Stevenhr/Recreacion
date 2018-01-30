@@ -102,7 +102,8 @@
                   <li><a href="#">Actividad</a></li>
                   <li class="divider"></li>
                   <li class="{{ Request::is( 'proceso_actividad') ? 'active' : '' }}"><a href="{{ route('proceso_actividad') }}">Crear actividad</a></li>
-                  <li class="{{ Request::is( 'mis_actividades') ? 'active' : '' }}"><a href="{{ route('mis_actividades') }}">Mis actividades</a></li>
+                  <li class="{{ Request::is( 'mis_actividades') ? 'active' : '' }}"><a href="{{ route('mis_actividades') }}">Aprobar actividades</a></li>
+                  <li class="{{ Request::is( 'confirmar_actividades') ? 'active' : '' }}"><a href="{{ route('confirmar_actividades') }}">Confirmar actividad</a></li>
                 </ul>
               </li>
             </ul>

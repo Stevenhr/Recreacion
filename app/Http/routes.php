@@ -177,6 +177,26 @@ Route::group(['prefix' => 'misActividades', 'middleware' => 'auth'], function()
 
 });
 
+
+
+Route::group(['prefix' => 'confirmarActividades', 'middleware' => 'auth'], function()
+{
+    $controller = "\\App\\Modulos\\ActividadRecreativa\\Controllers\\";
+
+    Route::any('/confirmar_actividades', [
+        'uses' => $controller.'ConfirmarActividadesController@inicio',
+        'as' => 'confirmar_actividades'
+    ]);
+
+    Route::any('/confirmarBusquedaActividad', [
+        'uses' => $controller.'ConfirmarActividadesController@confirmarBusquedaActividad',
+        'as' => 'confirmarBusquedaActividad'
+    ]);
+
+});
+
+
+
 Route::group(['prefix' => 'usuarios', 'middleware' => 'auth'], function()
 {
     Route::get('distribuir', '\App\Modulos\Usuario\Controllers\DistribucionController@index');
