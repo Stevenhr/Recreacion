@@ -54,10 +54,8 @@ $(function () {
                 }
                 else
                 {
-                	$('#uno').html(data.datos.actividadesPorRevisar);
-					$('#dos').html(data.datos.actividadesAprobadas);
-					$('#tres').html(data.datos.actividadesCanceladas);
-					$('#cuatro').html(data.datos.actividadesDenegadas);
+                	$('#uno').html(data.datos.actividadesPorConfirmar);
+					$('#dos').html(data.datos.actividadesConfirmadas);
                 	$("#resultadoBusqueda").show();
                 }
                 

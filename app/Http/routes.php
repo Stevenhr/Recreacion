@@ -193,6 +193,11 @@ Route::group(['prefix' => 'confirmarActividades', 'middleware' => 'auth'], funct
         'as' => 'confirmarBusquedaActividad'
     ]);
 
+     Route::any('/actividadesConfirmarResponsable', [
+        'uses' => $controller.'ConfirmarActividadesController@actividadesConfirmarResponsable',
+        'as' => 'actividadesConfirmarResponsable'
+    ]);
+
 });
 
 

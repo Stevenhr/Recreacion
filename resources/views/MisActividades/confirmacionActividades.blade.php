@@ -63,20 +63,18 @@
 				<h3>RESULTADO:</h3>
 				<br>
 			</div>
-			<div class="col-md-2"></div>
-			
-			
+			<div class="col-md-2"></div>		
 
-				<div class="col-md-2">
+				<div class="col-md-4">
 					<div class="card" style="width: 100%;">
 					  <img class="card-img-top" src="../public/Img/revisando.png" alt="Card image cap">
 					  <div class="card-body">
-					    <h5 class="card-title">Por aprobar</h5>
-					    <p class="card-text">Actividades registradas por el gestor, pendientes por aprobar.</p>
-					    	{{ Form::open(array('route' => 'actividadesResposableProgramaPendientes','target' => '_blank')) }}
+					    <h5 class="card-title">Por confirmar</h5>
+					    <p class="card-text">Actividades que no han sido confirmadas por el responsable de la actividad.</p>
+					    	{{ Form::open(array('route' => 'actividadesConfirmarResponsable','target' => '_blank')) }}
 								<input type="hidden" name="fechaInicioHiden" class="fechaInicioHiden">
 								<input type="hidden" name="fechaFinHiden" class="fechaFinHiden">
-								<input type="hidden" name="opcion" id="opcion" value="0">
+								<input type="hidden" name="opcion" id="opcion" value="1">
 								<input name="_token" type="hidden" value="{{ csrf_token() }}"/>
 						    	<button type="submit" class="btn btn-default btn-sm"><span class="badge" id="uno"></span> Ir a actividades</button>
 						    {{ Form::close() }}
@@ -84,55 +82,18 @@
 					</div>
 				</div>
 
-				<div class="col-md-2">
+				<div class="col-md-4">
 					<div class="card" style="width: 100%;">
 					  <img class="card-img-top" src="../public/Img/aprobado.png" alt="Card image cap">
 					  <div class="card-body">
-					    <h5 class="card-title">Aprobado</h5>
-					    <p class="card-text">Actividades registradas por el gestor, revisadas y aprobadas.</p>
-					   		{{ Form::open(array('route' => 'actividadesResposableProgramaPendientes','target' => '_blank')) }}
+					    <h5 class="card-title">Confirmadas</h5>
+					    <p class="card-text">Actividades confirmadas por el resposanble de la actividad.</p>
+					   		{{ Form::open(array('route' => 'actividadesConfirmarResponsable','target' => '_blank')) }}
 								<input type="hidden" name="fechaInicioHiden" class="fechaInicioHiden">
 								<input type="hidden" name="fechaFinHiden" class="fechaFinHiden">
-								<input type="hidden" name="opcion" id="opcion" value="1">
+								<input type="hidden" name="opcion" id="opcion" value="4">
 								<input name="_token" type="hidden" value="{{ csrf_token() }}"/>
 								<button type="submit" class="btn btn-success btn-sm"><span class="badge" id="dos"></span> Ir a actividades</button>
-					    	{{ Form::close() }}
-					  </div>
-					</div>
-				</div>
-
-				
-
-				<div class="col-md-2">
-					<div class="card" style="width: 100%;">
-					  <img class="card-img-top" src="../public/Img/denegada.png" alt="Card image cap">
-					  <div class="card-body">
-					    <h5 class="card-title">Denegada</h5>
-					    <p class="card-text">Actividades registradas por el gestor, revisadas y denegadas.</p>
-					    	{{ Form::open(array('route' => 'actividadesResposableProgramaPendientes','target' => '_blank')) }}
-								<input type="hidden" name="fechaInicioHiden" class="fechaInicioHiden">
-								<input type="hidden" name="fechaFinHiden" class="fechaFinHiden">
-								<input type="hidden" name="opcion" id="opcion" value="2">
-								<input name="_token" type="hidden" value="{{ csrf_token() }}"/>
-								<button type="submit" class="btn btn-warning btn-sm"><span class="badge" id="cuatro"></span> Ir a actividades</button>
-					    	{{ Form::close() }}
-					  </div>
-					</div>
-				</div>
-
-
-				<div class="col-md-2">
-					<div class="card" style="width: 100%;">
-					  <img class="card-img-top" src="../public/Img/cancelado.png" alt="Card image cap">
-					  <div class="card-body">
-					    <h5 class="card-title">Canceladas</h5>
-					    <p class="card-text">Actividades registradas por el gestor, revisadas y canceladas.</p>
-					    	{{ Form::open(array('route' => 'actividadesResposableProgramaPendientes','target' => '_blank')) }}
-								<input type="hidden" name="fechaInicioHiden" class="fechaInicioHiden">
-								<input type="hidden" name="fechaFinHiden" class="fechaFinHiden">
-								<input type="hidden" name="opcion" id="opcion" value="3">
-								<input name="_token" type="hidden" value="{{ csrf_token() }}"/>
-								<button type="submit" class="btn btn-danger btn-sm"><span class="badge" id="tres"></span> Ir a actividades</button>
 					    	{{ Form::close() }}
 					  </div>
 					</div>

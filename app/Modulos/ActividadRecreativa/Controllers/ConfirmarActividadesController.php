@@ -21,7 +21,7 @@ class ConfirmarActividadesController extends Controller
 
 	public function inicio()
 	{
-		
+
 		return view('MisActividades.confirmacionActividades');
 	}
 
@@ -46,25 +46,16 @@ class ConfirmarActividadesController extends Controller
         else
         {
 
-        	$persona_programa=ConfiguracionPersona::where('i_fk_id_persona',$_SESSION['Usuario'][0])
-        	->where('i_id_tipo_persona',Configuracion::RESPOSANBLE_PROGRAMA)
-        	->get();
 
-        	$tipo_programa=$persona_programa->pluck('i_fk_programa')->unique()->all();
-
-			$actividades = ActividadRecreativa::whereHas('datosActividad',function($query) use ($tipo_programa){
-				$query->whereIn('i_fk_programa',$tipo_programa);
-			})
+			$actividades = ActividadRecreativa::where('i_fk_usuarioResponsable',$_SESSION['Usuario'][0])
 			->whereBetween('d_fechaEjecucion',[$request['fechaInicio'],$request['fechaFin']])
 			->get();
 
 
 
 			$datos =[
-				'actividadesPorRevisar'=>$actividades->where('i_estado',Configuracion::PENDIENTE)->count(),
-				'actividadesAprobadas'=>$actividades->where('i_estado', Configuracion::APROBADO)->count(),
-				'actividadesDenegadas'=>$actividades->where('i_estado', Configuracion::DEVUELTO)->count(),
-				'actividadesCanceladas'=>$actividades->where('i_estado', Configuracion::CANCELADO)->count(),
+				'actividadesConfirmadas'=>$actividades->where('i_estado',Configuracion::CONFIRMADO)->count(),
+				'actividadesPorConfirmar'=>$actividades->where('i_estado', Configuracion::APROBADO)->count(),
 			];
 
             return response()->json(array('status' => 'ok', 'errors' => $validator->errors(), 'datos'=>$datos));
@@ -72,18 +63,11 @@ class ConfirmarActividadesController extends Controller
     }
 
 
-    public function actividadesResposableProgramaPendientes(Request $request)
+    public function actividadesConfirmarResponsable(Request $request)
 	{
 
-		$persona_programa=ConfiguracionPersona::where('i_fk_id_persona',$_SESSION['Usuario'][0])
-    	->where('i_id_tipo_persona',Configuracion::RESPOSANBLE_PROGRAMA)
-    	->get();
-
-    	$tipo_programa=$persona_programa->pluck('i_fk_programa')->unique()->all();
-
-		$actividades = ActividadRecreativa::with('datosActividad.programa','datosActividad.actividad','datosActividad.tematica','datosActividad.componente','acompanates')->whereHas('datosActividad',function($query) use ($tipo_programa){
-			$query->whereIn('i_fk_programa',$tipo_programa);
-		})
+		$actividades = ActividadRecreativa::with('datosActividad.programa','datosActividad.actividad','datosActividad.tematica','datosActividad.componente','acompanates')
+		->where('i_fk_usuarioResponsable',$_SESSION['Usuario'][0])
 		->whereBetween('d_fechaEjecucion',[$request['fechaInicioHiden'],$request['fechaFinHiden']])
 		->where('i_estado',$request['opcion'])
 		->get();
@@ -92,25 +76,15 @@ class ConfirmarActividadesController extends Controller
 		$color="";
 		$style="";
 		
-		if($request['opcion']==Configuracion::PENDIENTE){
-			$opcion="Actividades en espera de revisón.";
+		if($request['opcion']==Configuracion::APROBADO){
+			$opcion="Actividades en espera de confirmaciòn.";
 			$color="default";
 			$style ="color: black;background-color: #eeeeee;";
 
-		}else if($request['opcion']==Configuracion::APROBADO){
-			$opcion="Actividades aprobadas.";
+		}else if($request['opcion']==Configuracion::CONFIRMADO){
+			$opcion="Actividades confirmadas.";
 			$color="success";
 			$style ="color: white;background-color: #6b9c35;";
-
-		}else if($request['opcion']==Configuracion::DEVUELTO){
-			$opcion="Actividades denegadas.";
-			$color="warning";
-			$style ="color: white;background-color: #dd5600;";
-
-		}else if($request['opcion']==Configuracion::CANCELADO){
-			$opcion="Actividades canceladas.";
-			$color="danger";
-			$style ="color: white;background-color: #c71c22;";
 
 		}else{
 			$opcion="";
@@ -125,7 +99,7 @@ class ConfirmarActividadesController extends Controller
 			'style'=>$style,
 		];
 		
-		return view('MisActividades.tablaMisActividades',$datos);
+		return view('MisActividades.tablaConfirmarActividad',$datos);
    
     }
 
