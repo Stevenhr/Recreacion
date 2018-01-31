@@ -62,7 +62,7 @@ class MisActividadesController extends Controller
 
 			$datos =[
 				'actividadesPorRevisar'=>$actividades->where('i_estado',Configuracion::PENDIENTE)->count(),
-				'actividadesAprobadas'=>$actividades->where('i_estado', Configuracion::APROBADO)->count(),
+				'actividadesAprobadas'=>$actividades->whereIn('i_estado', [Configuracion::APROBADO,Configuracion::CONFIRMADO])->count(),
 				'actividadesDenegadas'=>$actividades->where('i_estado', Configuracion::DEVUELTO)->count(),
 				'actividadesCanceladas'=>$actividades->where('i_estado', Configuracion::CANCELADO)->count(),
 			];
@@ -85,7 +85,6 @@ class MisActividadesController extends Controller
 			$query->whereIn('i_fk_programa',$tipo_programa);
 		})
 		->whereBetween('d_fechaEjecucion',[$request['fechaInicioHiden'],$request['fechaFinHiden']])
-		->where('i_estado',$request['opcion'])
 		->get();
 		
 		$opcion="";
@@ -96,21 +95,25 @@ class MisActividadesController extends Controller
 			$opcion="Actividades en espera de revisón.";
 			$color="default";
 			$style ="color: black;background-color: #eeeeee;";
+			$actividades=$actividades->where('i_estado',Configuracion::PENDIENTE);
 
 		}else if($request['opcion']==Configuracion::APROBADO){
 			$opcion="Actividades aprobadas.";
 			$color="success";
 			$style ="color: white;background-color: #6b9c35;";
+			$actividades=$actividades->whereIn('i_estado',[Configuracion::APROBADO,Configuracion::CONFIRMADO]);
 
 		}else if($request['opcion']==Configuracion::DEVUELTO){
 			$opcion="Actividades denegadas.";
 			$color="warning";
 			$style ="color: white;background-color: #dd5600;";
+			$actividades=$actividades->where('i_estado',Configuracion::DEVUELTO);
 
 		}else if($request['opcion']==Configuracion::CANCELADO){
 			$opcion="Actividades canceladas.";
 			$color="danger";
 			$style ="color: white;background-color: #c71c22;";
+			$actividades=$actividades->where('i_estado',Configuracion::CANCELADO);
 
 		}else{
 			$opcion="";
