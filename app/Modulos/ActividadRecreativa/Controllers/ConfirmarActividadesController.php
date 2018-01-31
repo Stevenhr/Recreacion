@@ -102,7 +102,7 @@ class ConfirmarActividadesController extends Controller
    
     }
 
-    public function datosprogramacionactividad(Request $request, $id)
+    public function datosprogramacionactividadConfirmar(Request $request, $id)
 	{
 		$actividad = ActividadRecreativa::with(['datosActividad' => function($query) {
 			$query->with('programa', 'actividad','tematica','componente');
@@ -111,5 +111,21 @@ class ConfirmarActividadesController extends Controller
 
 		return response()->json($actividad);
 	}
+
+	public function confirmarActivida(Request $request, $id)
+    {
+        $actividad = ActividadRecreativa::find($id);
+        $actividad['i_estado']=4;
+        $actividad->save();
+        return response()->json(array('mensaje' => '<span class="label label-success">Aprobado</span>'));
+    }
+
+    public function noConfirmarActividad(Request $request, $id)
+    {
+        $actividad = ActividadRecreativa::find($id);
+        $actividad['i_estado']=5;
+        $actividad->save();
+        return response()->json(array('mensaje' => '<span class="label label-danger">cancelada</span>'));
+    }
 	
 }

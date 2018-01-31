@@ -142,10 +142,10 @@ class MisActividadesController extends Controller
 		return response()->json($actividad);
 	}
 
-	public function actividadConfirmada(Request $request, $id)
+	public function actividadAprobada(Request $request, $id)
 	{
 		$actividad = ActividadRecreativa::find($id);
-		$actividad['i_estado']=4;
+		$actividad['i_estado']=1;
 		$actividad->save();
 		return response()->json(array('mensaje' => '<span class="label label-success">Aprobado</span>'));
 	}

@@ -1,15 +1,7 @@
 $(function () {
-    $('#datetimepicker1').datetimepicker({
-    	format: 'YYYY-MM-DD'
-    });
-    $('#datetimepicker2').datetimepicker({
-    	format: 'YYYY-MM-DD'
-    });
-    var URL = $('#main_actividad').data('url');
-
-
-
-     $('#tbl_resposablePrograma tfoot th').each( function () {
+ 
+     var URL = $('#main_actividad').data('url');
+     $('#tbl_confirmarActividad tfoot th').each( function () {
         var title = $(this).text();
         if(title!="Menu" && title!="#"){
           $(this).html( '<input type="text" placeholder="Buscar"/>' );
@@ -17,7 +9,7 @@ $(function () {
     } );
  
     // DataTable
-    var t = $('#tbl_resposablePrograma').DataTable( {responsive: true,
+    var t = $('#tbl_confirmarActividad').DataTable( {responsive: true,
         dom: 'Bfrtip',
         buttons: [
             'copy', 'csv', 'excel', 'pdf'],
@@ -36,65 +28,8 @@ $(function () {
         } );
     });
 
-    $('#btn_buscar_Actividades').on('click', function(e)
-    {
 
-    	$('.fechaInicioHiden').val($('#fechaInicio').val());
-    	$('.fechaFinHiden').val($('#fechaFin').val());
-
-        $("#resultadoBusqueda").hide();
-        $.post(
-            URL+'/busquedaActividad',            
-            $('#form_consulta_actividades').serialize(),
-            function(data)
-            {
-                if(data.status == 'error')
-                {
-                    validador_datos(data.errors);
-                }
-                else
-                {
-                	$('#uno').html(data.datos.actividadesPorRevisar);
-					$('#dos').html(data.datos.actividadesAprobadas);
-					$('#tres').html(data.datos.actividadesCanceladas);
-					$('#cuatro').html(data.datos.actividadesDenegadas);
-                	$("#resultadoBusqueda").show();
-                }
-                
-            }
-        );
-        return false;
-    });
-
-    var validador_datos = function(data)
-    {
-        $('#form_consulta_actividades .form-group').removeClass('has-error');
-        var selector = '';
-        for (var error in data)
-        {
-            if (typeof data[error] !== 'function') 
-            {
-                switch(error)
-                {
-                    case 'fechaInicio':
-                    case 'fechaFin':
-                        selector = 'input';
-                    break;               
-                }
-                $('#form_consulta_actividades '+selector+'[name="'+error+'"]').closest('.form-group').addClass('has-error');
-            }
-        }
-    }
-
-
-    $('#tbl_resposablePrograma').delegate('a[data-funcion="ejecucion"]','click',function (e) {  
-
-        var id = $(this).data('rel'); 
-        $('#id_actividadEjecucion').html(id);
-
-    }); 
-
-    $('#tbl_resposablePrograma').delegate('button[data-funcion="programacion"]','click',function (e) {  
+      $('#tbl_confirmarActividad').delegate('button[data-funcion="programacion"]','click',function (e) {  
 
         var id = $(this).data('rel'); 
         
@@ -120,7 +55,7 @@ $(function () {
         $('#datosModalActividad').html('');
 
         $.get(
-            URL+'/datosprogramacionactividad/'+id,
+            URL+'/datosprogramacionactividadConfirmar/'+id,
             function(data)
             {
                 
@@ -171,16 +106,15 @@ $(function () {
 
 
 
-     $('#tbl_resposablePrograma').delegate('button[data-funcion="aprobar"]','click',function (e) {  
+
+    $('#tbl_confirmarActividad').delegate('button[data-funcion="aprobar"]','click',function (e) {  
 
         var id = $(this).data('rel'); 
         var val = $(this).data('val'); 
-
-            var $tr = $('#tbl_resposablePrograma').find('tr[data-row="'+id+'"]');
+        var $tr = $('#tbl_resposablePrograma').find('tr[data-row="'+id+'"]');
 
             if(val == 0)
             {
-
                 if ($tr.hasClass('danger'))
                 {
                    $tr.removeClass('danger');
@@ -191,12 +125,12 @@ $(function () {
                 }
 
                 $.get(
-                    URL+'/actividadAprobada/'+id,
+                    URL+'/confirmarActivida/'+id,
                     function(data)
                     {
-                        $('#'+id+'mensaje').html(data.mensaje);
+                        $('#'+id+'mensajeConfirmacion').html(data.mensaje);
                         setTimeout(function(){
-                            $('#'+id+'mensaje').html('');
+                            $('#'+id+'mensajeConfirmacion').html('');
                         }, 3000);
                     }
                 );
@@ -205,31 +139,6 @@ $(function () {
             }
             else if(val == 1)
             {
-
-                if ($tr.hasClass('danger'))
-                {
-                   $tr.removeClass('danger');
-                }
-                if ($tr.hasClass('success'))
-                {
-                   $tr.removeClass('success');
-                }
-
-                $.get(
-                    URL+'/actividadDevuelta/'+id,
-                    function(data)
-                    {
-                        $('#'+id+'mensaje').html(data.mensaje);
-                        setTimeout(function(){
-                            $('#'+id+'mensaje').html('');
-                        }, 3000);
-                    }
-                );
-
-                $tr.addClass('warning');
-
-            }else if(val == 2)
-            {
                 if ($tr.hasClass('warning'))
                 {
                    $tr.removeClass('warning');
@@ -240,19 +149,17 @@ $(function () {
                 }
 
                 $.get(
-                    URL+'/actividadCancelada/'+id,
+                    URL+'/noConfirmarActividad/'+id,
                     function(data)
                     {
-                        $('#'+id+'mensaje').html(data.mensaje);
+                        $('#'+id+'mensajeConfirmacion').html(data.mensaje);
                         setTimeout(function(){
-                            $('#'+id+'mensaje').html('');
+                            $('#'+id+'mensajeConfirmacion').html('');
                         }, 3000);
                     }
                 );
-
                 $tr.addClass('danger');
             }
-
     }); 
 
 

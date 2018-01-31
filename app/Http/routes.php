@@ -175,9 +175,9 @@ Route::group(['prefix' => 'misActividades', 'middleware' => 'auth'], function()
         'as' => 'datosprogramacionactividad'
     ]);
 
-    Route::get('actividadConfirmada/{id}',[
-        'uses' => $controller.'MisActividadesController@actividadConfirmada',
-        'as' => 'actividadConfirmada'
+    Route::get('actividadAprobada/{id}',[
+        'uses' => $controller.'MisActividadesController@actividadAprobada',
+        'as' => 'actividadAprobada'
     ]);
 
     Route::get('actividadDevuelta/{id}',[
@@ -212,6 +212,29 @@ Route::group(['prefix' => 'confirmarActividades', 'middleware' => 'auth'], funct
         'uses' => $controller.'ConfirmarActividadesController@actividadesConfirmarResponsable',
         'as' => 'actividadesConfirmarResponsable'
     ]);
+
+    Route::get('actividadConfirmada/{id}',[
+        'uses' => $controller.'ConfirmarActividadesController@actividadConfirmada',
+        'as' => 'actividadConfirmada'
+    ]);
+
+    Route::get('datosprogramacionactividadConfirmar/{id}',[
+        'uses' => $controller.'ConfirmarActividadesController@datosprogramacionactividadConfirmar',
+        'as' => 'datosprogramacionactividadConfirmar'
+    ]);
+
+
+    Route::get('confirmarActivida/{id}',[
+        'uses' => $controller.'ConfirmarActividadesController@confirmarActivida',
+        'as' => 'confirmarActivida'
+    ]);
+
+    Route::get('noConfirmarActividad/{id}',[
+        'uses' => $controller.'ConfirmarActividadesController@noConfirmarActividad',
+        'as' => 'noConfirmarActividad'
+    ]);
+
+
 
 });
 

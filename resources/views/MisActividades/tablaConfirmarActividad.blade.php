@@ -3,14 +3,14 @@
 	@section('script')
 		@parent
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmhb8BVo311Mnvr35sv8VngIvXiiTnKQ4" defer></script>
-		<script src="{{ asset('public/Js/MisActividad/misactividades.js') }}"></script>	
+		<script src="{{ asset('public/Js/MisActividad/tablaConfirmarActividad.js') }}"></script>	
 	@stop
 
 
 @section('content') 
 
 <div class="container-fluid">
-	<div class="content" id="main_actividad" class="row" data-url="{{ url('misActividades') }}" ></div>
+	<div class="content" id="main_actividad" class="row" data-url="{{ url('confirmarActividades') }}" ></div>
 	<div id="main" class="row" data-url="{{ url('personas') }}" data-url-parques="{{ url('parques') }}"></div>
 		
 
@@ -24,7 +24,7 @@
 				<div class="col-md-12">
 
 					
-					<table id="tbl_resposablePrograma" class="display responsive no-wrap table table-min table-bordered" width="100%" cellspacing="0" style="width:auto;">
+					<table id="tbl_confirmarActividad" class="display responsive no-wrap table table-min table-bordered" width="100%" cellspacing="0" style="width:auto;">
 		            <thead> 
 		                <tr style="{{$style}}"> 
 		                    <th>#</th> 
@@ -37,8 +37,7 @@
 		                    <th>Tematicas / Componentes</th>
 		                    <th>Gestor</th>
 		                    <th>Responsable</th>
-		                    <th data-priority="2">Confirmación</th>
-		                    <th data-priority="3">Programación / <br>Ejecución</th>
+		                    <th data-priority="3">Programación</th>
 		                    
 		                </tr> 
 		            </thead>
@@ -54,8 +53,7 @@
 		                    <th>Tematicas / Componentes</th>
 		                    <th>Gestor</th>
 		                    <th>Responsable</th>
-		                    <th data-priority="2">Confirmación</th>
-		                    <th data-priority="3">Programación / <br>Ejecución</th>
+		                    <th data-priority="3">Programación</th>
 						</tr>
 					</tfoot>
 		            <tbody>
@@ -95,11 +93,18 @@
 											</ul>
 			                        	@endforeach
 			                        </td>
-			                        <td></td>
 			                        <th class="text-center">
 			                        	<ul class="list-group">
 										  <li class="list-group-item"><button type="button" class="btn btn-link btn-xs" data-rel="{{$actividad['i_pk_id']}}" data-funcion="programacion" data-toggle="modal" data-target="#modalProgramacion"><span class="glyphicon glyphicon-eye-open"></span> Ver programaciòn </button></li>
 										</ul>
+
+										<div class="btn-group">
+										    <button type="button" class="btn btn-success btn-xs tama" data-rel="{{$actividad['i_pk_id']}}" data-funcion="aprobar" data-val="0"><span class="glyphicon glyphicon-hand-right"></span></button>
+										    <button type="button" class="btn btn-danger btn-xs tama" data-rel="{{$actividad['i_pk_id']}}" data-funcion="aprobar" data-val="1"><span class="glyphicon glyphicon-thumbs-down"></span></button>
+										    <button type="button" class="btn btn-default btn-xs tama" data-rel="{{$actividad['i_pk_id']}}" data-funcion="aprobar" data-val="2"><span class="glyphicon glyphicon-dashboard"></span></button>
+										</div>
+
+										<div id="{{$actividad['i_pk_id']}}mensajeConfirmacion"></div>
 			                        </th>
 			                    </tr>
 		                    <?php $num++; ?>
