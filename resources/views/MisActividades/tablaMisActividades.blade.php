@@ -37,7 +37,6 @@
 		                    <th>Tematicas / Componentes</th>
 		                    <th>Gestor</th>
 		                    <th>Responsable</th>
-		                    <th data-priority="2">Confirmación</th>
 		                    <th data-priority="3">Programación / <br>Ejecución</th>
 		                    
 		                </tr> 
@@ -54,7 +53,6 @@
 		                    <th>Tematicas / Componentes</th>
 		                    <th>Gestor</th>
 		                    <th>Responsable</th>
-		                    <th data-priority="2">Confirmación</th>
 		                    <th data-priority="3">Programación / <br>Ejecución</th>
 						</tr>
 					</tfoot>
@@ -62,7 +60,7 @@
 		            <?php $num=1;?>
 		            @if($actividades!='')
 		                @foreach ($actividades as $actividad) 
-		                    	<tr class="something" >
+		                    	<tr class="something" data-row="{{ $actividad['i_pk_id'] }}" >
 			                        <td class="col-md-1">{{$num}}</td>
 			                        <td class="col-md-13"><b><p class="text-info text-center" style="font-size: 15px">{{$actividad['i_pk_id']}} </p></b></td>
 			                        <td >{{$actividad['d_fechaEjecucion']}}</td>
@@ -95,12 +93,19 @@
 											</ul>
 			                        	@endforeach
 			                        </td>
-			                        <td></td>
 			                        <th class="text-center">
+			                        	
 			                        	<ul class="list-group">
 										  <li class="list-group-item"><button type="button" class="btn btn-link btn-xs" data-rel="{{$actividad['i_pk_id']}}" data-funcion="programacion" data-toggle="modal" data-target="#modalProgramacion"><span class="glyphicon glyphicon-eye-open"></span> Ver programaciòn </button></li>
-										  <li class="list-group-item"><button type="button"  class="btn btn-link btn-xs"data-rel="{{$actividad['i_pk_id']}}" data-funcion="ejecucion" data-toggle="modal" data-target="#modalEjecucion"><span class="glyphicon glyphicon-eye-open text-success"></span> Ver Ejecuciòn</button></li>
 										</ul>
+
+										<div class="btn-group">
+										    <button type="button" class="btn btn-success btn-xs tama" data-rel="{{$actividad['i_pk_id']}}" data-funcion="aprobar" data-val="0"><span class="glyphicon glyphicon-ok"></span></button>
+										    <button type="button" class="btn btn-warning btn-xs tama" data-rel="{{$actividad['i_pk_id']}}" data-funcion="aprobar" data-val="1"><span class="glyphicon glyphicon-arrow-left"></span></button>
+										    <button type="button" class="btn btn-danger btn-xs tama" data-rel="{{$actividad['i_pk_id']}}" data-funcion="aprobar" data-val="2"><span class="glyphicon glyphicon-remove"></span></button>
+										</div>
+
+										<div id="{{$actividad['i_pk_id']}}mensaje"></div>
 			                        </th>
 			                    </tr>
 		                    <?php $num++; ?>
@@ -114,72 +119,17 @@
 		</div>
 
 
-
-
-		<!-- MODAL EJECUCION-->
-			<div class="modal fade" data-backdrop="static" data-keyboard="false" id="modalEjecucion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-				<div class="modal-dialog modal-lg" role="document">
-					<div class="modal-content">
-
-						<div class="modal-header">
-
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-							<h3 class="modal-title text-success text-center" id="myModalLabel">Ejecuciòn de la actividad<br>
-							<b>ID:</b> <label id="id_actividadEjecucion"></label></h3>
-						</div>
-						<form id="form_agregar_estudio_comveniencia">
-							
-							<div class="modal-body">	
-								<div class="row">
-										<table class="table table-bordered table-striped table-condensed table-responsive" id="">
-											<thead>
-												<tr>
-													<th>
-														Programa
-													</th>
-													<th>
-														Actividad
-													</th>
-													<th>
-														Temática
-													</th>
-													<th>
-														Componente
-													</th>
-												</tr>
-											</thead>
-											<tbody>
-											</tbody>
-										</table>
-								</div>					
-							</div>
-
-							<div class="modal-footer" >
-								<div class="row">
-									<div class="col-xs-12 col-sm-12" style="text-align: left;">
-										<button type="button" class="btn btn-default" data-dismiss="modal">CERRAR</button>
-									</div>
-								</div>
-							</div>
-
-						</form>
-
-					</div>
-				</div>
-			</div>
-
-
 			<!-- MODAL PROGRAMACION-->
 			<div class="modal fade" data-backdrop="static" data-keyboard="false" id="modalProgramacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 				<div class="modal-dialog modal-lg" role="document">
 					<div class="modal-content">
 
 						<div class="modal-header">
-
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 							<h3 class="modal-title text-primary text-center" id="myModalLabel">Programación de la actividad<br>
 							<b>ID:</b> <label id="id_actividadProgramacion"></label></h3>
 						</div>
+
 						<form id="form_agregar_estudio_comveniencia">
 							<div id="cargando"></div>
 							<div class="modal-body" id="modalBody">		
@@ -321,8 +271,6 @@
 									</div>
 									<div class="col-xs-4 col-sm-4">
 									</div>
-
-
 
 								</div>					
 							</div>

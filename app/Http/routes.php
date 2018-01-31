@@ -175,6 +175,21 @@ Route::group(['prefix' => 'misActividades', 'middleware' => 'auth'], function()
         'as' => 'datosprogramacionactividad'
     ]);
 
+    Route::get('actividadConfirmada/{id}',[
+        'uses' => $controller.'MisActividadesController@actividadConfirmada',
+        'as' => 'actividadConfirmada'
+    ]);
+
+    Route::get('actividadDevuelta/{id}',[
+        'uses' => $controller.'MisActividadesController@actividadDevuelta',
+        'as' => 'actividadDevuelta'
+    ]);
+
+    Route::get('actividadCancelada/{id}',[
+        'uses' => $controller.'MisActividadesController@actividadCancelada',
+        'as' => 'actividadCancelada'
+    ]);
+
 });
 
 

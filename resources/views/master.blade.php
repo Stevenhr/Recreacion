@@ -97,13 +97,15 @@
 
 
               <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download">Gestor<span class="caret"></span></a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download">Actividades<span class="caret"></span></a>
                 <ul class="dropdown-menu" aria-labelledby="download">
                   <li><a href="#">Actividad</a></li>
                   <li class="divider"></li>
                   <li class="{{ Request::is( 'proceso_actividad') ? 'active' : '' }}"><a href="{{ route('proceso_actividad') }}">Crear actividad</a></li>
-                  <li class="{{ Request::is( 'mis_actividades') ? 'active' : '' }}"><a href="{{ route('mis_actividades') }}">Aprobar actividades</a></li>
+                  <li class="{{ Request::is( 'mis_actividades') ? 'active' : '' }}"><a href="{{ route('mis_actividades') }}">Aprobar programación</a></li>
                   <li class="{{ Request::is( 'confirmar_actividades') ? 'active' : '' }}"><a href="{{ route('confirmar_actividades') }}">Confirmar actividad</a></li>
+                  <li class="{{ Request::is( 'mis_actividades') ? 'active' : '' }}"><a href="{{ route('mis_actividades') }}">Aprobar ejecucion (NR)</a></li>
+                  <li class="{{ Request::is( 'mis_actividades') ? 'active' : '' }}"><a href="{{ route('mis_actividades') }}">Mis actividades (NR)</a></li>
                 </ul>
               </li>
             </ul>

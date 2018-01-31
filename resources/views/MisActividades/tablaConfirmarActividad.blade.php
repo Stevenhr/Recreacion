@@ -99,7 +99,6 @@
 			                        <th class="text-center">
 			                        	<ul class="list-group">
 										  <li class="list-group-item"><button type="button" class="btn btn-link btn-xs" data-rel="{{$actividad['i_pk_id']}}" data-funcion="programacion" data-toggle="modal" data-target="#modalProgramacion"><span class="glyphicon glyphicon-eye-open"></span> Ver programaciòn </button></li>
-										  <li class="list-group-item"><button type="button"  class="btn btn-link btn-xs"data-rel="{{$actividad['i_pk_id']}}" data-funcion="ejecucion" data-toggle="modal" data-target="#modalEjecucion"><span class="glyphicon glyphicon-eye-open text-success"></span> Ver Ejecuciòn</button></li>
 										</ul>
 			                        </th>
 			                    </tr>

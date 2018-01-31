@@ -171,4 +171,90 @@ $(function () {
 
 
 
+     $('#tbl_resposablePrograma').delegate('button[data-funcion="aprobar"]','click',function (e) {  
+
+        var id = $(this).data('rel'); 
+        var val = $(this).data('val'); 
+
+            var $tr = $('#tbl_resposablePrograma').find('tr[data-row="'+id+'"]');
+
+            if(val == 0)
+            {
+
+                if ($tr.hasClass('danger'))
+                {
+                   $tr.removeClass('danger');
+                }
+                if ($tr.hasClass('warning'))
+                {
+                   $tr.removeClass('warning');
+                }
+
+                $.get(
+                    URL+'/actividadConfirmada/'+id,
+                    function(data)
+                    {
+                        $('#'+id+'mensaje').html(data.mensaje);
+                        setTimeout(function(){
+                            $('#'+id+'mensaje').html('');
+                        }, 3000);
+                    }
+                );
+
+                $tr.addClass('success');
+            }
+            else if(val == 1)
+            {
+
+                if ($tr.hasClass('danger'))
+                {
+                   $tr.removeClass('danger');
+                }
+                if ($tr.hasClass('success'))
+                {
+                   $tr.removeClass('success');
+                }
+
+                $.get(
+                    URL+'/actividadDevuelta/'+id,
+                    function(data)
+                    {
+                        $('#'+id+'mensaje').html(data.mensaje);
+                        setTimeout(function(){
+                            $('#'+id+'mensaje').html('');
+                        }, 3000);
+                    }
+                );
+
+                $tr.addClass('warning');
+
+            }else if(val == 2)
+            {
+                if ($tr.hasClass('warning'))
+                {
+                   $tr.removeClass('warning');
+                }
+                if ($tr.hasClass('success'))
+                {
+                   $tr.removeClass('success');
+                }
+
+                $.get(
+                    URL+'/actividadCancelada/'+id,
+                    function(data)
+                    {
+                        $('#'+id+'mensaje').html(data.mensaje);
+                        setTimeout(function(){
+                            $('#'+id+'mensaje').html('');
+                        }, 3000);
+                    }
+                );
+
+                $tr.addClass('danger');
+            }
+
+    }); 
+
+
+
 });

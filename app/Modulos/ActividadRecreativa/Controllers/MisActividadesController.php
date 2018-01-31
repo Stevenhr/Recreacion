@@ -138,5 +138,29 @@ class MisActividadesController extends Controller
 
 		return response()->json($actividad);
 	}
+
+	public function actividadConfirmada(Request $request, $id)
+	{
+		$actividad = ActividadRecreativa::find($id);
+		$actividad['i_estado']=4;
+		$actividad->save();
+		return response()->json(array('mensaje' => '<span class="label label-success">Aprobado</span>'));
+	}
+
+	public function actividadDevuelta(Request $request, $id)
+	{
+		$actividad = ActividadRecreativa::find($id);
+		$actividad['i_estado']=2;
+		$actividad->save();
+		return response()->json(array('mensaje' => '<span class="label label-warning">Devuelto</span>'));
+	}
+
+	public function actividadCancelada(Request $request, $id)
+	{
+		$actividad = ActividadRecreativa::find($id);
+		$actividad['i_estado']=3;
+		$actividad->save();
+		return response()->json(array('mensaje' => '<span class="label label-danger">Cancelada</span>'));
+	}
 	
 }

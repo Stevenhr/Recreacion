@@ -52,7 +52,6 @@ class ConfirmarActividadesController extends Controller
 			->get();
 
 
-
 			$datos =[
 				'actividadesConfirmadas'=>$actividades->where('i_estado',Configuracion::CONFIRMADO)->count(),
 				'actividadesPorConfirmar'=>$actividades->where('i_estado', Configuracion::APROBADO)->count(),
